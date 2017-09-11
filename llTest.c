@@ -34,9 +34,11 @@ Node * initializeNode(void * data){
     previous = NULL;
 }
 
-char * printELement(void * toBePrinted){
-	printf("print\n");
-	return "!";
+char * printElement(void * toBePrinted){
+	// pointer to an int
+
+    printf("%d\n", *(int *)toBePrinted);
+	return "done";
 }
 
 void deleteElement(void *toBeDeleted){
@@ -49,12 +51,14 @@ int compareElement(const void *first,const void *second){
 }
 
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]){
 	List newList = initializeList(&printELement, &deleteElement, &compareElement);
-	newList.printData((void*);
 	
-	Node * node1 = initializeNode();
-        
-        return 0;
+
+
+	int num = 4;
+	Node * node1 = initializeNode(&num);
+
+    newList.printData(node1->data);    
+    return 0;
 }
