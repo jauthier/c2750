@@ -29,9 +29,10 @@ List initializeList(char* (*printFunction)(void *toBePrinted),void (*deleteFunct
 
 Node * initializeNode(void * data){
     Node * newNode = malloc(sizeof(Node));
-    newNode.data = data;
-    next = NULL;
-    previous = NULL;
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->previous = NULL;
+    return newNode;
 }
 
 char * printElement(void * toBePrinted){
@@ -52,7 +53,7 @@ int compareElement(const void *first,const void *second){
 
 
 int main(int argc, char const *argv[]){
-	List newList = initializeList(&printELement, &deleteElement, &compareElement);
+	List newList = initializeList(&printElement, &deleteElement, &compareElement);
 	
 
 
