@@ -82,7 +82,6 @@ void insertBack(List *list, void *toBeAdded){
 }
 
 void* getFromFront(List list){
-    list.printData(list.head->data);
     return list.head->data;
 }
 
@@ -112,11 +111,17 @@ int main(int argc, char const *argv[]){
 	
 
 
-	int num = 4;
-	insertFront(&newList, &num);
-    void * hold = getFromFront(newList);
-    newList.printData(hold);
-    newList.printData(newList.head->data);
-    newList.printData(getFromBack);
+	int num1 = 4;
+    int num2 = 5;
+    int num3 = 7;
+    int num4 = 6;
+	insertFront(&newList, &num1);
+    newList.printData(getFromFront(newList));
+    newList.printData(getFromBack(newList));
+    insertFront(&newList, &num2);
+    newList.printData(getFromFront(newList));
+    newList.printData(getFromBack(newList));
+
+
     return 0;
 }
