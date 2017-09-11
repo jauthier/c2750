@@ -114,7 +114,7 @@ int main(int argc, char const *argv[]){
 
 	int num = 4;
 	insertFront(&newList, &num);
-    void * hold = getFromFront;
+    void * hold = getFromFront(newList);
     newList.printData(hold);
     newList.printData(newList.head->data);
     newList.printData(getFromBack);
