@@ -82,7 +82,7 @@ void insertBack(List *list, void *toBeAdded){
 }
 
 void* getFromFront(List list){
-    return list.head->data;
+    return * list.head->data;
 }
 
 void* getFromBack(List list){
