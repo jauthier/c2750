@@ -105,7 +105,9 @@ void* nextElement(ListIterator* iter){
 char* toString(List list){
     //create an iterator
     ListIterator iter = createIterator(list);
+    
     if (iter.current != NULL){
+      printf("in if\n");
         char * temp = list.printData(iter.current->data);
         int len = strlen(temp);
         int mem = len * 4;
@@ -114,15 +116,18 @@ char* toString(List list){
         free(temp);
         iter.current = nextElement(&iter);
         while (iter.current != NULL){
+	  printf("in while\n");
             char * hold = list.printData(iter.current->data);
             len = len + strlen(hold) + 1;
 
             /*check if there is enough memory*/
             if (len > mem){
-                // allocate more
+	      printf("ran out of mem\n");
+	      // allocate more
                 mem = len * 2;
                 str = (char *) realloc(str,mem);
             }
+	    printf("time to add\n");
             strcat(str, "\n");
             strcat(str, hold);
 
@@ -139,7 +144,12 @@ char* toString(List list){
 char * printElement(void * toBePrinted){
 	// pointer to a string
     char * hold = (char *)toBePrinted;
-    char * str = malloc(sizeof(char)*strlen(hold));
+    printf("here\n");
+    int len = strlen(hold);
+    if (len <= 0)
+      len = 1;
+    char * str = malloc(sizeof(char)*len);
+    printf("printing data\n");
     strcpy(str, hold);
 	return str;
 }
