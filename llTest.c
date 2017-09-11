@@ -35,6 +35,60 @@ Node * initializeNode(void * data){
     return newNode;
 }
 
+void insertFront(List *list, void *toBeAdded){
+    /*create the node*/
+    Node * toAdd = initializeNode(toBeAdded);
+    if (list->head == NULL){
+        /* 
+         if the head is NULL then there are no elements and the 
+         element we are adding will be the first and last
+        */
+        list->head = toAdd;
+        list->tail = toAdd;
+    } else {
+        /*
+         if the element is not NULL then the element we are adding
+         will be added to the front (become the new head) and the 
+         previous head will be updated
+        */
+        Node * hold = list->head; 
+        toAdd->next = hold; 
+        hold->previous = toAdd;
+        list->head = toAdd;
+    }
+}
+
+void insertBack(List *list, void *toBeAdded){
+    /*create the node*/
+    Node * toAdd = initializeNode(toBeAdded);
+    if (list->head == NULL){
+        /* 
+         if the head is NULL then there are no elements and the 
+         element we are adding will be the first and last
+        */
+        list->head = toAdd;
+        list->tail = toAdd;
+    } else {
+        /*
+         if the element is not NULL then the element we are adding
+         will be added to the back (become the new tail) and the 
+         previous tail will be updated
+        */
+        Node * hold = list->tail; 
+        toAdd->previous = hold; 
+        hold->next = toAdd;
+        list->tail = toAdd;
+    }
+}
+
+void* getFromFront(List list){
+    return list.head->data;
+}
+
+void* getFromBack(List list){
+    return list.tail->data;
+}
+
 char * printElement(void * toBePrinted){
 	// pointer to an int
 
@@ -58,8 +112,8 @@ int main(int argc, char const *argv[]){
 
 
 	int num = 4;
-	Node * node1 = initializeNode(&num);
-
-    newList.printData(node1->data);    
+	insertFront(newList, $num);
+    newList.printData(getFromFront);
+    newList.printData(getFromBack);
     return 0;
 }
