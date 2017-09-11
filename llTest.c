@@ -21,12 +21,18 @@ List initializeList(char* (*printFunction)(void *toBePrinted),void (*deleteFunct
     List newList;
     newList.head = NULL;
     newList.tail = NULL;
-    newList.deleteData = &deleteFunction;
-    newList.compare = &compareFunction;
-    newList.printData = &printFunction;
+    newList.deleteData = deleteFunction;
+    newList.compare = compareFunction;
+    newList.printData = printFunction;
     return newList;
 }
 
+Node * initializeNode(void * data){
+    Node * newNode = malloc(sizeof(Node));
+    newNode.data = data;
+    next = NULL;
+    previous = NULL;
+}
 
 char * printELement(void * toBePrinted){
 	printf("print\n");
@@ -45,6 +51,10 @@ int compareElement(const void *first,const void *second){
 
 int main(int argc, char const *argv[])
 {
-	List newList = initializeList(&printELement, &deleteElement, &compareElement);	
-	return 0;
+	List newList = initializeList(&printELement, &deleteElement, &compareElement);
+	newList.printData((void*);
+	
+	Node * node1 = initializeNode();
+        
+        return 0;
 }
