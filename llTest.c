@@ -112,7 +112,7 @@ int main(int argc, char const *argv[]){
 
 
 	int num = 4;
-	insertFront(newList, $num);
+	insertFront(&newList, &num);
     newList.printData(getFromFront);
     newList.printData(getFromBack);
     return 0;
