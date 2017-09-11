@@ -121,7 +121,9 @@ int main(int argc, char const *argv[]){
     insertFront(&newList, &num2);
     newList.printData(getFromFront(newList));
     newList.printData(getFromBack(newList));
-
+    insertBack(&newList, &num3);
+    newList.printData(getFromFront(newList));
+    newList.printData(getFromBack(newList));
 
     return 0;
 }
