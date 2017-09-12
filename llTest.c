@@ -99,6 +99,7 @@ ListIterator createIterator(List list){
 }
 
 void* nextElement(ListIterator* iter){
+  printf("in next element\n");
     return iter->current->next->data;
 }
 
@@ -114,7 +115,7 @@ char* toString(List list){
         char * str = malloc (sizeof(char)*mem);
         strcpy(temp,str);
         free(temp);
-        iter.current = nextElement(&iter);
+        iter.current = iter.current->next;
         while (iter.current != NULL){
 	  printf("in while\n");
             char * hold = list.printData(iter.current->data);
@@ -130,10 +131,12 @@ char* toString(List list){
 	    printf("time to add\n");
             strcat(str, "\n");
             strcat(str, hold);
-
+	    
             free(hold);
-            iter.current = nextElement(&iter);
-        }
+	    
+	    iter.current = iter.current->next;
+	    printf("here\n");
+	}
         return str;
     }
     else
@@ -143,14 +146,14 @@ char* toString(List list){
 
 char * printElement(void * toBePrinted){
 	// pointer to a string
-    char * hold = (char *)toBePrinted;
-    int len = strlen(hold);
-    printf("%d\n",len);
-    if (len <= 0)
-      len = 1;
+    int * num = (int *)toBePrinted;
+    char buffer[20];
+    int n = sprintf(buffer,"%d",num);
+    int len = strlen(buffer);
+    
     char * data = malloc(sizeof(char)*len);
     printf("printing data\n");
-    strcpy(data, hold);
+    //strcpy(data, atoi(num, buffer, 10));
 	return data;
 }
 
