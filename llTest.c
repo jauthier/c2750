@@ -93,8 +93,8 @@ void* getFromBack(List list){
 }
 
 ListIterator createIterator(List list){
-    ListIterator * newIter = malloc(sizeof(ListIterator));
-    newIter->current = list.head;
+    ListIterator newIter; 
+    newIter.current = list.head;
     return newIter;
 }
 
@@ -104,17 +104,17 @@ void* nextElement(ListIterator* iter){
 
 char* toString(List list){
     //create an iterator
-    ListIterator * iter = createIterator(list);
-    if (iter != NULL){
-        char * temp = list.printData(iter->data);
+    ListIterator iter = createIterator(list);
+    if (iter.current != NULL){
+        char * temp = list.printData(iter.current->data);
         int len = strlen(temp);
         int mem = len * 4;
         char * str = malloc (sizeof(char)*mem);
         strcpy(temp,str);
         free(temp);
-        iter = nextElement(iter);
-        while (iter != NULL){
-            char * hold = list.printData(iter->data);
+        iter.current = nextElement(&iter);
+        while (iter.current != NULL){
+            char * hold = list.printData(iter.current->data);
             len = len + strlen(hold) + 1;
 
             /*check if there is enough memory*/
@@ -127,7 +127,7 @@ char* toString(List list){
             strcat(str, hold);
 
             free(hold);
-            iter = nextElement(iter);
+            iter.current = nextElement(&iter);
         }
         return str;
     }
