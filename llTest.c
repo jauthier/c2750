@@ -16,6 +16,9 @@ typedef struct listHead{
     char* (*printData)(void *toBePrinted);
 } List;
 
+typedef struct iter{
+    Node* current;
+} ListIterator;
 
 List initializeList(char* (*printFunction)(void *toBePrinted),void (*deleteFunction)(void *toBeDeleted),int (*compareFunction)(const void *first,const void *second)){
     List newList;
