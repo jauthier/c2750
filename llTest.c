@@ -144,14 +144,14 @@ char* toString(List list){
 char * printElement(void * toBePrinted){
 	// pointer to a string
     char * hold = (char *)toBePrinted;
-    printf("here\n");
     int len = strlen(hold);
+    printf("%d\n",len);
     if (len <= 0)
       len = 1;
-    char * str = malloc(sizeof(char)*len);
+    char * data = malloc(sizeof(char)*len);
     printf("printing data\n");
-    strcpy(str, hold);
-	return str;
+    strcpy(data, hold);
+	return data;
 }
 
 void deleteElement(void *toBeDeleted){
