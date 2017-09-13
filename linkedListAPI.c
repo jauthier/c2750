@@ -82,7 +82,7 @@ void clearList(List *list){
         list.deleteData(current->data);
         free(current);
         current = next;
-        next = current->next;
+        next = curent->next;
     }
     list.deleteData(current->data);
     free(current);
@@ -90,7 +90,17 @@ void clearList(List *list){
 
 //TEST
 void insertSorted(List *list, void *toBeAdded){
-    
+    // for the compare function should return 0 when the node to add goes before the list node
+    // being tested and 1 if it goes after
+    // start at the head of the list compare the two nodes 
+
+    /*create the node*/
+    Node * newNode = initializeNode(toBeAdded); 
+    /*check if the list is empty*/
+    if (list->head == NULL){
+        list->head = newNode;
+        list->tail = newNode;
+    }
 }
 
 //TEST
@@ -125,11 +135,32 @@ void* getFromBack(List list){
 char* toString(List list){
     //create an iterator
     ListIterator * iter = createIterator(list);
-    while (iter != NULL){
-        list.printData(iter->data);
-        printf("\n");
+    if (iter != NULL){
+        char * temp = list.printData(iter->data);
+        int len = strlen(temp);
+        int mem = len * 4;
+        char * str = malloc (sizeof(char)*mem);
+        strcpy(temp,str);
+        free(temp);
         iter = nextElement(iter);
+        while (iter != NULL){
+            char * hold = list.printData(iter->data);
+            len = len + strlen(hold) + 1;
+
+            /*check if there is enough memory*/
+            if (len > mem){
+                // allocate more
+                mem = len * 2;
+                realloc(str,mem);
+            }
+            strcat(str, "\n");
+            strcat(str, hold);
+            
+            free(hold);
+            iter = nextElement(iter);
+        }
     }
+
 }
 
 //TEST

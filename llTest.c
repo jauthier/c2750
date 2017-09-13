@@ -89,11 +89,46 @@ void* getFromBack(List list){
     return list.tail->data;
 }
 
-char * printElement(void * toBePrinted){
-	// pointer to an int
+char* toString(List list){
+    //create an iterator
+    ListIterator * iter = createIterator(list);
+    if (iter != NULL){
+        char * temp = list.printData(iter->data);
+        int len = strlen(temp);
+        int mem = len * 4;
+        char * str = malloc (sizeof(char)*mem);
+        strcpy(temp,str);
+        free(temp);
+        iter = nextElement(iter);
+        while (iter != NULL){
+            char * hold = list.printData(iter->data);
+            len = len + strlen(hold) + 1;
 
-    printf("%d\n", *(int *)toBePrinted);
-	return "done";
+            /*check if there is enough memory*/
+            if (len > mem){
+                // allocate more
+                mem = len * 2;
+                realloc(str,mem);
+            }
+            strcat(str, "\n");
+            strcat(str, hold);
+
+            free(hold);
+            iter = nextElement(iter);
+        }
+        return str;
+    }
+    else
+        return NULL;
+
+}
+
+char * printElement(void * toBePrinted){
+	// pointer to a string
+    char * hold = (char *)toBePrinted;
+    char * str = malloc(sizeof(char)*strlen(hold));
+    strcpy(str, hold);
+	return str;
 }
 
 void deleteElement(void *toBeDeleted){
@@ -116,14 +151,10 @@ int main(int argc, char const *argv[]){
     int num3 = 7;
     int num4 = 6;
 	insertFront(&newList, &num1);
-    newList.printData(getFromFront(newList));
-    newList.printData(getFromBack(newList));
     insertFront(&newList, &num2);
-    newList.printData(getFromFront(newList));
-    newList.printData(getFromBack(newList));
     insertBack(&newList, &num3);
-    newList.printData(getFromFront(newList));
-    newList.printData(getFromBack(newList));
 
+    printf("%s\n", tostring(newList));
+    
     return 0;
 }
