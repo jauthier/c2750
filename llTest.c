@@ -167,7 +167,7 @@ int main(int argc, char const *argv[]){
     insertFront(&newList, &num2);
     insertBack(&newList, &num3);
 
-    printf("%s\n", tostring(newList));
+    printf("%s\n", toString(newList));
     
     return 0;
 }
