@@ -93,7 +93,7 @@ void* getFromBack(List list){
 }
 
 ListIterator createIterator(List list){
-    ListIterator newIter = malloc(sizeof(ListIterator));
+    ListIterator * newIter = malloc(sizeof(ListIterator));
     newIter->current = list.head;
     return newIter;
 }
