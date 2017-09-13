@@ -89,6 +89,16 @@ void* getFromBack(List list){
     return list.tail->data;
 }
 
+ListIterator createIterator(List list){
+    ListIterator newIter = malloc(sizeof(ListIterator));
+    newIter->current = list.head;
+    return newIter;
+}
+
+void* nextElement(ListIterator* iter){
+    return iter->current->next->data;
+}
+
 char* toString(List list){
     //create an iterator
     ListIterator * iter = createIterator(list);
@@ -108,7 +118,7 @@ char* toString(List list){
             if (len > mem){
                 // allocate more
                 mem = len * 2;
-                realloc(str,mem);
+                str = (char *) realloc(str,mem);
             }
             strcat(str, "\n");
             strcat(str, hold);

@@ -155,11 +155,14 @@ char* toString(List list){
             }
             strcat(str, "\n");
             strcat(str, hold);
-            
+
             free(hold);
             iter = nextElement(iter);
         }
+        return str;
     }
+    else
+        return NULL;
 
 }
 
