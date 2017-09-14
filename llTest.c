@@ -113,7 +113,7 @@ char* toString(List list){
         int len = strlen(temp);
         int mem = len * 4;
         char * str = malloc (sizeof(char)*mem);
-        strcpy(temp,str);
+        strcpy(str,temp);
         free(temp);
         iter.current = iter.current->next;
         while (iter.current != NULL){
