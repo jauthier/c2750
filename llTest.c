@@ -145,16 +145,9 @@ char* toString(List list){
 }
 
 char * printElement(void * toBePrinted){
-	// pointer to a string
-    int * num = (int *)toBePrinted;
-    char buffer[20];
-    int n = sprintf(buffer,"%d",num);
-    int len = strlen(buffer);
-    
-    char * data = malloc(sizeof(char)*len);
-    printf("printing data\n");
-    strcpy(data, buffer);
-	return data;
+	char * str = malloc(sizeof(char)*strlen((char *)toBePrinted));
+    strcpy(str, toBePrinted);
+	return str;
 }
 
 void deleteElement(void *toBeDeleted){
@@ -172,13 +165,12 @@ int main(int argc, char const *argv[]){
 	
 
 
-	int num1 = 4;
-    int num2 = 5;
-    int num3 = 7;
-    int num4 = 6;
-	insertFront(&newList, &num1);
-    insertFront(&newList, &num2);
-    insertBack(&newList, &num3);
+	char animal1[4] = "cat";
+    char animal1[4] = "dog";
+    char animal1[5] = "bird";
+	insertFront(&newList, &animal1);
+    insertFront(&newList, &animal2);
+    insertBack(&newList, &animal3);
 
     printf("%s\n", toString(newList));
     
