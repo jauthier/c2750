@@ -166,8 +166,8 @@ int main(int argc, char const *argv[]){
 
 
 	char animal1[4] = "cat";
-    char animal1[4] = "dog";
-    char animal1[5] = "bird";
+    char animal2[4] = "dog";
+    char animal3[5] = "bird";
 	insertFront(&newList, &animal1);
     insertFront(&newList, &animal2);
     insertBack(&newList, &animal3);
