@@ -153,7 +153,7 @@ char * printElement(void * toBePrinted){
     
     char * data = malloc(sizeof(char)*len);
     printf("printing data\n");
-    //strcpy(data, atoi(num, buffer, 10));
+    strcpy(data, buffer);
 	return data;
 }
 
