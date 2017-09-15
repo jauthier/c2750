@@ -99,6 +99,7 @@ int main(void){
 		strcpy(tmpName->lastName, tmpStr);
 	
 		insertSorted(&list, (void*)tmpName);
+		char c = getchar();
 	}
 		
 	char* tmp = list.printData(getFromFront(list));
@@ -109,7 +110,7 @@ int main(void){
 	free(tmp);
 		
 	void* elem;
-	char c = getchar();
+	
 	//Create an iterator - again, the iterator is allocated on the stack
 	ListIterator iter = createIterator(list);
 
@@ -119,7 +120,6 @@ int main(void){
 	*/
 	while ((elem = nextElement(&iter)) != NULL){
 		Name* tmpName = (Name*)elem;
-		c = getchar();
 		/*
 		We use the printData function that we created to return a string representation 
 		of the data associated with the current node

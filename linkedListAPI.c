@@ -106,12 +106,6 @@ void insertSorted(List *list, void *toBeAdded){
         list->tail = newNode;
     }
 
-    /* If the list is empty */
-    if (list->head == NULL){
-        list->head = newNode;
-        list->tail = newNode;
-    }
-
     Node * hold = list->head; 
     /* compare the first */
     if (list->compare(newNode->data, hold->data) < 0){
@@ -136,9 +130,7 @@ void insertSorted(List *list, void *toBeAdded){
             hold->next = newNode;
             list->tail = newNode;
         }
-
     }
-
 }
 
 //TEST
