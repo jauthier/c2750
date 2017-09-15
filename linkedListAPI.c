@@ -151,33 +151,56 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
     /*create an iterator*/
     ListIterator iter = createIterator(*list);
 
-
-
-    /* find the node 
-        -- handle the first and last node being removed properly
-    */
-    while (strcmp(iter.current->data, toBeAdded)!=0 && iter.current != NULL){
+    /* check the first */
+    if (list->compare(toBeDeleted->data, iter.current->data) == 0){
+        /* save the next */
+        Node * next = iter.current->next;
+        /* hold the data */    
+        void * dataHold = iter.current->data;
+        /* delete the node */
+        free(iter.current);
+        /* reassemble the list */
+        next->previous = NULL;
+        list->head = next;
+        return dataHold;
+    /* check the middle nodes and end node */
+    } else {
         iter.current = iter.current->next;
-    }
+        while (list->compare(toBeDeleted->data, iter.current->data) != 0 && iter.current->next != NULL){
+            iter.current = iter.current->next;
+        }
+        /* if we found a match and are not at the end */
+        if (iter.current->next != NULL && list->compare(toBeDeleted->data, iter.current->data) == 0){
+            /* save the next and previous*/
+            Node * next = iter.current->next;
+            Node * previous = iter.current->previous;
+            /* hold the data */
+            void * dataHold = iter.current->data;
+            /* delete */
+            free(iter.current);
+            /* reassemble the list */
+            previous->next = next;
+            next->previous = previous;
+            return dataHold;
+        
+        /* if we found a match and are at the last node */
+        } else if (hold->next == NULL && list->compare(newNode->data, hold->data) == 0) {
+            /* save the previous*/
+            Node * previous = iter.current->previous;
+            /* hold the data */
+            void * dataHold = iter.current->data;
+            /* delete */
+            free(iter.current);
+            /* reassemble the list */
+            previous->next = NULL;
+            list->tail = previous;
+            return dataHold;
 
-    /* if the node doesn't exist */
-    if (){
-        retutrn NULL;
+        /* if we didn't find a match but are at the last node */
+        } else {
+            return NULL;
+        }
     }
-
-    /* save the next and previous*/
-    Node * next = iter.current->next;
-    Node * previous = iter.current->previous;
-    
-    void * dataHold = iter.current->data;
-    /* delete */
-    free(iter.current);
-    
-    /* reassemble the list */
-    previous->next = next;
-    next->previous = previous;
-    
-    return dataHold;
 }
 
 void* getFromFront(List list){
