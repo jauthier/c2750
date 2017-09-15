@@ -92,13 +92,13 @@ int main(void){
 		memLen = strlen(tmpStr)+2;
 		tmpName->firstName = (char*)malloc(sizeof(char)*memLen);
 		strcpy(tmpName->firstName, tmpStr);
-		
-		sprintf(tmpStr, "Lastname%d", i);
+		int j = 5 - i;
+		sprintf(tmpStr, "Lastname%d", j);
 		memLen = strlen(tmpStr)+2;
 		tmpName->lastName = (char*)malloc(sizeof(char)*memLen);
 		strcpy(tmpName->lastName, tmpStr);
 	
-		insertBack(&list, (void*)tmpName);
+		insertSorted(&list, (void*)tmpName);
 	}
 		
 	char* tmp = list.printData(getFromFront(list));
@@ -161,7 +161,8 @@ int main(void){
 	Crear list contents - free each node, including its contents
 	Since the list is created in the stack, we don't need to free it. 
 	*/
-	clearList(&list);	
+	clearList(&list);
+
 	
 	return 0;		
 }
