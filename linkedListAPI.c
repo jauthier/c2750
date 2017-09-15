@@ -11,7 +11,7 @@
 #include "LinkedListAPI.h"
 
 List initializeList(char* (*printFunction)(void *toBePrinted),void (*deleteFunction)(void *toBeDeleted),int (*compareFunction)(const void *first,const void *second)){
-    
+    List newList;
     newList.head = NULL;
     newList.tail = NULL;
     newList.deleteData = deleteFunction;
@@ -86,7 +86,7 @@ void clearList(List *list){
         list->deleteData(current->data);
         free(current);
         current = next;
-        next = curent->next;
+        next = current->next;
     }
     list->deleteData(current->data);
     free(current);
@@ -115,9 +115,9 @@ void insertSorted(List *list, void *toBeAdded){
     Node * hold = list->head; 
     /* compare the first */
     if (list->compare(newNode->data, hold->data) < 0){
-        toAdd->next = hold; 
-        hold->previous = toAdd;
-        list->head = toAdd;
+        newNode->next = hold; 
+        hold->previous = newNode;
+        list->head = newNode;
     } else {
         /* compare the middle nodes */
         hold = hold->next;
@@ -127,15 +127,14 @@ void insertSorted(List *list, void *toBeAdded){
 
         if (hold->next != NULL){
             /* add middle */
-            toAdd->next = hold;
-            hold = hold->previous;
-            toAdd->previous =  
+            newNode->next = hold;
+            newNode->previous = hold->previous;
 
         } else {
             /* add end */ 
-            toAdd->previous = hold; 
-            hold->next = toAdd;
-            list->tail = toAdd;
+            newNode->previous = hold; 
+            hold->next = newNode;
+            list->tail = newNode;
         }
 
     }
@@ -150,7 +149,7 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
     }
 
     /*create an iterator*/
-    ListIterator iter = createIterator(list);
+    ListIterator iter = createIterator(*list);
 
 
 
