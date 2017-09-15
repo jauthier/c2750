@@ -99,7 +99,6 @@ int main(void){
 		strcpy(tmpName->lastName, tmpStr);
 	
 		insertSorted(&list, (void*)tmpName);
-		char c = getchar();
 	}
 		
 	char* tmp = list.printData(getFromFront(list));

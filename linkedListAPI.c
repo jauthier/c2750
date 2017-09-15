@@ -74,7 +74,6 @@ void insertBack(List *list, void *toBeAdded){
     }
 }
 
-//TEST
 void clearList(List *list){
     
     if (list->head == NULL)
@@ -92,7 +91,6 @@ void clearList(List *list){
     free(current);
 }
 
-//TEST
 void insertSorted(List *list, void *toBeAdded){
     // for the compare function should return 0 when nodes are the same
     // greater than 0 if the first node is greater than
@@ -102,7 +100,6 @@ void insertSorted(List *list, void *toBeAdded){
     Node * newNode = initializeNode(toBeAdded); 
     /*check if the list is empty*/
     if (list->head == NULL){
-        printf("list empty\n");
         list->head = newNode;
         list->tail = newNode;
         return;
@@ -111,7 +108,6 @@ void insertSorted(List *list, void *toBeAdded){
     Node * hold = list->head; 
     /* compare the first */
     if (list->compare(newNode->data, hold->data) < 0){
-        printf("comparing first\n");
         newNode->next = hold; 
         hold->previous = newNode;
         list->head = newNode;
@@ -136,7 +132,6 @@ void insertSorted(List *list, void *toBeAdded){
     }
 }
 
-//TEST
 void* deleteDataFromList(List *list, void *toBeDeleted){
     /* if there is no list data */
     if (list->head == NULL){
@@ -199,10 +194,14 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
 }
 
 void* getFromFront(List list){
+    if (list.head == NULL)
+        return NULL;
     return list.head->data;
 }
 
 void* getFromBack(List list){
+    if (list.head == NULL)
+        return NULL;
     return list.tail->data;
 }
 
