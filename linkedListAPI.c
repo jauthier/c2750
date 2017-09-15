@@ -102,6 +102,7 @@ void insertSorted(List *list, void *toBeAdded){
     Node * newNode = initializeNode(toBeAdded); 
     /*check if the list is empty*/
     if (list->head == NULL){
+        printf("list empty\n");
         list->head = newNode;
         list->tail = newNode;
     }
@@ -109,6 +110,7 @@ void insertSorted(List *list, void *toBeAdded){
     Node * hold = list->head; 
     /* compare the first */
     if (list->compare(newNode->data, hold->data) < 0){
+        printf("comparing first\n");
         newNode->next = hold; 
         hold->previous = newNode;
         list->head = newNode;
