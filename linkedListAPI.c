@@ -1,7 +1,11 @@
 /*
 * LinkedListAPI.c
-* Author: Jessica Authier
-* 2017/09/11
+* CIS 2750
+* Assignment 0
+* Author: Jessica Authier, 0849720
+* 2017/09/15
+* 
+* This file contains the functions to create, manipulate and destroy a double linked list.
 */
 
 #include "LinkedListAPI.h"
@@ -73,26 +77,26 @@ void insertBack(List *list, void *toBeAdded){
 //TEST
 void clearList(List *list){
     
-    if (list.head == NULL)
+    if (list->head == NULL)
         return;
 
-    Node * current = list.head;
+    Node * current = list->head;
     Node * next = current->next;
     while (next != NULL){
-        list.deleteData(current->data);
+        list->deleteData(current->data);
         free(current);
         current = next;
         next = curent->next;
     }
-    list.deleteData(current->data);
+    list->deleteData(current->data);
     free(current);
 }
 
 //TEST
 void insertSorted(List *list, void *toBeAdded){
-    // for the compare function should return 0 when the node to add goes before the list node
-    // being tested and 1 if it goes after
-    // start at the head of the list compare the two nodes 
+    // for the compare function should return 0 when nodes are the same
+    // greater than 0 if the first node is greater than
+    // less than 0 if the first node is less than 
 
     /*create the node*/
     Node * newNode = initializeNode(toBeAdded); 
@@ -101,26 +105,80 @@ void insertSorted(List *list, void *toBeAdded){
         list->head = newNode;
         list->tail = newNode;
     }
+
+    /* If the list is empty */
+    if (list->head == NULL){
+        list->head = newNode;
+        list->tail = newNode;
+    }
+
+    Node * hold = list->head; 
+    /* compare the first */
+    if (list->compare(newNode->data, hold->data) < 0){
+        toAdd->next = hold; 
+        hold->previous = toAdd;
+        list->head = toAdd;
+    } else {
+        /* compare the middle nodes */
+        hold = hold->next;
+        while (list->compare(newNode->data, hold->data) >= 0 && hold->next != NULL){
+            hold = hold->next;
+        }
+
+        if (hold->next != NULL){
+            /* add middle */
+            toAdd->next = hold;
+            hold = hold->previous;
+            toAdd->previous =  
+
+        } else {
+            /* add end */ 
+            toAdd->previous = hold; 
+            hold->next = toAdd;
+            list->tail = toAdd;
+        }
+
+    }
+
 }
 
 //TEST
 void* deleteDataFromList(List *list, void *toBeDeleted){
-    //create an iterator
-    ListIterator * iter = createIterator(list);
-
-    /* find the node */
-    while (iter->data != toBeAdded){
-        iter = nextElement(iter);
+    /* if there is no list data */
+    if (list->head == NULL){
+        return NULL;
     }
+
+    /*create an iterator*/
+    ListIterator iter = createIterator(list);
+
+
+
+    /* find the node 
+        -- handle the first and last node being removed properly
+    */
+    while (strcmp(iter.current->data, toBeAdded)!=0 && iter.current != NULL){
+        iter.current = iter.current->next;
+    }
+
+    /* if the node doesn't exist */
+    if (){
+        retutrn NULL;
+    }
+
     /* save the next and previous*/
-    Node * next = iter->next;
-    Node * previous = iter->previous;
+    Node * next = iter.current->next;
+    Node * previous = iter.current->previous;
+    
+    void * dataHold = iter.current->data;
     /* delete */
-    list.deleteData(iter->data);
-    free(iter);
+    free(iter.current);
+    
     /* reassemble the list */
     previous->next = next;
     next->previous = previous;
+    
+    return dataHold;
 }
 
 void* getFromFront(List list){
@@ -131,49 +189,47 @@ void* getFromBack(List list){
     return list.tail->data;
 }
 
-//TEST
 char* toString(List list){
-    //create an iterator
-    ListIterator * iter = createIterator(list);
-    if (iter != NULL){
-        char * temp = list.printData(iter->data);
+    /* create an iterator */
+    ListIterator iter = createIterator(list);
+    
+    if (iter.current != NULL){
+        char * temp = list.printData(iter.current->data);
         int len = strlen(temp);
         int mem = len * 4;
         char * str = malloc (sizeof(char)*mem);
-        strcpy(temp,str);
+        strcpy(str,temp);
         free(temp);
-        iter = nextElement(iter);
-        while (iter != NULL){
-            char * hold = list.printData(iter->data);
+        iter.current = iter.current->next;
+        while (iter.current != NULL){
+            char * hold = list.printData(iter.current->data);
             len = len + strlen(hold) + 1;
 
-            /*check if there is enough memory*/
+            /* check if there is enough memory */
             if (len > mem){
-                // allocate more
+                /* allocate more */
                 mem = len * 2;
-                realloc(str,mem);
+                str = (char *) realloc(str,mem);
             }
             strcat(str, "\n");
             strcat(str, hold);
-
+        
             free(hold);
-            iter = nextElement(iter);
+        
+        iter.current = iter.current->next;
         }
         return str;
-    }
-    else
+    } else {
         return NULL;
-
+    }
 }
 
-//TEST
 ListIterator createIterator(List list){
-    ListIterator newIter = malloc(sizeof(ListIterator));
-    newIter->current = list.head;
+    ListIterator newIter; 
+    newIter.current = list.head;
     return newIter;
 }
 
-//TEST
 void* nextElement(ListIterator* iter){
     return iter->current->next->data;
 }
