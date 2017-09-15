@@ -152,7 +152,7 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
     ListIterator iter = createIterator(*list);
 
     /* check the first */
-    if (list->compare(toBeDeleted->data, iter.current->data) == 0){
+    if (list->compare(toBeDeleted, iter.current->data) == 0){
         /* save the next */
         Node * next = iter.current->next;
         /* hold the data */    
@@ -166,11 +166,11 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
     /* check the middle nodes and end node */
     } else {
         iter.current = iter.current->next;
-        while (list->compare(toBeDeleted->data, iter.current->data) != 0 && iter.current->next != NULL){
+        while (list->compare(toBeDeleted, iter.current->data) != 0 && iter.current->next != NULL){
             iter.current = iter.current->next;
         }
         /* if we found a match and are not at the end */
-        if (iter.current->next != NULL && list->compare(toBeDeleted->data, iter.current->data) == 0){
+        if (iter.current->next != NULL && list->compare(toBeDeleted, iter.current->data) == 0){
             /* save the next and previous*/
             Node * next = iter.current->next;
             Node * previous = iter.current->previous;
@@ -184,7 +184,7 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
             return dataHold;
         
         /* if we found a match and are at the last node */
-        } else if (hold->next == NULL && list->compare(newNode->data, hold->data) == 0) {
+        } else if (iter.current->next == NULL && list->compare(toBeDeleted, iter.current->data) == 0) {
             /* save the previous*/
             Node * previous = iter.current->previous;
             /* hold the data */
