@@ -253,8 +253,9 @@ ListIterator createIterator(List list){
 }
 
 void* nextElement(ListIterator* iter){
-    if (iter->current->next == NULL)
+    iter->current = iter->current->next;
+    if (iter->current == NULL)
         return NULL;
 
-    return iter->current->next->data;
+    return iter->current->data;
 }
