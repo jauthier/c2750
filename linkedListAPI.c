@@ -105,6 +105,7 @@ void insertSorted(List *list, void *toBeAdded){
         printf("list empty\n");
         list->head = newNode;
         list->tail = newNode;
+        return;
     }
 
     Node * hold = list->head; 
