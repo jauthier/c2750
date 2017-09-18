@@ -75,6 +75,7 @@ ErrorCode createCalendar(char* fileName){
             printf("%s\n", token);
             if (strcmp(token, "VCALENDAR") == 0){
                 ErrorCode eCode = parseCalendar(fp);
+                return eCode;
             } else {
                 return INV_CAL;
             }
