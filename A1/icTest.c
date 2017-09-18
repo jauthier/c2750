@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
+typedef enum ers {OK, INV_FILE, INV_CAL, INV_VER, DUP_VER, INV_PRODID, DUP_PRODID, INV_EVENT, INV_CREATEDT} ErrorCode;
+
 ErrorCode createCalendar(char* fileName){
     
     //check that the file exists and open it
@@ -10,7 +12,7 @@ ErrorCode createCalendar(char* fileName){
     }
     char buffer[75];
 
-    while (fgets(buffer,75,fp) != EOF){
+    while (fgets(buffer,75,fp) != NULL){
         printf("%s\n", buffer);
 
         char * token = strtok(buffer, ":;");
