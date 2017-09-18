@@ -11,6 +11,10 @@ ErrorCode createCalendar(char* fileName){
         return INV_FILE;
     }
     char buffer[75];
+    /* keep track of the things started and ended */
+    int numBegins = 0;
+    int numEnds = 0;
+
 
     while (fgets(buffer,75,fp) != NULL){
         printf("%s\n", buffer);
@@ -19,7 +23,16 @@ ErrorCode createCalendar(char* fileName){
         printf("%s\n", token);
 
         if (strcmp(token, "BEGIN")==0){
-            printf("found the start\n");
+            /* the first occurance of BEGIN */
+            if (numBegins ==0){
+                /* if the next word is not VCALENDAR then the file is wrong
+                and INV_CAL is returned */
+                token = strtok(NULL,":;\n");
+                printf("%s\n", token);
+
+            }
+        } else{
+            printf("not the beginning\n");
         }
     }
 
