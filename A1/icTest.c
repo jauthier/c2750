@@ -1,6 +1,6 @@
 
 
-ErrorCode createCalendar(char* fileName, Calendar** obj){
+ErrorCode createCalendar(char* fileName){
     
     //check that the file exists and open it
     FILE * fp = fopen(fileName,"r");
@@ -22,4 +22,10 @@ ErrorCode createCalendar(char* fileName, Calendar** obj){
 
 
     return 0;
+}
+
+int main(int argc, char * argv[]){
+    
+    char * fileName = "simpleICFile.ics";
+    createCalendar(fileName);
 }
