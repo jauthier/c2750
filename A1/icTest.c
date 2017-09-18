@@ -28,23 +28,25 @@ ErrorCode createCalendar(char* fileName){
     fgets(buffer,75,fp);
     printf("%s\n", buffer);
 
-    char * token = strtok(buffer, ":;");
+    char * token = strtok(buffer, ":; \t");
 
-    if (strcmp(token, "BEGIN")==0){
-        printf("%s\n", token);
-        /* if the next word is not VCALENDAR then the file is wrong
-        and INV_CAL is returned */
-        token = strtok(NULL,":;\n");
-        printf("%s\n", token);
-        if (strcmp(token, "VCALENDAR") == 0){
-            ErrorCode eCode = parseCalendar(fp);
-        } else {
-            return INV_CAL;
-        }
-    } else if (strcmp(token, "COMMENT")==0){
-        printf("comment\n");
-        return OK;
+    while (){
+        if (strcmp(token, "BEGIN")==0){
+            printf("%s\n", token);
+            /* if the next word is not VCALENDAR then the file is wrong
+            and INV_CAL is returned */
+            token = strtok(NULL,":;\n");
+            printf("%s\n", token);
+            if (strcmp(token, "VCALENDAR") == 0){
+                ErrorCode eCode = parseCalendar(fp);
+            } else {
+                return INV_CAL;
+            }
+        } else if (strcmp(token, "COMMENT")==0){
+            printf("comment\n");
+        } 
     }
+    
 
 
     return OK;
