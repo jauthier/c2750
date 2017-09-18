@@ -25,7 +25,7 @@ ErrorCode createCalendar(char* fileName){
         return INV_FILE;
     }
     char buffer[75];
-    fgets(buffer,75,fp)
+    fgets(buffer,75,fp);
     printf("%s\n", buffer);
 
     char * token = strtok(buffer, ":;");
