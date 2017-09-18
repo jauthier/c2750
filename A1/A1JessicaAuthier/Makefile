@@ -13,7 +13,7 @@ CalendarParser.o:
 	gcc $(CFLAGS) -c src/CalendarParser.c -o bin/CalendarParser.o
 
 parser: CalendarParser.o
-	ar rcs bin/libcparse.a bin/CalendarParser.o
+	ar rcs bin/libcparser.a bin/CalendarParser.o
 
 clean:
 	rm bin/libllist.a bin/libcparser.a bin/LinkedListAPI.o bin/CalendarParser.o
