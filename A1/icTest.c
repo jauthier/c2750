@@ -30,7 +30,7 @@ ErrorCode createCalendar(char* fileName){
 
     char * token = strtok(buffer, ":; \t");
 
-    while (){
+    while (1){
         if (strcmp(token, "BEGIN")==0){
             printf("%s\n", token);
             /* if the next word is not VCALENDAR then the file is wrong
