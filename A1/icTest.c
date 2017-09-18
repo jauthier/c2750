@@ -14,6 +14,7 @@ ErrorCode parseCalendar (FILE * fp){
     char * calID;
     fgets(buffer, 75, fp);
     char * token = strtok(buffer, ":; \t");
+    printf("%s\n", token);
     while (1){
         if (strcmp(token,"VERSION")==0){
             if (checkVer == 0){
