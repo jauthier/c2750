@@ -1,7 +1,21 @@
-#include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef enum ers {OK, INV_FILE, INV_CAL, INV_VER, DUP_VER, INV_PRODID, DUP_PRODID, INV_EVENT, INV_CREATEDT} ErrorCode;
+
+
+ErrorCode parseCalendar (FILE * fp){
+    printf("In parseCalendar\n");
+    char buffer[75];
+    fgets(buffer, 75, fp);
+    printf("%s\n", buffer);
+
+
+    return OK;
+}
+
 
 ErrorCode createCalendar(char* fileName){
     
@@ -11,33 +25,29 @@ ErrorCode createCalendar(char* fileName){
         return INV_FILE;
     }
     char buffer[75];
-    /* keep track of the things started and ended */
-    int numBegins = 0;
-    int numEnds = 0;
+    fgets(buffer,75,fp)
+    printf("%s\n", buffer);
 
+    char * token = strtok(buffer, ":;");
 
-    while (fgets(buffer,75,fp) != NULL){
-        printf("%s\n", buffer);
-
-        char * token = strtok(buffer, ":;");
+    if (strcmp(token, "BEGIN")==0){
         printf("%s\n", token);
-
-        if (strcmp(token, "BEGIN")==0){
-            /* the first occurance of BEGIN */
-            if (numBegins ==0){
-                /* if the next word is not VCALENDAR then the file is wrong
-                and INV_CAL is returned */
-                token = strtok(NULL,":;\n");
-                printf("%s\n", token);
-
-            }
-        } else{
-            printf("not the beginning\n");
+        /* if the next word is not VCALENDAR then the file is wrong
+        and INV_CAL is returned */
+        token = strtok(NULL,":;\n");
+        printf("%s\n", token);
+        if (strcmp(token, "VCALENDAR") == 0){
+            ErrorCode eCode = parseCalendar(fp);
+        } else {
+            return INV_CAL;
         }
+    } else if (strcmp(token, "COMMENT")==0){
+        printf("comment\n");
+        return OK;
     }
 
 
-    return 0;
+    return OK;
 }
 
 int main(int argc, char * argv[]){
