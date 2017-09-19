@@ -9,6 +9,7 @@
 #include <string.h>
 //#include "CalendarParser.h"
 
+typedef enum ers {OK, INV_FILE, INV_CAL, INV_VER, DUP_VER, INV_PRODID, DUP_PRODID, INV_EVENT, INV_CREATEDT} ErrorCode;
 
 
 int checkMultiLine (char * firstLine, char * secondLine){
