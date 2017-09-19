@@ -150,7 +150,6 @@ ErrorCode createCalendar(char* fileName){
     int multi;
     
     while (hold != NULL){
-        /
         /* parse the line */
         char * token = strtok(current, ":; \t");
         char * holdVal = strtok(NULL, ":;\n");
@@ -170,7 +169,7 @@ ErrorCode createCalendar(char* fileName){
                 return INV_CAL;
             }
         } else {
-            if (strcmp(value, "COMMENT") != 0)
+            if (strcmp(token, "COMMENT") != 0)
                 return INV_CAL;
 
             /* if the line doesnt exist then it can't be a multi line */
