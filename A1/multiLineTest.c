@@ -43,8 +43,8 @@ ErrorCode createCalendar(char* fileName){
 
     while (hold != NULL){
         /* if the line doesnt exist then it can't be a multi line */
-        printf("%s\n", current);
         hold = fgets(next,75,fp);
+        printf("%s\n%s\n", current,next);
         if (hold != NULL){
 
             multi = checkMultiLine(current, next);
