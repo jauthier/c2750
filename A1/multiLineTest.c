@@ -48,7 +48,7 @@ ErrorCode createCalendar(char* fileName){
             multi = 0;
         }
 
-
+        printf("%d\n", multi);
     }
     
 
