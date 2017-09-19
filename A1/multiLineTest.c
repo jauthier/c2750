@@ -12,6 +12,18 @@
 
 typedef enum ers {OK, INV_FILE, INV_CAL, INV_VER, DUP_VER, INV_PRODID, DUP_PRODID, INV_EVENT, INV_CREATEDT} ErrorCode;
 
+//Represents an iCalendar event component
+typedef struct evt {
+    //Event user ID.  We will assume that the UserID, even if malformed, does not exceed 1000 bytes
+    char        UID[1000];
+    //Alarm creation date-time.
+    DateTime    creationDateTime;
+    //Additional event properties.  All objects in the list will be of type Property.  It may be empty.
+    List        properties;
+    //List of alarms associated with the event.  All objects in the list will be of type Alarm.  It may be empty.
+    List        alarms;
+    
+} Event;
 
 int checkMultiLine (char * firstLine, char * secondLine){
     /*check if the first line reached its length limit */
@@ -96,7 +108,7 @@ ErrorCode parseCalendar (FILE * fp){
             }
             if (checkID == 1 && checkVer == 1){
                 Event ** eventPrt = malloc(sizeof(Event*));
-                ErrorCode = ecode = parseEvent(fp, eventPrt);
+                ErrorCode ecode = parseEvent(fp, eventPrt);
             }
 
         } else if (strcmp(token,"COMMENT")==0){
