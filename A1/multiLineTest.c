@@ -53,10 +53,11 @@ ErrorCode createCalendar(char* fileName){
         }
 
         printf("%d\n", multi);
+        strcpy(current,next);
     }
     
 
-    strcpy(current,next);
+    
     return OK;
 }
 
