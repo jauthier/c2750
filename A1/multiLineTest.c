@@ -14,6 +14,15 @@
 
 typedef enum ers {OK, INV_FILE, INV_CAL, INV_VER, DUP_VER, INV_PRODID, DUP_PRODID, INV_EVENT, INV_CREATEDT} ErrorCode;
 
+typedef struct dt {
+    //YYYYMMDD
+    char date[9]; 
+    //hhmmss
+    char time[7]; 
+    //indicates whether this is UTC time
+    bool    UTC;  
+} DateTime;
+
 //Represents an iCalendar event component
 typedef struct evt {
     //Event user ID.  We will assume that the UserID, even if malformed, does not exceed 1000 bytes
@@ -118,7 +127,7 @@ ErrorCode parseCalendar (FILE * fp){
         } else if (strcmp(token,"END")==0){
 
         } else {
-            return
+            return INV_CAL;
         }
         free(value);
         strcpy(current,next);
