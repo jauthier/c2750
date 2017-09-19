@@ -119,7 +119,7 @@ ErrorCode parseCalendar (FILE * fp){
             }
             if (checkID == 1 && checkVer == 1){
                 Event ** eventPrt = malloc(sizeof(Event*));
-                ErrorCode ecode = parseEvent(fp, eventPrt);
+                //ErrorCode ecode = parseEvent(fp, eventPrt);
             }
 
         } else if (strcmp(token,"COMMENT")==0){
