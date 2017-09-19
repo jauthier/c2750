@@ -58,26 +58,27 @@ ErrorCode parseCalendar (FILE * fp){
     /* hold the values of the version and porduct ID */
     float calVer;
     char * calID;
-
+    printf("test\n");
     char current[75];
     char * hold = fgets(current,75,fp);
     char next[75];
     int multi;
-    
+    printf("In parseCalendar\n");
     while (hold != NULL){
-        /* if the line doesnt exist then it can't be a multi line */
         hold = fgets(next,75,fp);
+        /* if the line doesnt exist then it can't be a multi line */
         if (hold != NULL)
             multi = checkMultiLine(current, next);
         else
             multi = 0;
         /* parse the line */
         char * token = strtok(current, ":; \t");
-        char * hold = strtok(NULL, ":;\n");
-        int len = strlen(hold) + 1;
+        char * holdVal = strtok(NULL, ":;\n");
+        int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
-        strcpy(value, hold);
+        strcpy(value, holdVal);
         while (multi == 1){
+            printf("in loop\n");
             /* check if the line after the next line is also a multi line */
             char buffer[75];
             hold = fgets(buffer, 75, fp);
@@ -156,10 +157,10 @@ ErrorCode createCalendar(char* fileName){
             multi = 0;
         /* parse the line */
         char * token = strtok(current, ":; \t");
-        char * hold = strtok(NULL, ":;\n");
-        int len = strlen(hold) + 1;
+        char * holdVal = strtok(NULL, ":;\n");
+        int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
-        strcpy(value, hold);
+        strcpy(value, holdVal);
         while (multi == 1){
             /* check if the line after the next line is also a multi line */
             char buffer[75];
@@ -183,6 +184,7 @@ ErrorCode createCalendar(char* fileName){
             /* if the next word is not VCALENDAR then the file is wrong
             and INV_CAL is returned */
             if (strcmp(value, "VCALENDAR") == 0){
+                printf("here\n");
                 ErrorCode eCode = parseCalendar(fp);
                 return eCode;
             } else {
