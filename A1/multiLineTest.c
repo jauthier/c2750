@@ -14,7 +14,7 @@ typedef enum ers {OK, INV_FILE, INV_CAL, INV_VER, DUP_VER, INV_PRODID, DUP_PRODI
 
 int checkMultiLine (char * firstLine, char * secondLine){
     /*check if the first line reached its length limit */
-    if (strlen(firstLine) == 75){
+    if (strlen(firstLine) == 74){
         /* check if the second line has a : or ; and starts with whitespace */
         if (secondLine[0] == ' ' || secondLine[0] == '\t'){
             if (strchr(secondLine,':') == NULL && strchr(secondLine,';') == NULL){
@@ -43,6 +43,7 @@ ErrorCode createCalendar(char* fileName){
     while (fgets(current,75,fp) != NULL){
         /* if the line doesnt exist then it can't be a multi line */
         if (fgets(next,75,fp) != NULL){
+
             multi = checkMultiLine(current, next);
         } else {
             multi = 0;
