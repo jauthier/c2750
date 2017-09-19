@@ -150,54 +150,50 @@ ErrorCode createCalendar(char* fileName){
     int multi;
     
     while (hold != NULL){
-        /* if the line doesnt exist then it can't be a multi line */
-        hold = fgets(next,75,fp);
-        if (hold != NULL)
-            multi = checkMultiLine(current, next);
-        else
-            multi = 0;
+        /
         /* parse the line */
         char * token = strtok(current, ":; \t");
         char * holdVal = strtok(NULL, ":;\n");
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
-        while (multi == 1){
-            /* check if the line after the next line is also a multi line */
-            char buffer[75];
-            hold = fgets(buffer, 75, fp);
-            
-            if (hold != NULL)
-                multi = checkMultiLine(next, buffer);
-            else 
-                multi = 0;
-            /* realloc and add the next line to the end of value */
-            char * temp = strtok(next, "\n");
-            temp++;
-            len = len + strlen(temp);
-            value = realloc(value, len);
-            strcat(value, temp);
-            strcpy(next, buffer);
-        }
 
         if (strcmp(token, "BEGIN")==0){
             printf("%s\n", token);
             /* if the next word is not VCALENDAR then the file is wrong
             and INV_CAL is returned */
             if (strcmp(value, "VCALENDAR") == 0){
-                printf("here\n");
+                printf("%s\n%s\n", current, next);
                 ErrorCode eCode = parseCalendar(fp);
                 return eCode;
             } else {
                 return INV_CAL;
             }
-        } else if (strcmp(token, "COMMENT")==0){
-            continue;
         } else {
-            return INV_CAL;
+            if (strcmp(value, "COMMENT") != 0)
+                return INV_CAL;
+
+            /* if the line doesnt exist then it can't be a multi line */
+            hold = fgets(next,75,fp);
+            if (hold != NULL)
+                multi = checkMultiLine(current, next);
+            else
+                multi = 0;
+
+            while (multi == 1){
+                /* check if the line after the next line is also a multi line */
+                char buffer[75];
+                hold = fgets(buffer, 75, fp);
+            
+                if (hold != NULL)
+                    multi = checkMultiLine(next, buffer);
+                else 
+                    multi = 0;
+                strcpy(next, buffer);
+            }
+            strcpy(current,next);
         }
         free(value);
-        strcpy(current,next);
     }
     return INV_CAL;
 }
