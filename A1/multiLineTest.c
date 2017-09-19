@@ -71,7 +71,7 @@ ErrorCode parseCalendar (FILE * fp){
             multi = checkMultiLine(current, next);
         else
             multi = 0;
-        printf(":p\n");
+        printf("%s\n"current);
         /* parse the line */
         char * token = strtok(current, ":; \t");
         char * holdVal = strtok(NULL, ":;\n");
