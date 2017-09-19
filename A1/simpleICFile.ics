@@ -6,7 +6,7 @@ BEGIN:VEVENT
 UDI:test@uoguelph.ca
 DTSTAMP:20170918T120000Z
 SUMMARY:This is a summary for testing purposes only. Its must be a multi
-  multi line value because I don't know if this will work out for I wante
+ multi line value because I don't know if this will work out for I wante
  d it to.
 END:VEVENT
 END:VCALENDAR
