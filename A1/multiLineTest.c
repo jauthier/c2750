@@ -36,13 +36,14 @@ ErrorCode createCalendar(char* fileName){
         return INV_FILE;
     }
     char current[75];
+    char * hold = fgets(current,75,fp);
     char next[75];
     int multi;
     
 
-    while (fgets(current,75,fp) != NULL){
+    while (hold != NULL){
         /* if the line doesnt exist then it can't be a multi line */
-        if (fgets(next,75,fp) != NULL){
+        if (hold = fgets(next,75,fp) != NULL){
 
             multi = checkMultiLine(current, next);
         } else {
@@ -53,7 +54,7 @@ ErrorCode createCalendar(char* fileName){
     }
     
 
-
+    strcpy(current,next);
     return OK;
 }
 
