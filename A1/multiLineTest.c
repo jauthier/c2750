@@ -66,12 +66,12 @@ ErrorCode parseCalendar (FILE * fp){
     printf("In parseCalendar\n");
     while (hold != NULL){
         hold = fgets(next,75,fp);
-        printf(":p\n");
         /* if the line doesnt exist then it can't be a multi line */
         if (hold != NULL)
             multi = checkMultiLine(current, next);
         else
             multi = 0;
+        printf(":p\n");
         /* parse the line */
         char * token = strtok(current, ":; \t");
         char * holdVal = strtok(NULL, ":;\n");
