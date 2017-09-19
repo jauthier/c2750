@@ -66,6 +66,7 @@ ErrorCode parseCalendar (FILE * fp){
     printf("In parseCalendar\n");
     while (hold != NULL){
         hold = fgets(next,75,fp);
+        printf(":p\n");
         /* if the line doesnt exist then it can't be a multi line */
         if (hold != NULL)
             multi = checkMultiLine(current, next);
@@ -78,7 +79,7 @@ ErrorCode parseCalendar (FILE * fp){
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
         while (multi == 1){
-            printf("in loop\n");
+            printf("in multi loop\n");
             /* check if the line after the next line is also a multi line */
             char buffer[75];
             hold = fgets(buffer, 75, fp);
