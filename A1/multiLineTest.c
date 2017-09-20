@@ -36,6 +36,25 @@ typedef struct evt {
     
 } Event;
 
+
+/* TEST
+  str is NULL
+  str contains only whitespace
+  str contains only non-whitespace
+  str contains both whitespace and non-whitespace
+*/
+int isWhitespace (char * str){
+    if (str == NULL)
+        return -1;
+    int len = strlen(str);
+    int i = 0;
+    for (i=0;i<len;i++){
+        if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
+            return 0;
+    }
+    return 1;
+}
+
 int checkMultiLine (char * firstLine, char * secondLine){
     /*check if the first line reached its length limit */
     if (strlen(firstLine) >= 74){
@@ -146,62 +165,93 @@ ErrorCode createCalendar(char* fileName){
 
     char current[75];
     char * hold = fgets(current,75,fp);
-    char next[75];
-    int multi;
     
     while (hold != NULL){
-        /* parse the line */
-        char * token = strtok(current, ":; \t");
-        char * holdVal = strtok(NULL, ":;\n");
-        int len = strlen(holdVal) + 1;
-        char * value = malloc(sizeof(char)*len);
-        strcpy(value, holdVal);
-
-        if (strcmp(token, "BEGIN")==0){
-            printf("%s\n", token);
-            /* if the next word is not VCALENDAR then the file is wrong
-            and INV_CAL is returned */
-            if (strcmp(value, "VCALENDAR") == 0){
-                printf("%s\n%s\n", current, next);
-                ErrorCode eCode = parseCalendar(fp);
-                return eCode;
-            } else {
-                return INV_CAL;
-            }
-        } else {
-            if (strcmp(token, "COMMENT") != 0)
-                return INV_CAL;
-
-            /* if the line doesnt exist then it can't be a multi line */
-            hold = fgets(next,75,fp);
-            if (hold != NULL)
-                multi = checkMultiLine(current, next);
+        /* make sure the line can be parsed */
+        if (strchr(current,':') == NULL && strchr(current,';') == NULL){
+            if (isWhitespace == 1)
+                //skip the line
             else
-                multi = 0;
+                //something is wrong
+        } else {
+        /* parse the line */
+            char * token = strtok(current, ":; \t");
+            char * holdVal = strtok(NULL, ":;\n");
+            int len = strlen(holdVal) + 1;
+            char * value = malloc(sizeof(char)*len);
+            strcpy(value, holdVal);
 
-            while (multi == 1){
-                /* check if the line after the next line is also a multi line */
-                char buffer[75];
-                hold = fgets(buffer, 75, fp);
-            
+            if (strcmp(token, "BEGIN")==0){
+                printf("%s\n", token);
+                /* if the next word is not VCALENDAR then the file is wrong
+                and INV_CAL is returned */
+                if (strcmp(value, "VCALENDAR") == 0){
+                    printf("%s\n", current);
+                    ErrorCode eCode = parseCalendar(fp);
+                    return eCode;
+                } else {
+                    return INV_CAL;
+                }
+            } else {
+                if (strcmp(token, "COMMENT") != 0)
+                    return INV_CAL;
+
+                /* if the line doesnt exist then it can't be a multi line */
+                char next[75];
+                hold = fgets(next,75,fp);
+                int multi;
                 if (hold != NULL)
-                    multi = checkMultiLine(next, buffer);
-                else 
+                    multi = checkMultiLine(current, next);
+                else
                     multi = 0;
-                strcpy(next, buffer);
+
+                while (multi == 1){
+                    /* check if the line after the next line is also a multi line */
+                    char buffer[75];
+                    hold = fgets(buffer, 75, fp);
+            
+                    if (hold != NULL)
+                        multi = checkMultiLine(next, buffer);
+                    else 
+                        multi = 0;
+                    strcpy(next, buffer);
+                }
+                strcpy(current,next);
             }
-            strcpy(current,next);
+            free(value);
         }
-        free(value);
     }
     return INV_CAL;
 }
 
+const char * printError (ErrorCode err){
+    if (err == INV_CAL)
+        return "Invaid Calendar\n";
+    if (err == OK)
+        return "Ok\n";
+    if (err == INV_FILE)
+        return "Invaid File\n";
+    if (err == INV_VER)
+        return "Invaid Version\n";
+    if (err == INV_PRODID)
+        return "Invaid Product ID\n";
+    if (err == INV_EVENT)
+        return "Invaid Event\n";
+    if (err == DUP_VER)
+        return "Duplicate Version\n";
+    if (err == DUP_PRODID)
+        return "Duplicate Product ID\n";
+    if (err == INV_CREATEDT)
+        return "Invaid DateTime\n";
+}
 
 int main(int argc, char * argv[]){
     
     char * fileName = "simpleICFile.ics";
-    createCalendar(fileName);
+    ErrorCode code =  createCalendar(fileName);
+    printf("%s\n", printError(code));
+
+    return 0;
 }
 
 
