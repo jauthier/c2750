@@ -4,7 +4,8 @@ COMMENT: this is a comment
 BEGIN:VCALENDAR
 PRODID://test/1234 cats are for life //test/1234 cats are for life //test
  /1234
-      
+
+VERSION:2.0
 VERSION:2.0
 BEGIN:VEVENT
 UDI:test@uoguelph.ca
