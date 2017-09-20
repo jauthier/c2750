@@ -136,7 +136,7 @@ ErrorCode parseCalendar (FILE * fp){
                 }
             } else if (strcmp(token,"PRODID")==0){
                 if (checkID == 0){ /* make sure this is the only declaration of the product ID */
-                    calID = malloc (sizeof(char)*strlen(value));
+                    calID = malloc (sizeof(char)*(strlen(value)+1));
                     strcpy(calID, value);
                     checkID = 1;
                 } else {
