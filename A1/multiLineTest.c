@@ -175,8 +175,8 @@ ErrorCode createCalendar(char* fileName){
             else 
                 hold = fgets(current,75,fp);
         } else {
-            printf("Yes :\n");
-        /* parse the line */
+            printf("%s\n",current);
+            /* parse the line */
             char * token = strtok(current, ":; \t");
             char * holdVal = strtok(NULL, ":;\n");
             int len = strlen(holdVal) + 1;
@@ -184,11 +184,10 @@ ErrorCode createCalendar(char* fileName){
             strcpy(value, holdVal);
 
             if (strcmp(token, "BEGIN")==0){
-                printf("%s\n", token);
+                printf("%s:%s\n", token,value);
                 /* if the next word is not VCALENDAR then the file is wrong
                 and INV_CAL is returned */
                 if (strcmp(value, "VCALENDAR") == 0){
-                    printf("%s\n", current);
                     ErrorCode eCode = parseCalendar(fp);
                     return eCode;
                 } else {
