@@ -169,13 +169,13 @@ ErrorCode createCalendar(char* fileName){
     while (hold != NULL){
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
-            printf("No :\n");
-            if (isWhitespace(current) != 1)
+            /* this handles the case where there are chracters but no : or ; */
+            if (isWhitespace(current) != 1) 
                 return INV_CAL;
+            /* this handles the case where there is only whitespace */
             else 
                 hold = fgets(current,75,fp);
         } else {
-            printf("%s\n",current);
             /* parse the line */
             char * token = strtok(current, ":; \t");
             char * holdVal = strtok(NULL, ":;\n");
@@ -183,31 +183,33 @@ ErrorCode createCalendar(char* fileName){
             char * value = malloc(sizeof(char)*len);
             strcpy(value, holdVal);
 
+            /* this should be the beginning of the calendar object */
             if (strcmp(token, "BEGIN")==0){
-                printf("%s:%s\n", token,value);
                 /* if the next word is not VCALENDAR then the file is wrong
                 and INV_CAL is returned */
                 if (strcmp(value, "VCALENDAR") == 0){
                     ErrorCode eCode = parseCalendar(fp);
+                    free(value);
                     return eCode;
-                } else {
+                } else
                     return INV_CAL;
-                }
             } else {
+                /* Comments can be ignored, anything else is invalid */
                 if (strcmp(token, "COMMENT") != 0)
                     return INV_CAL;
 
-                /* if the line doesnt exist then it can't be a multi line */
                 char next[75];
                 hold = fgets(next,75,fp);
                 int multi;
+                
+                /* if the line doesnt exist then it can't be a multi line */
                 if (hold != NULL)
                     multi = checkMultiLine(current, next);
                 else
                     multi = 0;
 
+                /* check if the line after the next line is also a multi line */
                 while (multi == 1){
-                    /* check if the line after the next line is also a multi line */
                     char buffer[75];
                     hold = fgets(buffer, 75, fp);
             
@@ -219,7 +221,6 @@ ErrorCode createCalendar(char* fileName){
                 }
                 strcpy(current,next);
             }
-            free(value);
         }
     }
     return INV_CAL;
