@@ -169,9 +169,11 @@ ErrorCode createCalendar(char* fileName){
     while (hold != NULL){
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
+            printf("No :\n");
             if (isWhitespace(current) != 1)
                 return INV_CAL;
         } else {
+            printf("Yes :\n");
         /* parse the line */
             char * token = strtok(current, ":; \t");
             char * holdVal = strtok(NULL, ":;\n");
