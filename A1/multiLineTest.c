@@ -169,7 +169,7 @@ ErrorCode createCalendar(char* fileName){
     while (hold != NULL){
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
-            if (isWhitespace != 1)
+            if (isWhitespace(current) != 1)
                 return INV_CAL;
         } else {
         /* parse the line */
