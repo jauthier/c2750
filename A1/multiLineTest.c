@@ -150,7 +150,6 @@ ErrorCode parseCalendar (FILE * fp){
                     return INV_CAL;
                 }
                 if (checkID == 1 && checkVer == 1){
-                    //Event ** eventPrt = malloc(sizeof(Event*));
                     free(value);
                     return OK;
                 }
@@ -194,8 +193,8 @@ ErrorCode createCalendar(char* fileName){
             /* parse the line */
             char * token = strtok(current, ":; \t");
             char * holdVal = strtok(NULL, ":;\n");
+            printf("%s\n", holdVal);
             int len = strlen(holdVal) + 1;
-            printf("%d\n", len);
             char * value = malloc(sizeof(char)*len);
             strcpy(value, holdVal);
 
