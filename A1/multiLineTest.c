@@ -37,12 +37,6 @@ typedef struct evt {
 } Event;
 
 
-/* TEST
-  str is NULL
-  str contains only whitespace
-  str contains only non-whitespace
-  str contains both whitespace and non-whitespace
-*/
 int isWhitespace (char * str){
     if (str == NULL)
         return -1;
@@ -66,6 +60,71 @@ int checkMultiLine (char * firstLine, char * secondLine){
         }
     }
     return 0;
+}
+
+ErrorCode parseEvent (FILE * fp,char * nextLine, Event ** eventPrt){
+
+
+    List properties = initalizeList();
+    List alarms = initalizeList();
+
+    /* Keeps track of whether or DTSTAMP and UID 
+    have been declared. There must be only one
+    DTSTAMP declared and only one UID declared */
+    int checkUID = 0;
+    int checkDT = 0;
+    /* hold the values of the DTSTAMP and UID */
+    char * evUID;
+    DateTime * evDT;
+    /* Parsing stuff */
+    char buffer[75];
+    fgets(buffer, 75, fp);
+    char * token = strtok(buffer, ":; \t");
+    /* calendar loop */
+    while (1){
+        if (strcmp(token,"UID")==0||strcmp(token,"uid")==0){
+            if (checkVer == 0){ /* make sure this is the only declaration of the UID */
+                token = strtok(NULL, ":;\n"); 
+                evUID = malloc (sizeof(char)*strlen(token));
+                strcpy(evUID, token);
+                checkVer = 1;
+            } else {
+                if (checkID == 1)
+                    free(calID);
+                return DUP_VER;
+            }
+        } else if (strcmp(token,"DTSTAMP")==0||strcmp(token,"dtstamp")==0){
+            if (checkID == 0){ /* make sure this is the only declaration of the product ID */
+                token = strtok(NULL, ":;\n");
+                
+                checkID = 1;
+            } else {
+                free(calID);
+                return DUP_PRODID;
+            }
+        } else if (strcmp(token,"BEGIN")==0){
+            token  = strtok(NULL, ":;\n");
+            if (strcmp(token,"VCALENDAR")==0){
+                return INV_CAL;
+            }
+            if (checkID == 1 && checkVer == 1){
+                Event ** eventPrt = malloc(sizeof(Event*));
+                ErrorCode = ecode = parseEvent(fp, eventPrt);
+            }
+
+        } else if (strcmp(token,"COMMENT")==0){
+
+        } else if (strcmp(token,"END")==0){
+
+        } else {
+            return INV_EVENT;
+        }
+        fgets(buffer, 75, fp);
+        token = strtok(buffer, ":; \t");
+    }
+
+
+    return OK;
 }
 
 ErrorCode parseCalendar (FILE * fp){
