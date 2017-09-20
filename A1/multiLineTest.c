@@ -131,6 +131,7 @@ ErrorCode parseCalendar (FILE * fp){
                 } else {
                     if (checkID == 1)
                         free(calID);
+                    free(value);
                     return DUP_VER;
                 }
             } else if (strcmp(token,"PRODID")==0){
@@ -140,14 +141,17 @@ ErrorCode parseCalendar (FILE * fp){
                     checkID = 1;
                 } else {
                     free(calID);
+                    free(value);
                     return DUP_PRODID;
                 }
             } else if (strcmp(token,"BEGIN")==0){
                 if (strcmp(value,"VCALENDAR")==0){
+                    free(value);
                     return INV_CAL;
                 }
                 if (checkID == 1 && checkVer == 1){
-                    Event ** eventPrt = malloc(sizeof(Event*));
+                    //Event ** eventPrt = malloc(sizeof(Event*));
+                    free(value);
                     return OK;
                 }
 
@@ -155,12 +159,14 @@ ErrorCode parseCalendar (FILE * fp){
 
             } else {
                 if (strcmp(token,"COMMENT")!=0)
+                    free(value);
                     return INV_CAL;
             }
             free(value);
         }
         strcpy(current,next);
-    }    
+    }
+    free(value);
     return OK;
 }
 
@@ -198,8 +204,10 @@ ErrorCode createCalendar(char* fileName){
                     ErrorCode eCode = parseCalendar(fp);
                     free(value);
                     return eCode;
-                } else
+                } else {
+                    free(value);
                     return INV_CAL;
+                }
             } else {
                 /* Comments can be ignored, anything else is invalid */
                 if (strcmp(token, "COMMENT") != 0)
