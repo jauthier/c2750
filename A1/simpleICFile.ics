@@ -2,7 +2,7 @@
     	
 COMMENT: this is a comment
 BEGIN:VCALENDAR
-PROID:blah
+PRODID:blah
 PRODID://test/1234 cats are for life //test/1234 cats are for life //test
  /1234
 
