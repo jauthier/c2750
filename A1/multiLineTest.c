@@ -91,8 +91,10 @@ ErrorCode parseCalendar (FILE * fp){
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
             /* this handles the case where there are chracters but no : or ; 
                if the line is just whitespace it will be ignored */
-            if (isWhitespace(current) != 1) 
+            if (isWhitespace(current) != 1){
+                fclose(fp);
                 return INV_CAL;
+            }
         } else {
             /* if the line doesnt exist then it can't be a multi line */
             if (hold != NULL)
@@ -132,6 +134,7 @@ ErrorCode parseCalendar (FILE * fp){
                     if (checkID == 1)
                         free(calID);
                     free(value);
+                    fclose(fp);
                     return DUP_VER;
                 }
             } else if (strcmp(token,"PRODID")==0){
@@ -142,30 +145,36 @@ ErrorCode parseCalendar (FILE * fp){
                 } else {
                     free(calID);
                     free(value);
+                    fclose(fp);
                     return DUP_PRODID;
                 }
             } else if (strcmp(token,"BEGIN")==0){
                 if (strcmp(value,"VCALENDAR")==0){
                     free(value);
+                    fclose(fp);
                     return INV_CAL;
                 }
                 if (checkID == 1 && checkVer == 1){
                     //Event ** eventPrt = malloc(sizeof(Event*));
                     free(value);
+                    fclose(fp);
                     return OK;
                 }
 
             } else if (strcmp(token,"END")==0){
 
             } else {
-                if (strcmp(token,"COMMENT")!=0)
+                if (strcmp(token,"COMMENT")!=0){
                     free(value);
+                    fclose(fp);
                     return INV_CAL;
+                }
             }
             free(value);
         }
         strcpy(current,next);
     }
+    fclose(fp);
     return OK;
 }
 
@@ -182,8 +191,10 @@ ErrorCode createCalendar(char* fileName){
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
             /* this handles the case where there are chracters but no : or ; */
-            if (isWhitespace(current) != 1) 
+            if (isWhitespace(current) != 1){ 
+                fclose(fp);
                 return INV_CAL;
+            }
             /* this handles the case where there is only whitespace */
             else 
                 hold = fgets(current,75,fp);
@@ -202,16 +213,20 @@ ErrorCode createCalendar(char* fileName){
                 if (strcmp(value, "VCALENDAR") == 0){
                     ErrorCode eCode = parseCalendar(fp);
                     free(value);
+                    fclose(fp);
                     return eCode;
                 } else {
                     free(value);
+                    fclose(fp);
                     return INV_CAL;
                 }
             } else {
                 /* Comments can be ignored, anything else is invalid */
-                if (strcmp(token, "COMMENT") != 0)
+                if (strcmp(token, "COMMENT") != 0){
+                    free(value);
+                    fclose(fp);
                     return INV_CAL;
-
+                }
                 char next[75];
                 hold = fgets(next,75,fp);
                 int multi;
@@ -237,6 +252,7 @@ ErrorCode createCalendar(char* fileName){
             }
         }
     }
+    fclose(fp);
     return INV_CAL;
 }
 
