@@ -166,7 +166,6 @@ ErrorCode parseCalendar (FILE * fp){
         }
         strcpy(current,next);
     }
-    free(value);
     return OK;
 }
 
