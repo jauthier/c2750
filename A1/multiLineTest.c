@@ -77,80 +77,88 @@ ErrorCode parseCalendar (FILE * fp){
     /* hold the values of the version and porduct ID */
     float calVer;
     char * calID;
-    printf("test\n");
+    /* parsing bits */
     char current[75];
     char * hold = fgets(current,75,fp);
     char next[75];
     int multi;
+
+
     printf("In parseCalendar\n");
     while (hold != NULL){
         hold = fgets(next,75,fp);
-        /* if the line doesnt exist then it can't be a multi line */
-        if (hold != NULL)
-            multi = checkMultiLine(current, next);
-        else
-            multi = 0;
-        printf("%s\n",current);
-        /* parse the line */
-        char * token = strtok(current, ":; \t");
-        char * holdVal = strtok(NULL, ":;\n");
-        int len = strlen(holdVal) + 1;
-        char * value = malloc(sizeof(char)*len);
-        strcpy(value, holdVal);
-        while (multi == 1){
-            printf("in multi loop\n");
-            /* check if the line after the next line is also a multi line */
-            char buffer[75];
-            hold = fgets(buffer, 75, fp);
-            
-            if (hold != NULL)
-                multi = checkMultiLine(next, buffer);
-            else 
-                multi = 0;
-            /* realloc and add the next line to the end of value */
-            char * temp = strtok(next, "\n");
-            temp++;
-            len = len + strlen(temp);
-            value = realloc(value, len);
-            strcat(value, temp);
-            strcpy(next, buffer);
-        }
-
-        if (strcmp(token,"VERSION")==0){
-            if (checkVer == 0){ /* make sure this is the only declaration of the version */
-                calVer = atof(value);
-                checkVer = 1;
-            } else {
-                if (checkID == 1)
-                    free(calID);
-                return DUP_VER;
-            }
-        } else if (strcmp(token,"PRODID")==0){
-            if (checkID == 0){ /* make sure this is the only declaration of the product ID */
-                calID = malloc (sizeof(char)*strlen(value));
-                strcpy(calID, value);
-                checkID = 1;
-            } else {
-                free(calID);
-                return DUP_PRODID;
-            }
-        } else if (strcmp(token,"BEGIN")==0){
-            if (strcmp(value,"VCALENDAR")==0){
+        /* make sure the line can be parsed */
+        if (strchr(current,':') == NULL && strchr(current,';') == NULL){
+            /* this handles the case where there are chracters but no : or ; 
+               if the line is just whitespace it will be ignored */
+            if (isWhitespace(current) != 1) 
                 return INV_CAL;
-            }
-            if (checkID == 1 && checkVer == 1){
-                Event ** eventPrt = malloc(sizeof(Event*));
-                //ErrorCode ecode = parseEvent(fp, eventPrt);
-            }
-
-        } else if (strcmp(token,"COMMENT")==0){
-
-        } else if (strcmp(token,"END")==0){
-
         } else {
-            return INV_CAL;
+            /* if the line doesnt exist then it can't be a multi line */
+            if (hold != NULL)
+                multi = checkMultiLine(current, next);
+            else
+                multi = 0;
+            /* parse the line */
+            char * token = strtok(current, ":; \t");
+            char * holdVal = strtok(NULL, ":;\n");
+            int len = strlen(holdVal) + 1;
+            char * value = malloc(sizeof(char)*len);
+            strcpy(value, holdVal);
+            /* this loop handles multi lines */
+            while (multi == 1){
+                /* check if the line after the next line is also a multi line */
+                char buffer[75];
+                hold = fgets(buffer, 75, fp);
+            
+                if (hold != NULL)
+                    multi = checkMultiLine(next, buffer);
+                else 
+                    multi = 0;
+                /* realloc and add the next line to the end of value */
+                char * temp = strtok(next, "\n");
+                temp++;
+                len = len + strlen(temp);
+                value = realloc(value, len);
+                strcat(value, temp);
+                strcpy(next, buffer);
+            }
+            printf("%s:%s\n", token, value);
+            if (strcmp(token,"VERSION")==0){
+                if (checkVer == 0){ /* make sure this is the only declaration of the version */
+                    calVer = atof(value);
+                    checkVer = 1;
+                } else {
+                    if (checkID == 1)
+                        free(calID);
+                    return DUP_VER;
+                }
+            } else if (strcmp(token,"PRODID")==0){
+                if (checkID == 0){ /* make sure this is the only declaration of the product ID */
+                    calID = malloc (sizeof(char)*strlen(value));
+                    strcpy(calID, value);
+                    checkID = 1;
+                } else {
+                    free(calID);
+                    return DUP_PRODID;
+                }
+            } else if (strcmp(token,"BEGIN")==0){
+                if (strcmp(value,"VCALENDAR")==0){
+                    return INV_CAL;
+                }
+                if (checkID == 1 && checkVer == 1){
+                    Event ** eventPrt = malloc(sizeof(Event*));
+                    return OK;
+                }
+
+            } else if (strcmp(token,"END")==0){
+
+            } else {
+                if (strcmp(token,"COMMENT")!=0)
+                    return INV_CAL;
+            }
+            free(value);
         }
-        free(value);
         strcpy(current,next);
     }    
     return OK;
@@ -159,13 +167,12 @@ ErrorCode parseCalendar (FILE * fp){
 ErrorCode createCalendar(char* fileName){
     /* check that the file exists and open it */
     FILE * fp = fopen(fileName,"r");
-    if (fp == NULL){
+    if (fp == NULL)
         return INV_FILE;
-    }
 
     char current[75];
     char * hold = fgets(current,75,fp);
-    
+
     while (hold != NULL){
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
