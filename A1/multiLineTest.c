@@ -62,11 +62,16 @@ int checkMultiLine (char * firstLine, char * secondLine){
     return 0;
 }
 
+/* write the list functions for properties and alarms */
+
+
+
+
 ErrorCode parseEvent (FILE * fp,char * nextLine, Event ** eventPrt){
 
 
-    List properties = initalizeList();
-    List alarms = initalizeList();
+    //List properties = initalizeList();
+    //List alarms = initalizeList();
 
     /* Keeps track of whether or DTSTAMP and UID 
     have been declared. There must be only one
@@ -83,29 +88,29 @@ ErrorCode parseEvent (FILE * fp,char * nextLine, Event ** eventPrt){
     /* calendar loop */
     while (1){
         if (strcmp(token,"UID")==0||strcmp(token,"uid")==0){
-            if (checkVer == 0){ /* make sure this is the only declaration of the UID */
+            if (checkUID == 0){ /* make sure this is the only declaration of the UID */
                 token = strtok(NULL, ":;\n"); 
                 evUID = malloc (sizeof(char)*strlen(token));
                 strcpy(evUID, token);
-                checkVer = 1;
+                checkUID = 1;
             } else {
-                if (checkID == 1)
-                    free(calID);
-                return DUP_VER;
+                if (checkDT == 1)
+                    free(evDT);
+                return INV_EVENT;
             }
         } else if (strcmp(token,"DTSTAMP")==0||strcmp(token,"dtstamp")==0){
-            if (checkID == 0){ /* make sure this is the only declaration of the product ID */
+            if (checkDT == 0){ /* make sure this is the only declaration of the product ID */
                 token = strtok(NULL, ":;\n");
                 
-                checkID = 1;
+                checkDT = 1;
             } else {
-                free(calID);
-                return DUP_PRODID;
+                free(evDT);
+                return INV_EVENT;
             }
         } else if (strcmp(token,"BEGIN")==0){
             token  = strtok(NULL, ":;\n");
             if (strcmp(token,"VCALENDAR")==0){
-                return INV_CAL;
+                return INV_EVENT;
             }
             if (checkID == 1 && checkVer == 1){
                 Event ** eventPrt = malloc(sizeof(Event*));
@@ -124,7 +129,7 @@ ErrorCode parseEvent (FILE * fp,char * nextLine, Event ** eventPrt){
     }
 
 
-    return OK;
+    return INV_EVENT;
 }
 
 ErrorCode parseCalendar (FILE * fp){
@@ -225,7 +230,7 @@ ErrorCode parseCalendar (FILE * fp){
         }
         strcpy(current,next);
     }
-    return OK;
+    return INV_CAL;
 }
 
 ErrorCode createCalendar(char* fileName){
