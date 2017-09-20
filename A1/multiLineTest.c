@@ -172,6 +172,8 @@ ErrorCode createCalendar(char* fileName){
             printf("No :\n");
             if (isWhitespace(current) != 1)
                 return INV_CAL;
+            else 
+                hold = fgets(current,75,fp);
         } else {
             printf("Yes :\n");
         /* parse the line */
