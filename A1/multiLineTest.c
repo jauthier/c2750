@@ -194,6 +194,7 @@ ErrorCode createCalendar(char* fileName){
             /* parse the line */
             char * token = strtok(current, ":; \t");
             char * holdVal = strtok(NULL, ":;\n");
+            printf("%d\n", strlen(holdVal));
             char * value = malloc(sizeof(char)*(strlen(holdVal) + 1));
             strcpy(value, holdVal);
 
