@@ -93,7 +93,7 @@ int main(int argc, char const *argv[]){
 
 
     //deleteProperty(prop1);
-    clearList(propList);
+    clearList(&propList);
     free(hold);
     
     return 0;
