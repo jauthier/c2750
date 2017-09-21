@@ -17,6 +17,9 @@ typedef struct dt {
 DateTime * initDT (char * str){
 
     DateTime * newDT = malloc(sizeof(DateTime));
+    newDT->date = malloc(sizeof(char)*9);
+    newDT->time = malloc(sizeof(char)*7);
+
     char date[9];
     char time[7];
 
@@ -48,6 +51,8 @@ char * printDT(DateTime * dt){
 }
 
 void deleteDT(DateTime * toDelete){
+    free(toDelete->date);
+    free(toDelete->time);
     free(toDelete);
 }
 
@@ -57,7 +62,9 @@ int main(int argc, char const *argv[]){
 
     DateTime * dt = initDT(str);
 
-    printf("%s\n", printDT(dt));
+    char * hold = printDT(dt);
+    printf("%s\n", hold);
+    free(hold);
 
     deleteDT(dt);
     
