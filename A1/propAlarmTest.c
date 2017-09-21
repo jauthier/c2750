@@ -35,7 +35,7 @@ Alarm * initAlarm(char * action, char * trigger, List propList){
 
 Property * initProperty(char * name, char * descr){
     Property * newProp = malloc(sizeof(Property));
-    strcpy(newProp->propName, name);
+    newProp->propName = name;
     strcpy(newProp->propDescr,descr);
     return newProp;
 }
@@ -44,7 +44,7 @@ char * printAlarm(void * toBePrinted){
     Alarm * toPrint = (Alarm *)toBePrinted;
 
     char * list = toString(toPrint->properties);
-    int len = strlen(list)+strlen(toPrint->action)+strlen(toPrint->trigger)+4;
+    int len = strlen(list)+strlen(toPrint->action)+strlen(toPrint->trigger)+10;
     char * str = malloc(sizeof(char)*len);
     sprintf(str,"%s\n%s\n%s\n", toPrint->action,toPrint->trigger,list);
     free(list);
@@ -53,7 +53,7 @@ char * printAlarm(void * toBePrinted){
 
 char * printProperty(void * toBePrinted){
     Property * toPrint = (Property *)toBePrinted;
-    int len = strlen(toPrint->propName)+strlen(toPrint->propDescr)+5;
+    int len = strlen(toPrint->propName)+strlen(toPrint->propDescr)+10;
     char * str = malloc(sizeof(char)*len);
     sprintf(str,"%s\n%s\n", toPrint->propName,toPrint->propDescr);
     return str;
