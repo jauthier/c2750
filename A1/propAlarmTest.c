@@ -90,7 +90,7 @@ int main(int argc, char const *argv[]){
     printf("%s\n", hold);
     List propList = initializeList(&printProperty,&deleteProperty,&compareProperty);
     insertFront(&propList, (void *)prop1);
-
+    Alarm * alarm1 = initAlarm(act, trigger, propList);
 
     //deleteProperty(prop1);
     clearList(&propList);
