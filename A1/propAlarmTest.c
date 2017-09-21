@@ -87,7 +87,12 @@ int main(int argc, char const *argv[]){
     char propDescr[100] = "Blue";
     Property * prop1 = initProperty(propName, propDescr);
     char * hold = printProperty(prop1);
-    deleteProperty(prop1);
+    List propList = initializeList(&printProperty,&deleteProperty,&compareProperty);
+    insertFront(prop1);
+
+
+    //deleteProperty(prop1);
+    free(hold);
     
     return 0;
 }
