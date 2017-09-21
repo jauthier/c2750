@@ -43,8 +43,14 @@ char * printDT(DateTime * dt){
 
     int len = strlen(dt->date)+strlen(dt->time)+5;
     char * dtStr = malloc(sizeof(char)*len);
-    sprintf(dtStr, "%s, %s\n", dt->date, dt->time);
+    sprintf(dtStr, "%s, %s", dt->date, dt->time);
     return dtStr;
+}
+
+void deleteDT(DateTime * toDelete){
+    free(toDelete->date);
+    free(toDelete->time);
+    free(toDelete);
 }
 
 int main(int argc, char const *argv[]){
@@ -55,6 +61,7 @@ int main(int argc, char const *argv[]){
 
     printf("%s\n", printDT(dt));
 
+    deleteDT(dt);
     
     return 0;
 }
