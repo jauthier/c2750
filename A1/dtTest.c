@@ -45,8 +45,6 @@ char * printDT(DateTime * dt){
 }
 
 void deleteDT(DateTime * toDelete){
-    free(toDelete->date);
-    free(toDelete->time);
     free(toDelete);
 }
 
