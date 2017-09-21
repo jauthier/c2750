@@ -36,8 +36,6 @@ DateTime * initDT (char * str){
     }
     strcpy(newDT->date, date);
     strcpy(newDT->time, time);
-    free(date);
-    free(time);
     return newDT;
 }
 
