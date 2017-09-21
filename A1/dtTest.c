@@ -1,4 +1,7 @@
-
+#include <stdbool.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 //Represents iCalendar Date-time
@@ -21,12 +24,13 @@ DateTime * initDT (char * str){
         newDT->UTC = true;
     else
         newDT->UTC = false;
-    
-    for (int i=0;i<8;i++){
+    int i = 0;
+    for (i=0;i<8;i++){
         date[i] = str[i];
     }
     int j = 0;
-    for (int i=8;i<14;i++){
+    i = 8;
+    for (i=8;i<14;i++){
         time[j] = str[i];
         j++;
     }
