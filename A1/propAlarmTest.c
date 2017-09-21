@@ -39,7 +39,7 @@ Property * initProperty(char * name, char * descr){
     strcpy(newProp->propDescr,descr);
     return newProp;
 }
-/*
+
 char * printAlarm(void * toBePrinted){
     Alarm * toPrint = (Alarm *)toBePrinted;
 
@@ -50,7 +50,7 @@ char * printAlarm(void * toBePrinted){
     free(list);
     return str;
 }
-*/
+
 char * printProperty(void * toBePrinted){
     Property * toPrint = (Property *)toBePrinted;
     int len = strlen(toPrint->propName)+strlen(toPrint->propDescr)+10;
@@ -88,9 +88,12 @@ int main(int argc, char const *argv[]){
     Property * prop1 = initProperty(propName, propDescr);
     char * hold = printProperty((void *)prop1);
     printf("%s\n", hold);
+    free(hold);
     List propList = initializeList(&printProperty,&deleteProperty,&compareProperty);
     insertFront(&propList, (void *)prop1);
     Alarm * alarm1 = initAlarm(act, trigger, propList);
+    hold = printAlarm(alarm1);
+    deleteAlarm(alarm1);
 
     //deleteProperty(prop1);
     clearList(&propList);
