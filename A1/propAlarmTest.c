@@ -35,11 +35,10 @@ Alarm * initAlarm(char * action, char * trigger, List propList){
 
 Property * initProperty(char * name, char * descr){
     Property * newProp = malloc(sizeof(Property));
-    char * nameHold = malloc(sizeof(char)*(strlen(name)+1));
-    strcpy(nameHold,name);    
+    newProp->propName = malloc(sizeof(char)*200);
+    newProp->propDescr = malloc(sizeof(char)*(strlen(descr)+1));
 
-    strcpy(newProp->propName, nameHold);
-    free(nameHold);
+    strcpy(newProp->propName, name);
     strcpy(newProp->propDescr,descr);
     return newProp;
 }
