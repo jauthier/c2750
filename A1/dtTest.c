@@ -14,6 +14,13 @@ typedef struct dt {
     bool    UTC;  
 } DateTime;
 
+
+/*
+ * Takes a string of the form: "20170921132500z", where the first 8
+ * characters represent the date (year/month/day) and the last 7
+ * characters represent the time (hour:minute:seconds and z if the 
+ * the time zone is UTC)
+ */
 DateTime * initDT (char * str){
 
     DateTime * newDT = malloc(sizeof(DateTime));
@@ -42,9 +49,11 @@ DateTime * initDT (char * str){
 
 char * printDT(DateTime * dt){
 
-    int len = strlen(dt->date)+strlen(dt->time)+5;
+    int len = strlen(dt->date)+strlen(dt->time)+6;
     char * dtStr = malloc(sizeof(char)*len);
     sprintf(dtStr, "%s, %s", dt->date, dt->time);
+    if (dt->UTC == true)
+        strcat(dtStr," UTC");
     return dtStr;
 }
 
