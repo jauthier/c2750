@@ -38,7 +38,7 @@ Property * initProperty(char * name, char * descr){
     char * nameHold = malloc(sizeof(char)*(strlen(name)+1));
     strcpy(nameHold,name);    
 
-    strcpy(newProp->propName, namehold);
+    strcpy(newProp->propName, nameHold);
     free(nameHold);
     strcpy(newProp->propDescr,descr);
     return newProp;
