@@ -17,8 +17,8 @@ typedef struct dt {
 DateTime * initDT (char * str){
 
     DateTime * newDT = malloc(sizeof(DateTime));
-    char * date = malloc(sizeof(char)*9);
-    char * time = malloc(sizeof(char)*7);
+    char date[9];
+    char time = [7];
 
     if (strlen(str) == 15)
         newDT->UTC = true;
