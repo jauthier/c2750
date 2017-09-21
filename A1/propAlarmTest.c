@@ -40,8 +40,31 @@ Property * initProperty(char * name, char * descr){
     return newProp;
 }
 
+char * printAlarm(void * toBePrinted){
 
+    char * list = toString(toBePrinted->properties);
+    int len = strlen(list)+strlen(toBePrinted->action)+strlen(toBePrinted->trigger)+4;
+    char * str = malloc(sizeof(char)*len);
+    sprintf(str,"%s\n%s\n%s\n", toBePrinted->action,toBePrinted->trigger,list);
+    free(list);
+    return str;
+}
 
+char * printProperty(void * toBePrinted){
+    int len = strlen(list)+strlen(toBePrinted->propName)+strlen(toBePrinted->propDescr)+3;
+    char * str = malloc(sizeof(char)*len);
+    sprintf(str,"%s\n%s\n", toBePrinted->propName,toBePrinted->propDescr);
+    return str;
+}
+
+void deleteAlarm(void * toDelete){
+    free(toDelete->trigger);
+    free(toDelete);
+}
+
+void deleteProperty(void * toDelete){
+    free(toDelete);
+}
 
 int main(int argc, char const *argv[]){
 
@@ -50,8 +73,10 @@ int main(int argc, char const *argv[]){
     
     char * propName = "Colour";
     char * propDescr = "Blue";
-    Property prop1 = initProperty(propName, propDescr);
-    
+    Property * prop1 = initProperty(propName, propDescr);
+    char * holdProp = printProperty(prop1);
+    printf("%s",holdProp);
+    free(holdProp);
     
     return 0;
 }
