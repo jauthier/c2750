@@ -41,29 +41,31 @@ Property * initProperty(char * name, char * descr){
 }
 
 char * printAlarm(void * toBePrinted){
+    Alarm * toPrint = (Alarm *)toBePrinted;
 
-    char * list = toString(toBePrinted->properties);
-    int len = strlen(list)+strlen(toBePrinted->action)+strlen(toBePrinted->trigger)+4;
+    char * list = toString(toPrint->properties);
+    int len = strlen(list)+strlen(toPrint->action)+strlen(toPrint->trigger)+4;
     char * str = malloc(sizeof(char)*len);
-    sprintf(str,"%s\n%s\n%s\n", toBePrinted->action,toBePrinted->trigger,list);
+    sprintf(str,"%s\n%s\n%s\n", toPrint->action,toPrint->trigger,list);
     free(list);
     return str;
 }
 
 char * printProperty(void * toBePrinted){
-    int len = strlen(list)+strlen(toBePrinted->propName)+strlen(toBePrinted->propDescr)+3;
+    Property * toPrint = (Property *)toBePrinted;
+    int len = strlen(list)+strlen(toPrint->propName)+strlen(toPrint->propDescr)+3;
     char * str = malloc(sizeof(char)*len);
-    sprintf(str,"%s\n%s\n", toBePrinted->propName,toBePrinted->propDescr);
+    sprintf(str,"%s\n%s\n", toPrint->propName,toPrint->propDescr);
     return str;
 }
 
 void deleteAlarm(void * toDelete){
-    free(toDelete->trigger);
-    free(toDelete);
+    free((Alarm *)toDelete->trigger);
+    free((Alarm *)toDelete);
 }
 
 void deleteProperty(void * toDelete){
-    free(toDelete);
+    free((Property *)toDelete);
 }
 
 int main(int argc, char const *argv[]){
