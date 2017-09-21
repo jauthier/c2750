@@ -33,14 +33,25 @@ Alarm * initAlarm(char * action, char * trigger, List propList){
     return newAlarm;
 }
 
-//Property * initProperty(){}
-
-
+Property * initProperty(char * name, char * descr){
+    Property * newProp = malloc(sizeof(Property));
+    strcpy(newProp->propName, name);
+    strcpy(newProp->propDescr,descr);
+    return newProp;
+}
 
 
 
 
 int main(int argc, char const *argv[]){
+
+    char * act = "Make Cats";
+    char * trigger = "Tomorrow morning";
+    
+    char * propName = "Colour";
+    char * propDescr = "Blue";
+    Property prop1 = initProperty(propName, propDescr);
+    
     
     return 0;
 }
