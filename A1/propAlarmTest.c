@@ -60,7 +60,7 @@ char * printProperty(void * toBePrinted){
 }
 
 void deleteAlarm(void * toDelete){
-    free((Alarm *)toDelete->trigger);
+    free(((Alarm *)toDelete)->trigger);
     free((Alarm *)toDelete);
 }
 
