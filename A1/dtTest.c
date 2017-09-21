@@ -18,21 +18,25 @@ DateTime * initDT (char * str){
 
     DateTime * newDT = malloc(sizeof(DateTime));
 
+    char date[9];
+    char time[7];
+
     if (strlen(str) == 15)
         newDT->UTC = true;
     else
         newDT->UTC = false;
     int i = 0;
     for (i=0;i<8;i++){
-        newDT->date[i] = str[i];
+        date[i] = str[i];
     }
     int j = 0;
     i = 8;
     for (i=8;i<14;i++){
-        newDT->time[j] = str[i];
+        time[j] = str[i];
         j++;
     }
-
+    strcpy(newDT->date, date);
+    strcpy(newDT->time, time);
     return newDT;
 }
 
