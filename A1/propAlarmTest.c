@@ -80,8 +80,8 @@ void deleteProperty(void * toDelete){
 
 int main(int argc, char const *argv[]){
 
-    char * act = "Make Cats";
-    char * trigger = "Tomorrow morning";
+    char * act = "";
+    char * trigger = "";
     
     char propName[100] = "Colour";
     char propDescr[100] = "Blue";
