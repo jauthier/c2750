@@ -43,7 +43,7 @@ Property * initProperty(char * name, char * descr){
     strcpy(newProp->propDescr,descr);
     return newProp;
 }
-
+/*
 char * printAlarm(void * toBePrinted){
     Alarm * toPrint = (Alarm *)toBePrinted;
 
@@ -71,7 +71,7 @@ void deleteAlarm(void * toDelete){
 void deleteProperty(void * toDelete){
     free((Property *)toDelete);
 }
-
+*/
 int main(int argc, char const *argv[]){
 
     char * act = "Make Cats";
@@ -80,9 +80,6 @@ int main(int argc, char const *argv[]){
     char propName[100] = "Colour";
     char propDescr[100] = "Blue";
     Property * prop1 = initProperty(propName, propDescr);
-    char * holdProp = printProperty(prop1);
-    printf("%s",holdProp);
-    free(holdProp);
     
     return 0;
 }
