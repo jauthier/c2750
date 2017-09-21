@@ -35,7 +35,6 @@ Alarm * initAlarm(char * action, char * trigger, List propList){
 
 Property * initProperty(char * name, char * descr){
     Property * newProp = malloc(sizeof(Property) + (sizeof(int)*strlen(descr)));
-    
     strcpy(newProp->propName, name);
     strcpy(newProp->propDescr,descr);
     return newProp;
@@ -51,7 +50,7 @@ char * printAlarm(void * toBePrinted){
     free(list);
     return str;
 }
-
+*/
 char * printProperty(void * toBePrinted){
     Property * toPrint = (Property *)toBePrinted;
     int len = strlen(toPrint->propName)+strlen(toPrint->propDescr)+10;
@@ -59,7 +58,17 @@ char * printProperty(void * toBePrinted){
     sprintf(str,"%s\n%s\n", toPrint->propName,toPrint->propDescr);
     return str;
 }
-*/
+
+
+//int compareAlarm(){
+
+//}
+
+int compareProperty(const void * first,const void * second){
+    return 0;
+}
+
+
 void deleteAlarm(void * toDelete){
     free(((Alarm *)toDelete)->trigger);
     free((Alarm *)toDelete);
@@ -77,6 +86,7 @@ int main(int argc, char const *argv[]){
     char propName[100] = "Colour";
     char propDescr[100] = "Blue";
     Property * prop1 = initProperty(propName, propDescr);
+    char * hold = printProperty(prop1);
     deleteProperty(prop1);
     
     return 0;
