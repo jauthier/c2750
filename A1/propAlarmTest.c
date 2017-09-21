@@ -53,7 +53,7 @@ char * printAlarm(void * toBePrinted){
 
 char * printProperty(void * toBePrinted){
     Property * toPrint = (Property *)toBePrinted;
-    int len = strlen(toPrint->propName)+strlen(toPrint->propDescr)+3;
+    int len = strlen(toPrint->propName)+strlen(toPrint->propDescr)+5;
     char * str = malloc(sizeof(char)*len);
     sprintf(str,"%s\n%s\n", toPrint->propName,toPrint->propDescr);
     return str;
@@ -73,8 +73,8 @@ int main(int argc, char const *argv[]){
     char * act = "Make Cats";
     char * trigger = "Tomorrow morning";
     
-    char * propName = "Colour";
-    char * propDescr = "Blue";
+    char propName[100] = "Colour";
+    char propDescr[100] = "Blue";
     Property * prop1 = initProperty(propName, propDescr);
     char * holdProp = printProperty(prop1);
     printf("%s",holdProp);
