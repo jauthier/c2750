@@ -35,8 +35,8 @@ DateTime * initDT (char * str){
         time[j] = str[i];
         j++;
     }
-    strcpy(newDT->date[], time);
-    strcpy(newDT->time[], time);
+    strcpy(newDT->date[9], time);
+    strcpy(newDT->time[7], time);
     return newDT;
 }
 
