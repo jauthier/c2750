@@ -93,6 +93,7 @@ int main(int argc, char const *argv[]){
     insertFront(&propList, (void *)prop1);
     Alarm * alarm1 = initAlarm(act, trigger, propList);
     hold = printAlarm(alarm1);
+    printf("%s\n", hold);
     deleteAlarm(alarm1);
 
     //deleteProperty(prop1);
