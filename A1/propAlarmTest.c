@@ -53,7 +53,7 @@ char * printAlarm(void * toBePrinted){
 
 char * printProperty(void * toBePrinted){
     Property * toPrint = (Property *)toBePrinted;
-    int len = strlen(list)+strlen(toPrint->propName)+strlen(toPrint->propDescr)+3;
+    int len = strlen(toPrint->propName)+strlen(toPrint->propDescr)+3;
     char * str = malloc(sizeof(char)*len);
     sprintf(str,"%s\n%s\n", toPrint->propName,toPrint->propDescr);
     return str;
