@@ -59,7 +59,7 @@ char * printProperty(void * toBePrinted){
     sprintf(str,"%s\n%s\n", toPrint->propName,toPrint->propDescr);
     return str;
 }
-
+*/
 void deleteAlarm(void * toDelete){
     free(((Alarm *)toDelete)->trigger);
     free((Alarm *)toDelete);
@@ -68,7 +68,7 @@ void deleteAlarm(void * toDelete){
 void deleteProperty(void * toDelete){
     free((Property *)toDelete);
 }
-*/
+
 int main(int argc, char const *argv[]){
 
     char * act = "Make Cats";
@@ -77,6 +77,7 @@ int main(int argc, char const *argv[]){
     char propName[100] = "Colour";
     char propDescr[100] = "Blue";
     Property * prop1 = initProperty(propName, propDescr);
+    deleteProperty(prop1);
     
     return 0;
 }
