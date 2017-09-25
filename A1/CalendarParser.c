@@ -76,7 +76,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     if (fp == NULL)
         return INV_FILE;
 
-    char current[75];
+    char current[75], next[75];
     char * hold = fgets(current,75,fp);
 
     int multi;
@@ -91,7 +91,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     Calendar * tempCal;
 
     while (hold != NULL){
-
+        hold = fgets(next,75,fp);
          /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
             /* this handles the case where there are chracters but no : or ; */
