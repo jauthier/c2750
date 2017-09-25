@@ -1,6 +1,5 @@
 
 #include "CalendarParser.h"
-#include "EventElements.h"
 
 void deleteEvent (Event * toDelete);
 
@@ -86,7 +85,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     char * calID;
     float calVer = 0.0;
     char * evID;
-    DateTime dtStamp;
+    DateTime * dtStamp;
     Event * event = NULL;
     List propList, alarmList, alarmPropList;
     Calendar * tempCal;
