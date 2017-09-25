@@ -222,7 +222,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 free(calID);
                                 deleteEvent(event);
                             } else if (state == 4){
-                                deleteCal(calendar);
+                                deleteCal(tempCal);
                             }
                             return INV_CAL;
                         }
@@ -250,7 +250,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 free(calID);
                                 deleteEvent(event);
                             } else if (state == 4){
-                                deleteCal(calendar);
+                                deleteCal(tempCal);
                             }
                             return INV_CAL;
                         }
@@ -274,7 +274,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             free(calID);
                             deleteEvent(event);
                         } else if (state == 4){
-                            deleteCal(calendar);
+                            deleteCal(tempCal);
                         }
                         return INV_CAL;
                     }
@@ -313,7 +313,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             free(calID);
                             deleteEvent(event);
                         } else if (state == 4){
-                            deleteCal(calendar);
+                            deleteCal(tempCal);
                         }
                         return INV_CAL;
                     }
@@ -347,7 +347,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             free(calID);
                             deleteEvent(event);
                         } else if (state == 4){
-                            deleteCal(calendar);
+                            deleteCal(tempCal);
                         }
                         return INV_CAL;
                     }
@@ -389,7 +389,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             free(calID);
                             deleteEvent(event);
                         } else if (state == 4){
-                            deleteCal(calendar);
+                            deleteCal(tempCal);
                         }
                         return INV_CAL;
                     }
@@ -430,7 +430,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             free(calID);
                             deleteEvent(event);
                         } else if (state == 4){
-                            deleteCal(calendar);
+                            deleteCal(tempCal);
                         }
                         return INV_CAL;
                     }
@@ -467,7 +467,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                     clearList(&alarmPropList);
                                 return INV_EVENT;
                             } else if (state == 4){
-                                deleteCal(calendar);
+                                deleteCal(tempCal);
                             }
                             return INV_CAL;
                         }
@@ -507,7 +507,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 free(calID);
                                 deleteEvent(event);
                             } else if (state == 4){
-                                deleteCal(calendar);
+                                deleteCal(tempCal);
                             }
                             return INV_CAL;
                         }
@@ -549,7 +549,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 free(calID);
                                 deleteEvent(event);
                             } else if (state == 4){
-                                deleteCal(calendar);
+                                deleteCal(tempCal);
                             }
                             return INV_CAL;
                         }
@@ -571,7 +571,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             free(calID);
                             deleteEvent(event);
                         } else if (state == 4){
-                            deleteCal(calendar);
+                            deleteCal(tempCal);
                         }
                         return INV_CAL;
                     }

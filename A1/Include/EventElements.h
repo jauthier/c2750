@@ -17,7 +17,7 @@ int compareAlarm(const void * first,const void * second);
 
 void deleteAlarm(void * toDelete);
 
-Property * initProperty(char * name, char * descr);
+struct prop * initProperty(char * name, char * descr);
 
 char * printProperty(void * toBePrinted);
 
@@ -31,10 +31,10 @@ void deleteProperty(void * toDelete);
  * characters represent the time (hour:minute:seconds and z if the 
  * the time zone is UTC)
  */
-DateTime * initDT (char * str);
+struct dt * initDT (char * str);
 
-char * printDT(DateTime * dt);
+char * printDT(struct dt * dt);
 
-void deleteDT(DateTime * toDelete);
+void deleteDT(struct dt * toDelete);
 
 #endif
