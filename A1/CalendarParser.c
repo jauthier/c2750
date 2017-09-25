@@ -80,24 +80,19 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     char * hold = fgets(current,75,fp);
 
     int multi;
-    int state = 0;
-    int checkID = 0;
-    int checkVer = 0;
-    int checkUID = 0;
-    int checkDT = 0;
+    int state = 0, checkID = 0, checkVer = 0, checkUID = 0, checkDT = 0;
 
     char * calID;
     float calVer = 0.0;
     char * evID;
     DateTime dtStamp;
     Event * event = NULL;
-    List propList;
-    List alarmList;
+    List propList, alarmList, alarmPropList;
     Calendar * tempCal;
-    List alarmPropList;
 
 
     while (hold != NULL){
+
          /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
             /* this handles the case where there are chracters but no : or ; */
@@ -115,29 +110,42 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
 
             /* For comments it doesn't matter if the value is empty */
             if (strcmp(token,"COMMENT") == 0){
-                //still check for multi line
-
-            } else {
-                if (holdVal == NULL){
-                    fclose(fp);
-                    // there are more options for return values here
-                    if (state == 0)
-                        return INV_CAL;
-                    else 
-                        return INV_EVENT;
-                }
                 /* if the line doesnt exist then it can't be a multi line */
                 if (hold != NULL)
                     multi = checkMultiLine(current, next);
                 else
                     multi = 0;
+                while (multi == 1){
+                    /* check if the line after the next line is also a multi line */
+                    char buffer[75];
+                    hold = fgets(buffer, 75, fp);
             
+                    if (hold != NULL)
+                        multi = checkMultiLine(next, buffer);
+                    else 
+                        multi = 0;
+                    strcpy(next, buffer);
+                }
+            } else {
+                /* check if the value following the key word is NULL */
+                if (holdVal == NULL){
+                    fclose(fp);
+                    // there are more options for return values here---------------------------
+                    if (state == 0)
+                        return INV_CAL;
+                    else 
+                        return INV_EVENT;
+                }
                 int len = strlen(holdVal) + 1;
                 char * value = malloc(sizeof(char)*len);
                 strcpy(value, holdVal);
-                /* this loop handles multi lines */
-                while (multi == 1){
-                    /* check if the line after the next line is also a multi line */
+
+                /* ------------Check for multi lines----------- */
+                if (hold != NULL)
+                    multi = checkMultiLine(current, next);
+                else
+                    multi = 0;
+                while (multi == 1){ /* check if the line after the next line is also a multi line */
                     char buffer[75];
                     hold = fgets(buffer, 75, fp);
             
@@ -153,6 +161,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                     strcat(value, temp);
                     strcpy(next, buffer);
                 }
+                /* ------------Multi line check complete------------ */
 
                 if (strcmp(token,"BEGIN")==0){
                     if (strcmp(value, "VCALENDAR") == 0){
@@ -575,6 +584,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
         }
     }
     fclose(fp);
+
     if (state == 4)
         return OK;
     else
