@@ -268,7 +268,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 deleteDT(dtStamp);
                             clearList(&propList);
                             clearList(&alarmList);
-                            clearList(alarmPropList);
+                            clearList(&alarmPropList);
                             return INV_EVENT;
                         } else if (state == 3){
                             free(calID);
@@ -307,7 +307,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             clearList(&propList);
                             clearList(&alarmList);
                             if (state == 5)
-                                clearList(alarmPropList);
+                                clearList(&alarmPropList);
                             return INV_EVENT;
                         } else if (state == 3){
                             free(calID);
