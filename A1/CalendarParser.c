@@ -1,6 +1,7 @@
 
 #include "CalendarParser.h"
 
+void deleteEvent (Event * toDelete);
 
 /* determines whether or no a line is completely composed of whitespace */
 int isWhitespace (char * str){
@@ -53,7 +54,7 @@ Event * initEvent (char * uID, DateTime dt, List propList, List alarmList){
 }
 
 void deleteEvent (Event * toDelete){
-    free(toDelete->creationDateTime);
+    deleteDT(toDelete->creationDateTime);
     clearList(&toDelete->properties);
     clearList(&toDelete->alarms);
     free(toDelete);
@@ -78,6 +79,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     char current[75];
     char * hold = fgets(current,75,fp);
 
+    int multi;
     int state = 0;
     int checkID = 0;
     int checkVer = 0;
@@ -124,6 +126,11 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                     else 
                         return INV_EVENT;
                 }
+                /* if the line doesnt exist then it can't be a multi line */
+                if (hold != NULL)
+                    multi = checkMultiLine(current, next);
+                else
+                    multi = 0;
             
                 int len = strlen(holdVal) + 1;
                 char * value = malloc(sizeof(char)*len);
