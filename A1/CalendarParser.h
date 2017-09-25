@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include "LinkedListAPI.h"
+#include "EventElements.h"
 
 //Error codes that indicate what went wrong during parsing
 typedef enum ers {OK, INV_FILE, INV_CAL, INV_VER, DUP_VER, INV_PRODID, DUP_PRODID, INV_EVENT, INV_CREATEDT, OTHER_ERROR} ErrorCode;
