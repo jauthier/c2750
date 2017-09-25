@@ -60,9 +60,9 @@ char * printProperty(void * toBePrinted){
 }
 
 
-//int compareAlarm(){
-
-//}
+int compareAlarm(const void * first,const void * second){
+    return 0;
+}
 
 int compareProperty(const void * first,const void * second){
     return 0;
