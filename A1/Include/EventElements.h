@@ -9,7 +9,7 @@
 #include "CalendarParser.h"
 #include "LinkedListAPI.h"
 
-struct alarm * initAlarm(char * action, char * trigger, List propList);
+Alarm * initAlarm(char * action, char * trigger, List propList);
 
 char * printAlarm(void * toBePrinted);
 
@@ -17,7 +17,7 @@ int compareAlarm(const void * first,const void * second);
 
 void deleteAlarm(void * toDelete);
 
-struct prop * initProperty(char * name, char * descr);
+Property * initProperty(char * name, char * descr);
 
 char * printProperty(void * toBePrinted);
 
@@ -31,10 +31,10 @@ void deleteProperty(void * toDelete);
  * characters represent the time (hour:minute:seconds and z if the 
  * the time zone is UTC)
  */
-struct dt * initDT (char * str);
+DateTime * initDT (char * str);
 
-char * printDT(struct dt * dt);
+char * printDT(DateTime * dt);
 
-void deleteDT(struct dt * toDelete);
+void deleteDT(DateTime * toDelete);
 
 #endif
