@@ -201,7 +201,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 fclose(fp);
                                 free(value);
                                 if (checkID == 1)
-                                    free(calID)
+                                    free(calID);
                                 return INV_CAL;
                             }
                         } else {
@@ -244,7 +244,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                     deleteDT(dtStamp);
                                 clearList(&propList);
                                 clearList(&alarmList);
-                                clearList(alarmPropList);
+                                clearList(&alarmPropList);
                                 return INV_EVENT;
                             } else if (state == 3){
                                 free(calID);
@@ -280,8 +280,8 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                     }
                 } else if (strcmp(token,"VERSION")==0){
                     if (state == 1){
-                        if (checkVer == 0){ /* make sure this is the only declaration of the version */
-                            
+                        if (checkVer == 0){ 
+                        /* make sure this is the only declaration of the version */    
                             calVer = atof(value);
                             if (calVer < 0){
                                 fclose(fp);
