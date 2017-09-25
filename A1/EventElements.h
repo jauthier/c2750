@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "LinkedListAPI.h"
 #include "CalendarParser.h"
+#include "LinkedListAPI.h"
 
 Alarm * initAlarm(char * action, char * trigger, List propList);
 
