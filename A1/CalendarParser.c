@@ -447,7 +447,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 free(value);
                                 free(calID);
                                 deleteEvent(event);
-                                return INV_CAL
+                                return INV_CAL;
                             }
                         } else {
                             fclose(fp);
