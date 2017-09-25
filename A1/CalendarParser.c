@@ -1,5 +1,6 @@
 
 #include "CalendarParser.h"
+#include "EventElements.h"
 
 void deleteEvent (Event * toDelete);
 
