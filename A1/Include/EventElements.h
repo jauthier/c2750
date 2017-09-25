@@ -9,7 +9,7 @@
 #include "CalendarParser.h"
 #include "LinkedListAPI.h"
 
-Alarm * initAlarm(char * action, char * trigger, List propList);
+struct alarm * initAlarm(char * action, char * trigger, List propList);
 
 char * printAlarm(void * toBePrinted);
 
