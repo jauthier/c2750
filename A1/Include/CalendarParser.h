@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "EventElements.h"
 #include "LinkedListAPI.h"
 
 //Error codes that indicate what went wrong during parsing
