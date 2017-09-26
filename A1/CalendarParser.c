@@ -745,7 +745,7 @@ int main(int argc, char const *argv[])
     Calendar ** cal = malloc(sizeof(Calendar*));
 
     ErrorCode ec = createCalendar(file,cal);
-    char * error = printError(ec);
+    const char * error = printError(ec);
     printf("%s\n", error);
 
     return 0;
