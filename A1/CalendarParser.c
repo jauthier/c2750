@@ -82,8 +82,8 @@ char * printAlarm(void * toBePrinted){
 }
 //TEST
 int compareAlarm(const void * first,const void * second){
-    char * action1 = ((Property *)first)->action;
-    char * action2 = ((Property *)second)->action;
+    char * action1 = ((Alarm *)first)->action;
+    char * action2 = ((Alarm *)second)->action;
     return strcmp(action1, action2);
 }
 
@@ -161,7 +161,7 @@ Event * initEvent (char * uID, DateTime dt, List propList, List alarmList){
 }
 
 void deleteEvent (Event * toDelete){
-    deleteDT(toDelete->creationDateTime);
+    deleteDT(&toDelete->creationDateTime);
     clearList(&(toDelete->properties));
     clearList(&(toDelete->alarms));
     free(toDelete);
@@ -194,7 +194,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     char * calID;
     float calVer = 0.0;
     char * evID;
-    DateTime * dtStamp;
+    DateTime dtStamp;
     Event * event = NULL;
     List propList, alarmList, alarmPropList;
     Calendar * tempCal;
@@ -286,7 +286,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 if (checkUID == 1)
                                     free(evID);
                                 if (checkDT == 1)
-                                    deleteDT(dtStamp);
+                                    deleteDT(&dtStamp);
                                 clearList(&propList);
                                 clearList(&alarmList);
                                 if (state == 5)
@@ -321,7 +321,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 if (checkUID == 1)
                                     free(evID);
                                 if (checkDT == 1)
-                                    deleteDT(dtStamp);
+                                    deleteDT(&dtStamp);
                                 clearList(&propList);
                                 clearList(&alarmList);
                                 if (state == 5)
@@ -350,7 +350,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 if (checkUID == 1)
                                     free(evID);
                                 if (checkDT == 1)
-                                    deleteDT(dtStamp);
+                                    deleteDT(&dtStamp);
                                 clearList(&propList);
                                 clearList(&alarmList);
                                 clearList(&alarmPropList);
@@ -374,7 +374,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             if (checkUID == 1)
                                 free(evID);
                             if (checkDT == 1)
-                                deleteDT(dtStamp);
+                                deleteDT(&dtStamp);
                             clearList(&propList);
                             clearList(&alarmList);
                             clearList(&alarmPropList);
@@ -412,7 +412,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             if (checkUID == 1)
                                 free(evID);
                             if (checkDT == 1)
-                                deleteDT(dtStamp);
+                                deleteDT(&dtStamp);
                             clearList(&propList);
                             clearList(&alarmList);
                             if (state == 5)
@@ -446,7 +446,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             if (checkUID == 1)
                                 free(evID);
                             if (checkDT == 1)
-                                deleteDT(dtStamp);
+                                deleteDT(&dtStamp);
                             clearList(&propList);
                             clearList(&alarmList);
                             if (state == 5)
@@ -473,7 +473,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             if (checkUID == 1)
                                 free(evID);
                             if (checkDT == 1)
-                                deleteDT(dtStamp);
+                                deleteDT(&dtStamp);
                             clearList(&propList);
                             clearList(&alarmList);
                             return INV_EVENT;
@@ -489,7 +489,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             if (checkUID == 1)
                                 free(evID);
                             if (checkDT == 1)
-                                deleteDT(dtStamp);
+                                deleteDT(&dtStamp);
                             clearList(&propList);
                             clearList(&alarmList);
                             clearList(&alarmPropList);
@@ -514,7 +514,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             if (checkUID == 1)
                                 free(evID);
                             if (checkDT == 1)
-                                deleteDT(dtStamp);
+                                deleteDT(&dtStamp);
                             clearList(&propList);
                             clearList(&alarmList);
                             return INV_EVENT;
@@ -530,7 +530,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             if (checkUID == 1)
                                 free(evID);
                             if (checkDT == 1)
-                                deleteDT(dtStamp);
+                                deleteDT(&dtStamp);
                             clearList(&propList);
                             clearList(&alarmList);
                             clearList(&alarmPropList);
@@ -569,7 +569,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 if (checkUID == 1)
                                     free(evID);
                                 if (checkDT == 1)
-                                    deleteDT(dtStamp);
+                                    deleteDT(&dtStamp);
                                 clearList(&propList);
                                 clearList(&alarmList);
                                 if (state == 5)
@@ -591,7 +591,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 if (checkUID == 1)
                                     free(evID);
                                 if (checkDT == 1)
-                                    deleteDT(dtStamp);
+                                    deleteDT(&dtStamp);
                                 clearList(&propList);
                                 clearList(&alarmList);
                                 return INV_EVENT;
@@ -607,7 +607,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 if (checkUID == 1)
                                     free(evID);
                                 if (checkDT == 1)
-                                    deleteDT(dtStamp);
+                                    deleteDT(&dtStamp);
                                 clearList(&propList);
                                 clearList(&alarmList);
                                 clearList(&alarmPropList);
@@ -631,7 +631,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                 if (checkUID == 1)
                                     free(evID);
                                 if (checkDT == 1)
-                                    deleteDT(dtStamp);
+                                    deleteDT(&dtStamp);
                                 clearList(&propList);
                                 clearList(&alarmList);
                                 clearList(&alarmPropList);
@@ -649,7 +649,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                                     free(evID);
                                 }
                                 if (checkDT == 1){
-                                    deleteDT(dtStamp);
+                                    deleteDT(&dtStamp);
                                 }
                                 clearList(&propList);
                                 clearList(&alarmList);
@@ -670,7 +670,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                             if (checkUID == 1)
                                 free(evID);
                             if (checkDT == 1)
-                                deleteDT(dtStamp);
+                                deleteDT(&dtStamp);
                             clearList(&propList);
                             clearList(&alarmList);
                             if (state == 5)
