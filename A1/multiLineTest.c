@@ -36,7 +36,7 @@ typedef struct evt {
     
 } Event;
 
-
+/* determines whether or no a line is completely composed of whitespace */
 int isWhitespace (char * str){
     if (str == NULL)
         return -1;
@@ -49,6 +49,8 @@ int isWhitespace (char * str){
     return 1;
 }
 
+/* checks the current line and its following line for signs that 
+   there is a multi line */
 int checkMultiLine (char * firstLine, char * secondLine){
     /*check if the first line reached its length limit */
     if (strlen(firstLine) >= 74){
@@ -62,31 +64,9 @@ int checkMultiLine (char * firstLine, char * secondLine){
     return 0;
 }
 
-DateTime * initDT (char * str){
 
-    DateTime * newDT = malloc(sizeof(DateTime));
-    char * date = malloc(sizeof(char)*9);
-    char * time = malloc(sizeof(char)*7);
 
-    if (strlen(str) == 15)
-        newDT->UTC = true;
-    else
-        newDT->UTC = false;
-    
-    for (int i=0;i<8;i++){
-        date[i] = str[i];
-    }
-    int j = 0;
-    for (int i=8;i<14;i++){
-        time[j] = str[i];
-        j++;
-    }
-    newDT->date = date;
-    newDT->time = time;
-    return newDT;
-}
 
-/* write the list functions for properties and alarms */
 
 
 ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){

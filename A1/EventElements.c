@@ -12,6 +12,20 @@
 
 #include "EventElements.h" 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ------------------------Alarm------------------------ */
 
 Alarm * initAlarm(char * action, char * trigger, List propList){
