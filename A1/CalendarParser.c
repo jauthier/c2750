@@ -734,7 +734,7 @@ const char * printError (ErrorCode err){
     if (err == INV_CREATEDT)
         strcpy(buffer,"Invaid DateTime\n");
 
-    error = malloc(sizeof(char)*strlen(buffer));
+    char * error = malloc(sizeof(char)*strlen(buffer));
     strcpy(error, buffer);
     return error;
 }
