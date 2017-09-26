@@ -711,27 +711,35 @@ char* printCalendar(const Calendar* obj){
 }
 
 const char * printError (ErrorCode err){
-    if (err == INV_CAL)
-        return "Invaid Calendar\n";
+
+    char buffer[100];
+    if (err == INV_CAL){
+        
+        strcpy(buffer,"Invaid Calendar");
+    }
     if (err == OK)
-        return "Ok\n";
+        strcpy(buffer,"Ok\n");
     if (err == INV_FILE)
-        return "Invaid File\n";
+        strcpy(buffer,"Invaid File\n");
     if (err == INV_VER)
-        return "Invaid Version\n";
+        strcpy(buffer,"Invaid Version\n");
     if (err == INV_PRODID)
-        return "Invaid Product ID\n";
+        strcpy(buffer,"Invaid Product ID\n");
     if (err == INV_EVENT)
-        return "Invaid Event\n";
+        strcpy(buffer,"Invaid Event\n");
     if (err == DUP_VER)
-        return "Duplicate Version\n";
+        strcpy(buffer,"Duplicate Version\n");
     if (err == DUP_PRODID)
-        return "Duplicate Product ID\n";
+        strcpy(buffer,"Duplicate Product ID\n");
     if (err == INV_CREATEDT)
-        return "Invaid DateTime\n";
+        strcpy(buffer,"Invaid DateTime\n");
+
+    error = malloc(sizeof(char)*strlen(buffer));
+    strcpy(error, buffer);
+    return error;
 }
 
-int int main(int argc, char const *argv[])
+int main(int argc, char const *argv[])
 {
     char * file = "simpleICFile.ics";
     Calendar ** cal = malloc(sizeof(Calendar*));
