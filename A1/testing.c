@@ -6,6 +6,11 @@
 #include "LinkedListAPI.h"
 #include "CalendarParser.h"
 
+typedef struct posReturn{
+	ErrorCode ec;
+	fpos_t * filePos;
+} PosReturn;
+
 void deleteEvent (Event * toDelete);
 
 
@@ -35,6 +40,13 @@ int checkMultiLine (char * firstLine, char * secondLine){
         }
     }
     return 0;
+}
+
+PosReturn * initPosReturn(ErrorCode err, fpos_t * pos){
+	PosReturn * ret = malloc(sizeof(PosReturn));
+	ret->ec = err;
+	ret->pos = pos;
+	return ret;
 }
 
 /* ------------------------Property------------------------ */
@@ -185,14 +197,13 @@ void freeEv(List *list1, List *list2, char * value){
     free(value);
 }
 
-ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
+ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, fpos_t ** pos){
     return OK;
 }
 
-ErrorCode parseEvent (FILE ** fpHold,char * currentLine, Event ** eventPtr){
+ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     // the file pointer will be pointing to the next line so we must pass the current line 
 
-	FILE * fp = *fpHold;
     List propList = initializeList(printProperty, deleteProperty, compareProperty);
     List alarmList = initializeList(printAlarm, deleteAlarm, compareAlarm);
 
@@ -213,9 +224,8 @@ ErrorCode parseEvent (FILE ** fpHold,char * currentLine, Event ** eventPtr){
     
     
     while (hold != NULL){
-    	fpos_t filePos;
     	printf("%s\n", current);
-    	int i = fgetpos(fp,&filePos);
+    	int i = fgetpos(fp,*pos);
     	if (i != 0)
     		printf("getpos didnt work\n");
         hold = fgets(next,75,fp);
@@ -339,10 +349,10 @@ ErrorCode parseEvent (FILE ** fpHold,char * currentLine, Event ** eventPtr){
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         *eventPtr = temp;
                         
-                        fsetpos(fp,&filePos); // go back one line in the file
+                        fsetpos(fp,*pos); // go back one line in the file
                         fgets(next,75,fp);
-                        printf("%s\n", next);
-                        *fpHold = fp; 
+                        printf("%s\n", next); 
+
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
@@ -371,9 +381,7 @@ ErrorCode parseEvent (FILE ** fpHold,char * currentLine, Event ** eventPtr){
     
 }
 
-ErrorCode parseCalendar (FILE ** fpHold, Calendar ** obj){
-
-	FILE * fp = *fpHold;
+ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
     /* Keeps track of whether or not there has been a 
     version and product ID declared. There must be only
     one version declared and only one product ID declared */
@@ -491,7 +499,8 @@ ErrorCode parseCalendar (FILE ** fpHold, Calendar ** obj){
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
                         printf("Going to parseEvent\n");
-                        ErrorCode eCode = parseEvent(&fp, next, eventPtr);
+                        fpos_t ** pos = malloc(sizeof(fpos_t));
+                        ErrorCode eCode = parseEvent(fp, next, eventPtr, pos);
                         if (eCode != OK){
                             free(value);
                             return eCode;
@@ -540,9 +549,7 @@ ErrorCode parseCalendar (FILE ** fpHold, Calendar ** obj){
 
 ErrorCode createCalendar(char* fileName, Calendar ** obj){
     /* check that the file exists and open it */
-    FILE **fpHold = malloc(sizeof(FILE*));
     FILE * fp = fopen(fileName,"r");
-    *fpHold = fp;
     if (fp == NULL)
         return INV_FILE;
 
@@ -572,7 +579,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                 /* if the next word is not VCALENDAR then the file is wrong
                 and INV_CAL is returned */
                 if (strcmp(value, "VCALENDAR") == 0){
-                    ErrorCode eCode = parseCalendar(fpHold,obj);
+                    ErrorCode eCode = parseCalendar(fp,obj);
                     freeCal(value, fp);
                     return eCode;
                 } else {
