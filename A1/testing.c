@@ -504,6 +504,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                         free(holdLong);
                         if (eCode != OK){
                             free(value);
+                            free(calID);
                             return eCode;
                         }
                         eventEnd = 1;   
@@ -544,6 +545,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
         }
         strcpy(current,next);
     }
+    free(calID);
     if (end == 1)
         return OK;
     else 
