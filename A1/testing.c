@@ -504,7 +504,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPtr){
                         if (checkID == 1)
                             free(calID);
                         if (eventEnd == 1)
-                            deleteEvent(*eventPrt);
+                            deleteEvent(*eventPtr);
                         return INV_CAL;
                     }
                 } else {
@@ -512,7 +512,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPtr){
                     if (checkID == 1)
                         free(calID);
                     if (eventEnd == 1)
-                        deleteEvent(*eventPrt);
+                        deleteEvent(*eventPtr);
                     return INV_CAL;
                 }
                 free(value);
