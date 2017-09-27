@@ -162,13 +162,11 @@ Event * initEvent (char * uID, DateTime * dt, List propList, List alarmList){
     newEvent->creationDateTime = *dt;
     newEvent->properties = propList;
     newEvent->alarms = alarmList;
-    if (newEvent == NULL)
-    	printf("I fucked up\n");
     return newEvent;
 }
 
 void deleteEvent (Event * toDelete){
-    deleteDT(&toDelete->creationDateTime);
+    /*deleteDT(&(toDelete->creationDateTime));*/
     clearList(&(toDelete->properties));
     clearList(&(toDelete->alarms));
     free(toDelete);
