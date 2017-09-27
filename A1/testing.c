@@ -327,9 +327,12 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                     }
 
                 } else if (strcmp(token,"END")==0){ /* don't want multiple ends */
-                    if (strcmp(value, "VCALENDAR") == 0 && checkUID == 1 && checkDT == 1){
+                    if (strcmp(value, "VEVENT") == 0 && checkUID == 1 && checkDT == 1){
                         fsetpos(fp,&filePos); // go back one line in the file 
-                        //create a calendar object
+                        //create a event object
+                        Event * calEvent = initEvent(evUID,evDT,propList,alarmList);
+                        * eventPrt = calEvent;
+                        return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
                         if (checkUID == 1)
@@ -474,7 +477,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                 } else if (strcmp(token,"BEGIN")==0 && eventEnd == 0){ /* only allow one Event per calendar object */
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
-                        eventPrt = malloc(sizeof(Event*));
+                        //eventPrt = malloc(sizeof(Event*));
                         printf("Going to parseEvent\n");
                         ErrorCode eCode = parseEvent(fp, next, eventPrt);
                         if (eCode != OK){
@@ -493,6 +496,8 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                     if (strcmp(value, "VCALENDAR") == 0 && checkID == 1 && checkVer == 1 && eventEnd == 1){
                         end = 1;
                         //create a calendar object
+                        Calendar * newCal = initCal(calVer,calID,*eventPrt);
+                        *obj = newCal;
                     } else {
                         free(value);
                         if (checkID == 1)
@@ -620,6 +625,8 @@ int main(int argc, char * argv[]){
     Calendar ** cal;
     ErrorCode code =  createCalendar(fileName, cal);
     printf("%s\n", printError(code));
+
+    deleteCal(*cal);
 
 
     return 0;
