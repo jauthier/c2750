@@ -308,6 +308,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                         //ErrorCode eCode = parseAlarm(fp, next, newAlarm);
                         //add alarm to the list
                         //deleteAlarm(newAlarm);
+                        ErrorCode eCode = INV_EVENT;
                         if (eCode != OK){
                             freeEv(&propList, &alarmList, value);
                             if (checkUID == 0)
