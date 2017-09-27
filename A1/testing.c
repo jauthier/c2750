@@ -99,17 +99,17 @@ void deleteAlarm(void * toDelete){
 
 /* ------------------------DateTime------------------------ */
 
-DateTime * initDT (char * str){
+DateTime initDT (char * str){
 
-    DateTime * newDT = malloc(sizeof(DateTime));
+    DateTime newDT = malloc(sizeof(DateTime));
 
     char date[9] = "";
     char time[7] = "";
 
     if (strlen(str) == 15)
-        newDT->UTC = true;
+        newDT.UTC = true;
     else
-        newDT->UTC = false;
+        newDT.UTC = false;
     int i = 0;
     for (i=0;i<8;i++){
         date[i] = str[i];
@@ -120,22 +120,22 @@ DateTime * initDT (char * str){
         time[j] = str[i];
         j++;
     }
-    strcpy(newDT->date, time);
-    strcpy(newDT->time, time);
+    strcpy(newDT.date, time);
+    strcpy(newDT.time, time);
     return newDT;
 }
 
-char * printDT(DateTime * dt){
+char * printDT(DateTime dt){
 
-    int len = strlen(dt->date)+strlen(dt->time)+6;
+    int len = strlen(dt.date)+strlen(dt.time)+6;
     char * dtStr = malloc(sizeof(char)*len);
-    sprintf(dtStr, "%s, %s", dt->date, dt->time);
-    if (dt->UTC == true)
+    sprintf(dtStr, "%s, %s", dt.date, dt.time);
+    if (dt.UTC == true)
         strcat(dtStr," UTC");
     return dtStr;
 }
 
-void deleteDT(DateTime * toDelete){
+void deleteDT(DateTime toDelete){
     free(toDelete);
 }
 
@@ -201,7 +201,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
     int checkDT = 0;
     /* hold the values of the DTSTAMP and UID */
     char * evUID;
-    DateTime * evDT;
+    DateTime evDT;
     /* parsing bits */
     char current[75];
     strcpy(current,currentLine);
@@ -331,7 +331,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                     if (strcmp(value, "VEVENT") == 0 && checkUID == 1 && checkDT == 1){
                         fsetpos(fp,&filePos); // go back one line in the file 
                         //create a event object
-                        Event * calEvent = initEvent(evUID,*evDT,propList,alarmList);
+                        Event * calEvent = initEvent(evUID,evDT,propList,alarmList);
                         *eventPrt = calEvent;
                         return OK;
                     } else {
