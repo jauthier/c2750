@@ -162,6 +162,8 @@ Event * initEvent (char * uID, DateTime * dt, List propList, List alarmList){
     newEvent->creationDateTime = *dt;
     newEvent->properties = propList;
     newEvent->alarms = alarmList;
+    if (newEvent == NULL)
+    	printf("I fucked up\n");
     return newEvent;
 }
 
@@ -342,12 +344,13 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
 
                 } else if (strcmp(token,"END")==0){ /* don't want multiple ends */
                     if (strcmp(value, "VEVENT") == 0 && checkUID == 1 && checkDT == 1){
-                        fsetpos(fp,&filePos); // go back one line in the file 
                         //create a event object
-                        (*eventPtr) = initEvent(evUID,evDT,propList,alarmList);
-                        char * hold = printEvent(*eventPtr);
+                        Event * temp = initEvent(evUID,evDT,propList,alarmList);
+                        char * hold = printEvent(temp);
                         printf("%s\n", hold);
-                        //*eventPrt = calEvent;
+                        *eventPrt = temp;
+                        
+                        fsetpos(fp,&filePos); // go back one line in the file 
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
