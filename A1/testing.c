@@ -180,6 +180,10 @@ char * printEvent(Event * toPrint){
 	int len = strlen(uID) + strlen(dt) + strlen(prop) + strlen(alarm) + 5;
 	char * eventStr = malloc(sizeof(char)*len);
 	sprintf(eventStr, "%s\n%s\n%s\n%s\n",uID,dt,prop,alarm);
+	free(dt);
+	free(prop);
+	free(alarm);
+	return eventStr
 }
 
 void freeCal(char * value, FILE * fp){
@@ -341,6 +345,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                         fsetpos(fp,&filePos); // go back one line in the file 
                         //create a event object
                         Event * calEvent = initEvent(evUID,*evDT,propList,alarmList);
+                        char * hold = printEvent(calEvent);
+                        printf("%s\n", hold);
                         *eventPrt = calEvent;
                         return OK;
                     } else {
