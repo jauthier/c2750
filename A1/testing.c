@@ -192,7 +192,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
     return OK;
 }
 
-ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, long * posHold){
+ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, long posHold){
     // the file pointer will be pointing to the next line so we must pass the current line 
 
     List propList = initializeList(printProperty, deleteProperty, compareProperty);
@@ -485,9 +485,9 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
                         printf("Going to parseEvent\n");
-                        long * pos;
+                        long pos;
                         ErrorCode eCode = parseEvent(fp, next, eventPtr,pos);
-                        fseek(fp,*pos,SEEK_SET);
+                        fseek(fp,pos,SEEK_SET);
                         if (eCode != OK){
                             free(value);
                             return eCode;
