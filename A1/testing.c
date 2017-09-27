@@ -151,6 +151,7 @@ Calendar * initCal (float ver, char * id, Event * event){
 
 void deleteCal(Calendar * toDelete){
     deleteEvent(toDelete->event);
+    printf("here\n");
     free(toDelete);
 }
 
