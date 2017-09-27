@@ -331,7 +331,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                         fsetpos(fp,&filePos); // go back one line in the file 
                         //create a event object
                         Event * calEvent = initEvent(evUID,*evDT,propList,alarmList);
-                        * eventPrt = calEvent;
+                        *eventPrt = calEvent;
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
