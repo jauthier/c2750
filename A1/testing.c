@@ -383,6 +383,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
     Event ** eventPtr = malloc(sizeof(Event*));
 
     while (hold != NULL){
+    	printf("%s\n", current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
