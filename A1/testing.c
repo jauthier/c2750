@@ -170,6 +170,7 @@ void deleteEvent (Event * toDelete){
     /*deleteDT(&(toDelete->creationDateTime));*/
     clearList(&(toDelete->properties));
     clearList(&(toDelete->alarms));
+    printf("here\n");
     free(toDelete);
 }
 
@@ -363,7 +364,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     
 }
 
-ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPtr){
+ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
     /* Keeps track of whether or not there has been a 
     version and product ID declared. There must be only
     one version declared and only one product ID declared */
@@ -379,7 +380,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPtr){
 
     int eventEnd = 0;
     int end = 0;
-    
+    Event ** eventPtr = malloc(sizeof(Event*));
 
     while (hold != NULL){
         hold = fgets(next,75,fp);
@@ -527,7 +528,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPtr){
         return INV_CAL;
 }
 
-ErrorCode createCalendar(char* fileName, Calendar ** obj,Event **eventPtr){
+ErrorCode createCalendar(char* fileName, Calendar ** obj){
     /* check that the file exists and open it */
     FILE * fp = fopen(fileName,"r");
     if (fp == NULL)
@@ -559,7 +560,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj,Event **eventPtr){
                 /* if the next word is not VCALENDAR then the file is wrong
                 and INV_CAL is returned */
                 if (strcmp(value, "VCALENDAR") == 0){
-                    ErrorCode eCode = parseCalendar(fp,obj,eventPtr);
+                    ErrorCode eCode = parseCalendar(fp,obj);
                     freeCal(value, fp);
                     return eCode;
                 } else {
@@ -624,8 +625,7 @@ int main(int argc, char * argv[]){
     
     char * fileName = "simpleICFile.ics";
     Calendar ** cal = malloc(sizeof(Calendar*));
-    Event ** eventPtr = malloc(sizeof(Event*));
-    ErrorCode code =  createCalendar(fileName, cal,eventPtr);
+    ErrorCode code =  createCalendar(fileName, cal);
     printf("%s\n", printError(code));
 
     deleteCal(*cal);
