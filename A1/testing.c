@@ -6,7 +6,7 @@
 #include "LinkedListAPI.h"
 #include "CalendarParser.h"
 
-fpos_t filePos;
+
 
 
 void deleteEvent (Event * toDelete);
@@ -216,6 +216,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     
     
     while (hold != NULL){
+    	fpos_t filePos;
     	fgetpos(fp,&filePos);
     	printf("%d: %s\n", &filePos, current);
         hold = fgets(next,75,fp);
