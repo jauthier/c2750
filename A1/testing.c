@@ -162,7 +162,6 @@ Event * initEvent (char * uID, DateTime dt, List propList, List alarmList){
     newEvent->creationDateTime = dt;
     newEvent->properties = propList;
     newEvent->alarms = alarmList;
-    printf("%s\n", printDT(&newEvent->creationDateTime));
     return newEvent;
 }
 
@@ -175,7 +174,7 @@ void deleteEvent (Event * toDelete){
 
 char * printEvent(Event * toPrint){
 	char * uID = toPrint->UID;
-	char * dt = printDT(&toPrint->creationDateTime);
+	char * dt = printDT(&(toPrint->creationDateTime));
 	char * prop = toString(toPrint->properties);
 	char * alarm = toString(toPrint->alarms);
 	int len = strlen(uID) + strlen(dt) + strlen(prop) + strlen(alarm) + 5;
