@@ -344,7 +344,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
                     if (strcmp(value, "VEVENT") == 0 && checkUID == 1 && checkDT == 1){
                         fsetpos(fp,&filePos); // go back one line in the file 
                         //create a event object
-                        * eventPtr = initEvent(evUID,*evDT,propList,alarmList);
+                        (*eventPtr) = initEvent(evUID,*evDT,propList,alarmList);
                         char * hold = printEvent(*eventPtr);
                         printf("%s\n", hold);
                         //*eventPrt = calEvent;
