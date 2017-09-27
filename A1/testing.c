@@ -212,6 +212,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     fpos_t filePos;
     fgetpos(fp,&filePos);
 
+    printf("In parseEvent: %s\n", currentLine);
+
     while (hold != NULL){
     	printf("%s\n", current);
         hold = fgets(next,75,fp);
