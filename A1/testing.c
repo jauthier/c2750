@@ -183,7 +183,7 @@ char * printEvent(Event * toPrint){
 	free(dt);
 	free(prop);
 	free(alarm);
-	return eventStr
+	return eventStr;
 }
 
 void freeCal(char * value, FILE * fp){
