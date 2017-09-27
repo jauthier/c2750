@@ -488,7 +488,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
                         printf("Going to parseEvent\n");
-                        fpos_t ** pos = malloc(sizeof(fpos_t));
+                        fpos_t ** pos = malloc(sizeof(fpos_t*));
                         ErrorCode eCode = parseEvent(fp, next, eventPtr, pos);
                         if (eCode != OK){
                             free(value);
