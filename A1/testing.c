@@ -190,7 +190,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
     return OK;
 }
 
-ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr,fpos_t ** pos){
+ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr,fpos_t * pos){
     // the file pointer will be pointing to the next line so we must pass the current line 
 
     List propList = initializeList(printProperty, deleteProperty, compareProperty);
@@ -216,7 +216,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr,fpos_t ** 
     while (hold != NULL){
     	printf("%s\n", current);
     	fpos_t filePos;
-    	fgetpos(fp,filePos);
+    	fgetpos(fp,&filePos);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
@@ -341,7 +341,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr,fpos_t ** 
                         //fsetpos(fp,); // go back one line in the file
                         fgets(next,75,fp);
                         printf("%s\n", next); 
-                        *pos = &filePos;
+                        *pos = filePos;
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
@@ -488,7 +488,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
                         printf("Going to parseEvent\n");
-                        fpos_t ** pos = malloc(sizeof(fpos_t*));
+                        fpos_t * pos = malloc(sizeof(fpos_t));
                         ErrorCode eCode = parseEvent(fp, next, eventPtr, pos);
                         if (eCode != OK){
                             free(value);
