@@ -6,6 +6,34 @@
 #include "LinkedListAPI.h"
 #include "CalendarParser.h"
 
+/* determines whether or no a line is completely composed of whitespace */
+int isWhitespace (char * str){
+    if (str == NULL)
+        return -1;
+    int len = strlen(str);
+    int i = 0;
+    for (i=0;i<len;i++){
+        if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
+            return 0;
+    }
+    return 1;
+}
+
+/* checks the current line and its following line for signs that 
+   there is a multi line */
+int checkMultiLine (char * firstLine, char * secondLine){
+    /*check if the first line reached its length limit */
+    if (strlen(firstLine) >= 74){
+        /* check if the second line has a : or ; and starts with whitespace */
+        if (secondLine[0] == ' ' || secondLine[0] == '\t'){
+            if (strchr(secondLine,':') == NULL && strchr(secondLine,';') == NULL){
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
 ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
 	return OK;
 }
