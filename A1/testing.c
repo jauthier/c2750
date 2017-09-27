@@ -514,6 +514,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                         //create a calendar object
                         Calendar * newCal = initCal(calVer,calID,*eventPtr);
                         *obj = newCal;
+                        free(eventPtr);
                     } else {
                         free(value);
                         if (checkID == 1)
@@ -537,7 +538,6 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
         }
         strcpy(current,next);
     }
-
     if (end == 1)
         return OK;
     else 
