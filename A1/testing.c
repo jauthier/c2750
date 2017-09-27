@@ -120,7 +120,7 @@ DateTime * initDT (char * str){
         time[j] = str[i];
         j++;
     }
-    strcpy(newDT->date, time);
+    strcpy(newDT->date, date);
     strcpy(newDT->time, time);
     return newDT;
 }
@@ -171,6 +171,16 @@ void deleteEvent (Event * toDelete){
     clearList(&(toDelete->properties));
     clearList(&(toDelete->alarms));
     free(toDelete);
+}
+
+char * printEvent(Event * toPrint){
+	char * uID = toPrint->UID;
+	char * dt = printDT(toPrint->creationDateTime);
+	char * prop = toString(toPrint->properties);
+	char * alarm = toString(toPrint->alarms);
+	int len = strlen(uID) + strlen(dt) + strlen(prop) + strlen(alarm) + 5;
+	char eventStr = malloc(sizeof(char)*len);
+	sprintf(eventStr, "%s\n%s\n%s\n%s\n",uID,dt,prop,alarm);
 }
 
 void freeCal(char * value, FILE * fp){
