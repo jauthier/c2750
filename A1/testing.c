@@ -201,7 +201,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
     return OK;
 }
 
-ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
+ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     // the file pointer will be pointing to the next line so we must pass the current line 
 
     List propList = initializeList(printProperty, deleteProperty, compareProperty);
