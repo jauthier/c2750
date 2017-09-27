@@ -192,7 +192,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
     return OK;
 }
 
-ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, long posHold){
+ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * holdLong){
     // the file pointer will be pointing to the next line so we must pass the current line 
 
     List propList = initializeList(printProperty, deleteProperty, compareProperty);
@@ -212,13 +212,13 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, long posH
     char next[75];
     char * hold = currentLine; /* this is so hold isn't NULL */
     int multi;
-    //long pos;
+    long pos;
     
     
     while (hold != NULL){
     	
-    	posHold = ftell(fp);
-    	printf("%d: %s\n", posHold, current);
+    	pos = ftell(fp);
+    	printf("%d: %s\n", pos, current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
@@ -339,6 +339,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, long posH
                         //create a event object
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         *eventPtr = temp;
+
+                        sprintf(holdLong,"%d",pos)
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
@@ -485,8 +487,9 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
                         printf("Going to parseEvent\n");
-                        long pos;
-                        ErrorCode eCode = parseEvent(fp, next, eventPtr,pos);
+                        char * holdLong = malloc(sizeof(char)*10);
+                        ErrorCode eCode = parseEvent(fp, next, eventPtr,holdLong);
+                        long pos = atol(holdLong);
                         fseek(fp,pos,SEEK_SET);
                         printf("%d\n", pos);
                         if (eCode != OK){
