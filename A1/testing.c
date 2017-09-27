@@ -497,7 +497,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPtr){
                     if (strcmp(value, "VCALENDAR") == 0 && checkID == 1 && checkVer == 1 && eventEnd == 1){
                         end = 1;
                         //create a calendar object
-                        Calendar * newCal = initCal(calVer,calID,*eventPrt);
+                        Calendar * newCal = initCal(calVer,calID,*eventPtr);
                         *obj = newCal;
                     } else {
                         free(value);
@@ -559,7 +559,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj,Event **eventPtr){
                 /* if the next word is not VCALENDAR then the file is wrong
                 and INV_CAL is returned */
                 if (strcmp(value, "VCALENDAR") == 0){
-                    ErrorCode eCode = parseCalendar(fp, ,eventPtr);
+                    ErrorCode eCode = parseCalendar(fp,obj,eventPtr);
                     freeCal(value, fp);
                     return eCode;
                 } else {
