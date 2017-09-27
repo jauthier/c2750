@@ -304,10 +304,10 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                 } else if (strcmp(token,"BEGIN")==0){ /* only allow one Event per calendar object */
                     if (strcmp(value, "ALARM") == 0 && checkUID == 1 && checkDT == 1){
                         //go to parseAlarm 
-                        Alarm ** newAlarm = malloc(sizeof(Alarm*));
-                        ErrorCode eCode = parseAlarm(fp, next, newAlarm);
+                        //Alarm ** newAlarm = malloc(sizeof(Alarm*));
+                        //ErrorCode eCode = parseAlarm(fp, next, newAlarm);
                         //add alarm to the list
-                        deleteAlarm(newAlarm);
+                        //deleteAlarm(newAlarm);
                         if (eCode != OK){
                             freeEv(&propList, &alarmList, value);
                             if (checkUID == 0)
@@ -347,6 +347,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                         deleteDT(evDT);
                     return INV_EVENT;
                 }
+                free(value);
             }
         }
         fgetpos(fp,&filePos);
