@@ -378,7 +378,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
 
     int eventEnd = 0;
     int end = 0;
-    Event ** eventPrt;
+    Event ** eventPrt = malloc(sizeof(Event*));
 
     while (hold != NULL){
         hold = fgets(next,75,fp);
@@ -478,7 +478,6 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                 } else if (strcmp(token,"BEGIN")==0 && eventEnd == 0){ /* only allow one Event per calendar object */
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
-                        eventPrt = malloc(sizeof(Event*));
                         printf("Going to parseEvent\n");
                         ErrorCode eCode = parseEvent(fp, next, eventPrt);
                         if (eCode != OK){
