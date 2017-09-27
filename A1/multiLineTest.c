@@ -330,7 +330,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                     }
 
                 } else if (strcmp(token,"END")==0){ /* don't want multiple ends */
-                    if (strcmp(value, "VCALENDAR") == 0 && checkUID == 1 && checkDT == 1 && eventEnd == 1){
+                    if (strcmp(value, "VCALENDAR") == 0 && checkUID == 1 && checkDT == 1){
                         fsetpos(fp,filePos); // go back one line in the file 
                         //create a calendar object
                     } else {
@@ -511,8 +511,8 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                     return INV_CAL;
                 }
             }
+            free(value);
         }
-        free(value);
         strcpy(current,next);
     }
 
