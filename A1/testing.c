@@ -172,10 +172,6 @@ void deleteEvent (Event * toDelete){
     free(toDelete);
 }
 
-ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
-    return OK;
-}
-
 void freeCal(char * value, FILE * fp){
     free(value);
     fclose(fp);
