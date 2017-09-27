@@ -40,9 +40,166 @@ void freeCal(char * value, FILE * fp){
 }
 
 ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
-	return OK;
-}
+    /* Keeps track of whether or not there has been a 
+    version and product ID declared. There must be only
+    one version declared and only one product ID declared */
+    int checkVer = 0;
+    int checkID = 0;
+    /* hold the values of the version and porduct ID */
+    float calVer;
+    char * calID;
+    /* parsing bits */
+    char current[75], next[75];
+    char * hold = fgets(current,75,fp);
+    int multi;
 
+    int eventEnd = 0;
+    int end = 0;
+    Event ** eventPrt;
+
+    while (hold != NULL){
+        hold = fgets(next,75,fp);
+        /* make sure the line can be parsed */
+        if (strchr(current,':') == NULL && strchr(current,';') == NULL){
+            /* this handles the case where there are chracters but no : or ; 
+               if the line is just whitespace it will be ignored */
+            if (isWhitespace(current) != 1) 
+                return INV_CAL;
+        } else {
+            /* parse the line */
+            char * token = strtok(current, ":; \t");
+            char * holdVal = strtok(NULL, ":;\n");
+
+            /* For comments it doesn't matter if the value is empty */
+            if (strcmp(token,"COMMENT") == 0){
+                /* if the line doesnt exist then it can't be a multi line */
+                if (hold != NULL)
+                    multi = checkMultiLine(current, next);
+                else
+                    multi = 0;
+                while (multi == 1){
+                    /* check if the line after the next line is also a multi line */
+                    char buffer[75];
+                    hold = fgets(buffer, 75, fp);
+            
+                    if (hold != NULL)
+                        multi = checkMultiLine(next, buffer);
+                    else 
+                        multi = 0;
+                    strcpy(next, buffer);
+                }
+            } else {
+                /* check if the value following the key word is NULL */
+                if (holdVal == NULL){
+                    fclose(fp);
+                    if (strcmp(token, "VERSION") == 0)
+                        return INV_VER;
+                    else if (strcmp(token, "PRODID") == 0)
+                        return INV_PRODID;
+                    else
+                        return INV_CAL;
+                }
+                int len = strlen(holdVal) + 1;
+                char * value = malloc(sizeof(char)*len);
+                strcpy(value, holdVal);
+
+                /* ------------Check for multi lines----------- */
+                if (hold != NULL)
+                    multi = checkMultiLine(current, next);
+                else
+                    multi = 0;
+                while (multi == 1){ /* check if the line after the next line is also a multi line */
+                    char buffer[75];
+                    hold = fgets(buffer, 75, fp);
+            
+                    if (hold != NULL)
+                        multi = checkMultiLine(next, buffer);
+                    else 
+                        multi = 0;
+                    /* realloc and add the next line to the end of value */
+                    char * temp = strtok(next, "\n");
+                    temp++;
+                    len = len + strlen(temp);
+                    value = realloc(value, len);
+                    strcat(value, temp);
+                    strcpy(next, buffer);
+                }
+                /* ------------Identify Key Word----------- */
+                if (strcmp(token, "VERSION") == 0){
+                    if (checkVer == 0){
+                        /* make sure this is the only version */
+                        calVer = atof(value);
+                        if (calVer <= 0){
+                            free(value);
+                            if (checkID == 1)
+                                free(calID);
+                            return INV_VER;
+                        }
+                        checkVer = 1;
+                    } else {
+                        free(value);
+                        if (checkID == 1)
+                            free(calID);
+                        return DUP_VER;
+                    }
+                } else if (strcmp(token,"PRODID")==0){
+                    if (checkID == 0){ /* make sure this is the only declaration of the version */
+                        calID = malloc (sizeof(char)*(strlen(value)+1));
+                        strcpy(calID, value);
+                        checkID = 1;
+                    } else {
+                        free(calID);
+                        free(value);
+                        return DUP_PRODID;
+                    }
+                } else if (strcmp(token,"BEGIN")==0 && eventEnd == 0){ /* only allow one Event per calendar object */
+                    if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
+                        //go to parseEvent 
+                        eventPrt = malloc(sizeof(Event*));
+                        ErrorCode eCode = parseEvent(fp, next, eventPrt);
+                        if (eCode != OK){
+                            free(value);
+                            return eCode;
+                        }
+                        eventEnd = 1;   
+                    } else {
+                        free(value);
+                        if (checkID == 1)
+                            free(calID);
+                        return INV_CAL;
+                    }
+
+                } else if (strcmp(token,"END")==0 && end == 0){ /* don't want multiple ends */
+                    if (strcmp(value, "VCALENDAR") == 0 && checkID == 1 && checkVer == 1 && eventEnd == 1){
+                        end = 1;
+                        //create a calendar object
+                    } else {
+                        free(value);
+                        if (checkID == 1)
+                            free(calID);
+                        if (eventEnd == 1)
+                            deleteEvent(*eventPrt);
+                        return INV_CAL;
+                    }
+                } else {
+                    free(value);
+                    if (checkID == 1)
+                        free(calID);
+                    if (eventEnd == 1)
+                        deleteEvent(*eventPrt);
+                    return INV_CAL;
+                }
+                free(value);
+            }
+        }
+        strcpy(current,next);
+    }
+
+    if (end == 1)
+        return OK;
+    else 
+        return INV_CAL;
+}
 
 ErrorCode createCalendar(char* fileName, Calendar ** obj){
     /* check that the file exists and open it */
