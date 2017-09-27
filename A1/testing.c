@@ -216,7 +216,9 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
 
     while (hold != NULL){
     	printf("%s\n", current);
-    	fgetpos(fp,&filePos);
+    	int i = fgetpos(fp,&filePos);
+    	if (i != 0)
+    		printf("getpos didnt work\n");
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
