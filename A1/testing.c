@@ -213,6 +213,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     fgetpos(fp,&filePos);
 
     while (hold != NULL){
+    	printf("%s\n", current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
