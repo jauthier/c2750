@@ -210,13 +210,13 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr,fpos_t ** 
     char next[75];
     char * hold = currentLine; /* this is so hold isn't NULL */
     int multi;
+    fpos_t filePos;
     
     
     while (hold != NULL){
     	printf("%s\n", current);
-    	int i = fgetpos(fp,*pos);
-    	if (i != 0)
-    		printf("getpos didnt work\n");
+    	fpos_t filePos;
+    	fgetpos(fp,filePos);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
@@ -338,10 +338,10 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr,fpos_t ** 
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         *eventPtr = temp;
                         
-                        fsetpos(fp,*pos); // go back one line in the file
+                        //fsetpos(fp,); // go back one line in the file
                         fgets(next,75,fp);
                         printf("%s\n", next); 
-
+                        *pos = &filePos;
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
