@@ -175,7 +175,7 @@ void deleteEvent (Event * toDelete){
 
 char * printEvent(Event * toPrint){
 	char * uID = toPrint->UID;
-	char * dt = printDT(toPrint->creationDateTime);
+	char * dt = printDT(&toPrint->creationDateTime);
 	char * prop = toString(toPrint->properties);
 	char * alarm = toString(toPrint->alarms);
 	int len = strlen(uID) + strlen(dt) + strlen(prop) + strlen(alarm) + 5;
