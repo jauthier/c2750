@@ -6,10 +6,6 @@
 #include "LinkedListAPI.h"
 #include "CalendarParser.h"
 
-typedef struct posReturn{
-	ErrorCode ec;
-	fpos_t * filePos;
-} PosReturn;
 
 void deleteEvent (Event * toDelete);
 
@@ -40,13 +36,6 @@ int checkMultiLine (char * firstLine, char * secondLine){
         }
     }
     return 0;
-}
-
-PosReturn * initPosReturn(ErrorCode err, fpos_t * pos){
-	PosReturn * ret = malloc(sizeof(PosReturn));
-	ret->ec = err;
-	ret->pos = pos;
-	return ret;
 }
 
 /* ------------------------Property------------------------ */
