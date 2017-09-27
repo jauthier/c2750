@@ -341,7 +341,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr,fpos_t * p
                         //fsetpos(fp,); // go back one line in the file
                         fgets(next,75,fp);
                         *pos = filePos;
-                        printf("%d  %d\n",filePos,*pos ); 
+                        printf("%d  %d\n",&filePos,*pos); 
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
