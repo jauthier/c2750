@@ -210,12 +210,13 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     char * hold = currentLine; /* this is so hold isn't NULL */
     int multi;
     fpos_t filePos;
-    fgetpos(fp,&filePos);
+    
 
     printf("In parseEvent: %s\n", currentLine);
 
     while (hold != NULL){
     	printf("%s\n", current);
+    	fgetpos(fp,&filePos);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
@@ -360,7 +361,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
                 free(value);
             }
         }
-        fgetpos(fp,&filePos);
         strcpy(current,next);
     }
 
