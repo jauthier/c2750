@@ -488,6 +488,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                         long pos;
                         ErrorCode eCode = parseEvent(fp, next, eventPtr,pos);
                         fseek(fp,pos,SEEK_SET);
+                        printf("%d\n", pos);
                         if (eCode != OK){
                             free(value);
                             return eCode;
