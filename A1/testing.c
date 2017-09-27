@@ -536,7 +536,9 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
 
 ErrorCode createCalendar(char* fileName, Calendar ** obj){
     /* check that the file exists and open it */
+    FILE **fpHold = malloc(sizeof(FILE*));
     FILE * fp = fopen(fileName,"r");
+    *fpHold = fp;
     if (fp == NULL)
         return INV_FILE;
 
