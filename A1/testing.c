@@ -340,7 +340,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         *eventPtr = temp;
 
-                        sprintf(holdLong,"%d",pos)
+                        sprintf(holdLong,"%d",pos);
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
