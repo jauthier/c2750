@@ -307,17 +307,21 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                         Alarm ** newAlarm = malloc(sizeof(Alarm*));
                         ErrorCode eCode = parseAlarm(fp, next, newAlarm);
                         //add alarm to the list
-
+                        deleteAlarm(newAlarm);
                         if (eCode != OK){
                             freeEv(&propList, &alarmList, value);
-                            clearList(&propList);
-                            clearList(&alarmList);
+                            if (checkUID == 0)
+                            	free(evUID);
+                            if (checkDT == 0)
+                            	deleteDT(evDT);
                             return eCode;
                         }
                     } else {
                         freeEv(&propList, &alarmList, value);
                         if (checkUID == 1)
                             free(evUID);
+                        if (checkDT == 0)
+                            deleteDT(evDT);
                         return INV_EVENT;
                     }
 
@@ -329,6 +333,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                         freeEv(&propList, &alarmList, value);
                         if (checkUID == 1)
                             free(evUID);
+                        if (checkDT == 0)
+                            deleteDT(evDT);
                         return INV_EVENT;
                     }
                 } else {
@@ -337,6 +343,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                     freeEv(&propList, &alarmList, value);
                     if (checkUID == 1)
                         free(evUID);
+                    if (checkDT == 0)
+                        deleteDT(evDT);
                     return INV_EVENT;
                 }
             }
