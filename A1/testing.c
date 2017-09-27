@@ -197,11 +197,11 @@ void freeEv(List *list1, List *list2, char * value){
     free(value);
 }
 
-ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, fpos_t ** pos){
+ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
     return OK;
 }
 
-ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
+ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr,fpos_t ** pos){
     // the file pointer will be pointing to the next line so we must pass the current line 
 
     List propList = initializeList(printProperty, deleteProperty, compareProperty);
