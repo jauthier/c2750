@@ -1,4 +1,10 @@
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "LinkedListAPI.h"
+#include "CalendarParser.h"
 
 ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
 	return OK;
