@@ -198,8 +198,8 @@ void freeEv(List *list1, List *list2, char * value){
 ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
     // the file pointer will be pointing to the next line so we must pass the current line 
 
-    propList = initializeList(printProperty, deleteProperty, compareProperty);
-    alarmList = initializeList(printAlarm, deleteAlarm, compareAlarm);
+    List propList = initializeList(printProperty, deleteProperty, compareProperty);
+    List alarmList = initializeList(printAlarm, deleteAlarm, compareAlarm);
 
     /* Keeps track of whether or DTSTAMP and UID 
     have been declared. There must be only one
@@ -215,7 +215,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
     char next[75];
     char * hold = currentLine; /* this is so hold isn't NULL */
     int multi;
-    fpos_t filePos;
+    fpos_t * filePos;
     fgetpos(fp,filePos);
 
     while (hold != NULL){
@@ -309,11 +309,11 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                             deleteDT(evDT);
                         return INV_EVENT;
                     }
-                } else if (strcmp(token,"BEGIN")==0 && eventEnd == 0){ /* only allow one Event per calendar object */
-                    if (strcmp(value, "ALARM") == 0 && checkUID == 1 && checkVer == 1){
+                } else if (strcmp(token,"BEGIN")==0){ /* only allow one Event per calendar object */
+                    if (strcmp(value, "ALARM") == 0 && checkUID == 1 && checkDT == 1){
                         //go to parseAlarm 
                         Alarm ** newAlarm = malloc(sizeof(Alarm*));
-                        ErrorCode eCode = parseAlarm(fp);
+                        ErrorCode eCode = parseAlarm(fp, newAlarm);
                         //add alarm to the list
 
                         if (eCode != OK){
@@ -330,8 +330,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                         return INV_EVENT;
                     }
 
-                } else if (strcmp(token,"END")==0 && end == 0){ /* don't want multiple ends */
-                    if (strcmp(value, "VCALENDAR") == 0 && checkUID == 1 && checkVer == 1 && eventEnd == 1){
+                } else if (strcmp(token,"END")==0){ /* don't want multiple ends */
+                    if (strcmp(value, "VCALENDAR") == 0 && checkUID == 1 && checkDT == 1 && eventEnd == 1){
                         end = 1;
                         fsetpos(fp,filePos); // go back one line in the file 
                         //create a calendar object
@@ -622,7 +622,7 @@ int main(int argc, char * argv[]){
     char * fileName = "simpleICFile.ics";
     ErrorCode code =  createCalendar(fileName);
     printf("%s\n", printError(code));
-    
+
 
     return 0;
 }
