@@ -209,12 +209,13 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     char next[75];
     char * hold = currentLine; /* this is so hold isn't NULL */
     int multi;
-    fpos_t filePos;
+    
     
 
     printf("In parseEvent: %s\n", currentLine);
 
     while (hold != NULL){
+    	fpos_t filePos;
     	printf("%s\n", current);
     	int i = fgetpos(fp,&filePos);
     	if (i != 0)
