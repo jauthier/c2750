@@ -162,6 +162,7 @@ Event * initEvent (char * uID, DateTime dt, List propList, List alarmList){
     newEvent->creationDateTime = dt;
     newEvent->properties = propList;
     newEvent->alarms = alarmList;
+    printf("%s\n", printDT(newEvent->creationDateTime));
     return newEvent;
 }
 
