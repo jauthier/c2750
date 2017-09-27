@@ -492,6 +492,8 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                         long pos = atol(holdLong);
                         fseek(fp,pos,SEEK_SET);
                         printf("%d\n", pos);
+                        fgest(next,75,fp);
+                        printf("%s\n", next);
                         if (eCode != OK){
                             free(value);
                             return eCode;
