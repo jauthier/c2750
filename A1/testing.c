@@ -363,7 +363,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     
 }
 
-ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPrt){
+ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPtr){
     /* Keeps track of whether or not there has been a 
     version and product ID declared. There must be only
     one version declared and only one product ID declared */
@@ -480,7 +480,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPrt){
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
                         printf("Going to parseEvent\n");
-                        ErrorCode eCode = parseEvent(fp, next, eventPrt);
+                        ErrorCode eCode = parseEvent(fp, next, eventPtr);
                         if (eCode != OK){
                             free(value);
                             return eCode;
@@ -527,7 +527,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPrt){
         return INV_CAL;
 }
 
-ErrorCode createCalendar(char* fileName, Calendar ** obj,Event **eventPrt){
+ErrorCode createCalendar(char* fileName, Calendar ** obj,Event **eventPtr){
     /* check that the file exists and open it */
     FILE * fp = fopen(fileName,"r");
     if (fp == NULL)
@@ -559,7 +559,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj,Event **eventPrt){
                 /* if the next word is not VCALENDAR then the file is wrong
                 and INV_CAL is returned */
                 if (strcmp(value, "VCALENDAR") == 0){
-                    ErrorCode eCode = parseCalendar(fp, obj);
+                    ErrorCode eCode = parseCalendar(fp, ,eventPtr);
                     freeCal(value, fp);
                     return eCode;
                 } else {
@@ -624,8 +624,8 @@ int main(int argc, char * argv[]){
     
     char * fileName = "simpleICFile.ics";
     Calendar ** cal = malloc(sizeof(Calendar*));
-    Event ** eventPrt = malloc(sizeof(Event*));
-    ErrorCode code =  createCalendar(fileName, cal,eventPrt);
+    Event ** eventPtr = malloc(sizeof(Event*));
+    ErrorCode code =  createCalendar(fileName, cal,eventPtr);
     printf("%s\n", printError(code));
 
     deleteCal(*cal);

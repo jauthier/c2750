@@ -77,7 +77,7 @@ typedef struct ical {
  *@param fileName - a string containing the name of the iCalendar file
  *@param a double pointer to a Calendar struct that needs to be allocated
 **/
-ErrorCode createCalendar(char* fileName, Calendar** obj);
+ErrorCode createCalendar(char* fileName, Calendar** obj, Event ** eventPtr);
 
 
 /** Function to delete all calendar content and free all the memory.
