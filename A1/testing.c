@@ -182,8 +182,7 @@ void freeCal(char * value, FILE * fp){
     fclose(fp);
 }
 
-void freeEv(List *list1, List *list2, char * value, Event ** evPtr){
-	free(evPtr);
+void freeEv(List *list1, List *list2, char * value){
     clearList(list1);
     clearList(list2);
     free(value);
@@ -291,7 +290,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         evDT = initDT(value);
                         checkDT = 1;
                     } else {
-                        freeEv(&propList, &alarmList, value,eventPtr);
+                        freeEv(&propList, &alarmList, value);
                         deleteDT(evDT);
                         if (checkUID == 1)
                             free(evUID);
@@ -304,7 +303,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         checkUID = 1;
                     } else {
                         free(evUID);
-                        freeEv(&propList, &alarmList, value, eventPtr);
+                        freeEv(&propList, &alarmList, value);
                         if (checkDT == 1)
                             deleteDT(evDT);
                         return INV_EVENT;
@@ -318,7 +317,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         //deleteAlarm(newAlarm);
                         ErrorCode eCode = INV_EVENT;
                         if (eCode != OK){
-                            freeEv(&propList, &alarmList, value, eventPtr);
+                            freeEv(&propList, &alarmList, value);
                             if (checkUID == 0)
                             	free(evUID);
                             if (checkDT == 0)
@@ -326,7 +325,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                             return eCode;
                         }
                     } else {
-                        freeEv(&propList, &alarmList, value, eventPtr);
+                        freeEv(&propList, &alarmList, value);
                         if (checkUID == 1)
                             free(evUID);
                         if (checkDT == 0)
@@ -343,7 +342,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         free(value);
                         return OK;
                     } else {
-                        freeEv(&propList, &alarmList, value, eventPtr);
+                        freeEv(&propList, &alarmList, value);
                         if (checkUID == 1)
                             free(evUID);
                         if (checkDT == 0)
@@ -353,7 +352,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                 } else {
                     // handle properties
 
-                    freeEv(&propList, &alarmList, value, eventPtr);
+                    freeEv(&propList, &alarmList, value);
                     if (checkUID == 1)
                         free(evUID);
                     if (checkDT == 0)
@@ -385,7 +384,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
 
     int eventEnd = 0;
     int end = 0;
-    Event ** eventPtr = malloc(sizeof(Event*));
+    Event ** eventPtr;
 
     while (hold != NULL){
     	printf("%s\n", current);
@@ -394,8 +393,11 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
             /* this handles the case where there are chracters but no : or ; 
                if the line is just whitespace it will be ignored */
-            if (isWhitespace(current) != 1) 
+            if (isWhitespace(current) != 1){
+            	if (eventEnd == 1)
+            		free(eventPtr);
                 return INV_CAL;
+            } 
         } else {
             /* parse the line */
             char * token = strtok(current, ":; \t");
@@ -423,6 +425,8 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                 /* check if the value following the key word is NULL */
                 if (holdVal == NULL){
                     fclose(fp);
+                    if (eventEnd == 1)
+            			free(eventPtr);
                     if (strcmp(token, "VERSION") == 0)
                         return INV_VER;
                     else if (strcmp(token, "PRODID") == 0)
@@ -456,7 +460,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                     strcpy(next, buffer);
                 }
                 /* ------------Identify Key Word----------- */
-                if (strcmp(token, "VERSION") == 0){
+                if (strcmp(token, "VERSION") == 0 && eventEnd == 0){
                     if (checkVer == 0){
                         /* make sure this is the only version */
                         calVer = atof(value);
@@ -473,7 +477,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                             free(calID);
                         return DUP_VER;
                     }
-                } else if (strcmp(token,"PRODID")==0){
+                } else if (strcmp(token,"PRODID")==0 && eventEnd == 0){
                     if (checkID == 0){ /* make sure this is the only declaration of the version */
                         calID = malloc (sizeof(char)*(strlen(value)+1));
                         strcpy(calID, value);
@@ -486,14 +490,12 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                 } else if (strcmp(token,"BEGIN")==0 && eventEnd == 0){ /* only allow one Event per calendar object */
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
-                        printf("Going to parseEvent\n");
+                        eventPtr = malloc(sizeof(Event*));
                         char * holdLong = malloc(sizeof(char)*10);
                         ErrorCode eCode = parseEvent(fp, next, eventPtr,holdLong);
                         long pos = atol(holdLong);
                         fseek(fp,pos,SEEK_SET);
-                        printf("%d\n", pos);
                         fgets(next,75,fp);
-                        printf("%s\n", next);
                         if (eCode != OK){
                             free(value);
                             return eCode;
@@ -521,11 +523,13 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                         return INV_CAL;
                     }
                 } else {
-                    free(value);
+                    free(value);            			
                     if (checkID == 1)
                         free(calID);
-                    if (eventEnd == 1)
+                    if (eventEnd == 1){
                         deleteEvent(*eventPtr);
+                    	free(eventPtr);
+                    }
                     return INV_CAL;
                 }
                 free(value);
