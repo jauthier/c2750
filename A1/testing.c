@@ -305,7 +305,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                     if (strcmp(value, "ALARM") == 0 && checkUID == 1 && checkDT == 1){
                         //go to parseAlarm 
                         Alarm ** newAlarm = malloc(sizeof(Alarm*));
-                        ErrorCode eCode = parseAlarm(fp, next, newAlarm);
+                        //ErrorCode eCode = parseAlarm(fp, next, newAlarm);
                         //add alarm to the list
 
                         if (eCode != OK){
@@ -323,7 +323,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
 
                 } else if (strcmp(token,"END")==0){ /* don't want multiple ends */
                     if (strcmp(value, "VCALENDAR") == 0 && checkUID == 1 && checkDT == 1){
-                        fsetpos(fp,filePos); // go back one line in the file 
+                        fsetpos(fp,&filePos); // go back one line in the file 
                         //create a calendar object
                     } else {
                         freeEv(&propList, &alarmList, value);
