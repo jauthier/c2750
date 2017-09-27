@@ -189,9 +189,10 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
     return OK;
 }
 
-ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
+ErrorCode parseEvent (FILE ** fpHold,char * currentLine, Event ** eventPtr){
     // the file pointer will be pointing to the next line so we must pass the current line 
 
+	FILE * fp = *fpHold;
     List propList = initializeList(printProperty, deleteProperty, compareProperty);
     List alarmList = initializeList(printAlarm, deleteAlarm, compareAlarm);
 
@@ -340,7 +341,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
                         
                         fsetpos(fp,&filePos); // go back one line in the file
                         fgets(next,75,fp);
-                        printf("%s\n", next); 
+                        printf("%s\n", next);
+                        *fpHold = fp; 
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
@@ -369,7 +371,9 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     
 }
 
-ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
+ErrorCode parseCalendar (FILE ** fpHold, Calendar ** obj){
+
+	FILE * fp = *fpHold;
     /* Keeps track of whether or not there has been a 
     version and product ID declared. There must be only
     one version declared and only one product ID declared */
@@ -487,7 +491,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
                         printf("Going to parseEvent\n");
-                        ErrorCode eCode = parseEvent(fp, next, eventPtr);
+                        ErrorCode eCode = parseEvent(&fp, next, eventPtr);
                         if (eCode != OK){
                             free(value);
                             return eCode;
@@ -568,7 +572,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                 /* if the next word is not VCALENDAR then the file is wrong
                 and INV_CAL is returned */
                 if (strcmp(value, "VCALENDAR") == 0){
-                    ErrorCode eCode = parseCalendar(fp,obj);
+                    ErrorCode eCode = parseCalendar(fpHold,obj);
                     freeCal(value, fp);
                     return eCode;
                 } else {
