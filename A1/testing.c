@@ -179,7 +179,7 @@ char * printEvent(Event * toPrint){
 	char * prop = toString(toPrint->properties);
 	char * alarm = toString(toPrint->alarms);
 	int len = strlen(uID) + strlen(dt) + strlen(prop) + strlen(alarm) + 5;
-	char eventStr = malloc(sizeof(char)*len);
+	char * eventStr = malloc(sizeof(char)*len);
 	sprintf(eventStr, "%s\n%s\n%s\n%s\n",uID,dt,prop,alarm);
 }
 
