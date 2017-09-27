@@ -512,10 +512,10 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                 }
             }
         }
+        free(value);
         strcpy(current,next);
     }
 
-    free(value);
     if (end == 1)
         return OK;
     else 
@@ -585,9 +585,9 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                         multi = 0;
                     strcpy(next, buffer);
                 }
+                strcpy(current,next);
             }
             free(value);
-            strcpy(current,next);
         }
     }
     fclose(fp);
@@ -618,7 +618,8 @@ const char * printError (ErrorCode err){
 int main(int argc, char * argv[]){
     
     char * fileName = "simpleICFile.ics";
-    ErrorCode code =  createCalendar(fileName);
+    Calendar ** cal;
+    ErrorCode code =  createCalendar(fileName, cal);
     printf("%s\n", printError(code));
 
 
