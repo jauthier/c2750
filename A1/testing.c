@@ -218,7 +218,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     	if (i != 0)
     		printf("getpos didnt work\n");
         hold = fgets(next,75,fp);
-        printf("%s\n", next);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
             /* this handles the case where there are chracters but no : or ; 
@@ -339,7 +338,9 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         *eventPtr = temp;
                         
-                        fsetpos(fp,&filePos); // go back one line in the file 
+                        fsetpos(fp,&filePos); // go back one line in the file
+                        fgets(next,75,fp);
+                        printf("%s\n", ); 
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
