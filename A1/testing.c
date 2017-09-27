@@ -34,6 +34,11 @@ int checkMultiLine (char * firstLine, char * secondLine){
     return 0;
 }
 
+void freeCal(char * value, FILE * fp){
+    free(value);
+    fclose(fp);
+}
+
 ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
 	return OK;
 }
