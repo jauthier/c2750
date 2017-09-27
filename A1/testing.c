@@ -330,7 +330,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                     if (strcmp(value, "VEVENT") == 0 && checkUID == 1 && checkDT == 1){
                         fsetpos(fp,&filePos); // go back one line in the file 
                         //create a event object
-                        Event * calEvent = initEvent(evUID,evDT,propList,alarmList);
+                        Event * calEvent = initEvent(evUID,*evDT,propList,alarmList);
                         * eventPrt = calEvent;
                         return OK;
                     } else {
