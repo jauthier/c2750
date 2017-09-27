@@ -217,8 +217,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, long posH
     
     while (hold != NULL){
     	
-    	*posHold = ftell(fp);
-    	printf("%d: %s\n", *posHold, current);
+    	posHold = ftell(fp);
+    	printf("%d: %s\n", posHold, current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
