@@ -226,6 +226,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
             if (isWhitespace(current) != 1){
                 clearList(&propList);
                 clearList(&alarmList);
+                if (checkUID == 1)
+                	free(evUID);
                 return INV_EVENT;
             }
 
@@ -257,6 +259,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                 if (holdVal == NULL){
                     clearList(&propList);
                     clearList(&alarmList);
+                    if (checkUID == 1)
+                		free(evUID);
                     return INV_EVENT;
                 }
                 int len = strlen(holdVal) + 1;
@@ -318,9 +322,9 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         ErrorCode eCode = INV_EVENT;
                         if (eCode != OK){
                             freeEv(&propList, &alarmList, value);
-                            if (checkUID == 0)
+                            if (checkUID == 1)
                             	free(evUID);
-                            if (checkDT == 0)
+                            if (checkDT == 1)
                             	deleteDT(evDT);
                             return eCode;
                         }
@@ -328,7 +332,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         freeEv(&propList, &alarmList, value);
                         if (checkUID == 1)
                             free(evUID);
-                        if (checkDT == 0)
+                        if (checkDT == 1)
                             deleteDT(evDT);
                         return INV_EVENT;
                     }
@@ -340,12 +344,13 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         *eventPtr = temp;
                         sprintf(holdLong,"%d",pos);
                         free(value);
+                        free(evUID);
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
                         if (checkUID == 1)
                             free(evUID);
-                        if (checkDT == 0)
+                        if (checkDT == 1)
                             deleteDT(evDT);
                         return INV_EVENT;
                     }
@@ -355,7 +360,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                     freeEv(&propList, &alarmList, value);
                     if (checkUID == 1)
                         free(evUID);
-                    if (checkDT == 0)
+                    if (checkDT == 1)
                         deleteDT(evDT);
                     return INV_EVENT;
                 }
