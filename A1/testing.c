@@ -207,8 +207,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
     char next[75];
     char * hold = currentLine; /* this is so hold isn't NULL */
     int multi;
-    fpos_t * filePos;
-    fgetpos(fp,filePos);
+    fpos_t filePos;
+    fgetpos(fp,&filePos);
 
     while (hold != NULL){
         hold = fgets(next,75,fp);
@@ -341,7 +341,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                 }
             }
         }
-        fgetpos(fp,filePos);
+        fgetpos(fp,&filePos);
         strcpy(current,next);
     }
 
