@@ -622,6 +622,7 @@ int main(int argc, char * argv[]){
     char * fileName = "simpleICFile.ics";
     ErrorCode code =  createCalendar(fileName);
     printf("%s\n", printError(code));
+    
 
     return 0;
 }
