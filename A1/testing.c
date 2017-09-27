@@ -182,7 +182,8 @@ void freeCal(char * value, FILE * fp){
     fclose(fp);
 }
 
-void freeEv(List *list1, List *list2, char * value){
+void freeEv(List *list1, List *list2, char * value, Event ** evPtr){
+	free(evPtr);
     clearList(list1);
     clearList(list2);
     free(value);
@@ -218,7 +219,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
     while (hold != NULL){
     	
     	pos = ftell(fp);
-    	printf("%d: %s\n", pos, current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
@@ -291,7 +291,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         evDT = initDT(value);
                         checkDT = 1;
                     } else {
-                        freeEv(&propList, &alarmList, value);
+                        freeEv(&propList, &alarmList, value,eventPtr);
                         deleteDT(evDT);
                         if (checkUID == 1)
                             free(evUID);
@@ -304,7 +304,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         checkUID = 1;
                     } else {
                         free(evUID);
-                        freeEv(&propList, &alarmList, value);
+                        freeEv(&propList, &alarmList, value, eventPtr);
                         if (checkDT == 1)
                             deleteDT(evDT);
                         return INV_EVENT;
@@ -318,7 +318,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         //deleteAlarm(newAlarm);
                         ErrorCode eCode = INV_EVENT;
                         if (eCode != OK){
-                            freeEv(&propList, &alarmList, value);
+                            freeEv(&propList, &alarmList, value, eventPtr);
                             if (checkUID == 0)
                             	free(evUID);
                             if (checkDT == 0)
@@ -326,7 +326,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                             return eCode;
                         }
                     } else {
-                        freeEv(&propList, &alarmList, value);
+                        freeEv(&propList, &alarmList, value, eventPtr);
                         if (checkUID == 1)
                             free(evUID);
                         if (checkDT == 0)
@@ -339,11 +339,11 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         //create a event object
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         *eventPtr = temp;
-
                         sprintf(holdLong,"%d",pos);
+                        free(value);
                         return OK;
                     } else {
-                        freeEv(&propList, &alarmList, value);
+                        freeEv(&propList, &alarmList, value, eventPtr);
                         if (checkUID == 1)
                             free(evUID);
                         if (checkDT == 0)
@@ -353,7 +353,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                 } else {
                     // handle properties
 
-                    freeEv(&propList, &alarmList, value);
+                    freeEv(&propList, &alarmList, value, eventPtr);
                     if (checkUID == 1)
                         free(evUID);
                     if (checkDT == 0)
@@ -640,8 +640,10 @@ int main(int argc, char * argv[]){
     ErrorCode code =  createCalendar(fileName, cal);
     printf("%s\n", printError(code));
 
-    deleteCal(*cal);
 
+    if (code == OK)
+    	deleteCal(*cal);
+    free(cal);
 
     return 0;
 }
