@@ -337,8 +337,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                         freeEv(&propList, &alarmList, value);
                         if (checkUID == 1)
                             free(evUID);
-                        if (eventEnd == 1)
-                            deleteEvent(*eventPrt);
                         return INV_EVENT;
                     }
                 } else {
@@ -347,8 +345,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                     freeEv(&propList, &alarmList, value);
                     if (checkUID == 1)
                         free(evUID);
-                    if (eventEnd == 1)
-                        deleteEvent(*eventPrt);
                     return INV_EVENT;
                 }
             }
@@ -510,8 +506,8 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                         deleteEvent(*eventPrt);
                     return INV_CAL;
                 }
+                free(value);
             }
-            free(value);
         }
         strcpy(current,next);
     }
