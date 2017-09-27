@@ -363,7 +363,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     
 }
 
-ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
+ErrorCode parseCalendar (FILE * fp, Calendar ** obj,Event **eventPrt){
     /* Keeps track of whether or not there has been a 
     version and product ID declared. There must be only
     one version declared and only one product ID declared */
@@ -379,7 +379,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
 
     int eventEnd = 0;
     int end = 0;
-    Event ** eventPrt = malloc(sizeof(Event*));
+    
 
     while (hold != NULL){
         hold = fgets(next,75,fp);
@@ -527,7 +527,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
         return INV_CAL;
 }
 
-ErrorCode createCalendar(char* fileName, Calendar ** obj){
+ErrorCode createCalendar(char* fileName, Calendar ** obj,Event **eventPrt){
     /* check that the file exists and open it */
     FILE * fp = fopen(fileName,"r");
     if (fp == NULL)
@@ -624,7 +624,8 @@ int main(int argc, char * argv[]){
     
     char * fileName = "simpleICFile.ics";
     Calendar ** cal = malloc(sizeof(Calendar*));
-    ErrorCode code =  createCalendar(fileName, cal);
+    Event ** eventPrt = malloc(sizeof(Event*));
+    ErrorCode code =  createCalendar(fileName, cal,eventPrt);
     printf("%s\n", printError(code));
 
     deleteCal(*cal);
