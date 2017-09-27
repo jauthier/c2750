@@ -6,6 +6,9 @@
 #include "LinkedListAPI.h"
 #include "CalendarParser.h"
 
+void deleteEvent (Event * toDelete);
+
+
 /* determines whether or no a line is completely composed of whitespace */
 int isWhitespace (char * str){
     if (str == NULL)
