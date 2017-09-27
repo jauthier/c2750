@@ -551,7 +551,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                 and INV_CAL is returned */
                 if (strcmp(value, "VCALENDAR") == 0){
                     ErrorCode eCode = parseCalendar(fp, obj);
-                    freeCal(value,fp);
+                    fclose(fp);
                     return eCode;
                 } else {
                     freeCal(value, fp);
