@@ -6,6 +6,8 @@
 #include "LinkedListAPI.h"
 #include "CalendarParser.h"
 
+fpos_t filePos;
+
 
 void deleteEvent (Event * toDelete);
 
@@ -214,9 +216,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr,fpos_t * p
     
     
     while (hold != NULL){
-    	printf("%s\n", current);
-    	fpos_t filePos;
     	fgetpos(fp,&filePos);
+    	printf("%d: %s\n", &filePos, current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
@@ -338,10 +339,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr,fpos_t * p
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         *eventPtr = temp;
                         
-                        //fsetpos(fp,); // go back one line in the file
-                        fgets(next,75,fp);
-                        *pos = filePos;
-                        printf("%d  %d\n",&filePos,*pos); 
+                        //fsetpos(fp,); // go back one line in the file 
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
@@ -488,10 +486,8 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
                         printf("Going to parseEvent\n");
-                        fpos_t * pos = malloc(sizeof(fpos_t));
-                        ErrorCode eCode = parseEvent(fp, next, eventPtr, pos);
-                        printf("%d\n", *pos);
-                        fsetpos(fp,pos);
+                        ErrorCode eCode = parseEvent(fp, next, eventPtr);
+                        fsetpos(fp,&filePos);
                         if (eCode != OK){
                             free(value);
                             return eCode;
