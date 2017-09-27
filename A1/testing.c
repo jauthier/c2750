@@ -211,9 +211,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     int multi;
     
     
-
-    printf("In parseEvent: %s\n", currentLine);
-
     while (hold != NULL){
     	fpos_t filePos;
     	printf("%s\n", current);
@@ -221,6 +218,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     	if (i != 0)
     		printf("getpos didnt work\n");
         hold = fgets(next,75,fp);
+        printf("%s\n", next);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
             /* this handles the case where there are chracters but no : or ; 
