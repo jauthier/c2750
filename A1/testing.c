@@ -192,7 +192,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
     return OK;
 }
 
-ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
+ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, long * posHold){
     // the file pointer will be pointing to the next line so we must pass the current line 
 
     List propList = initializeList(printProperty, deleteProperty, compareProperty);
@@ -212,13 +212,13 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
     char next[75];
     char * hold = currentLine; /* this is so hold isn't NULL */
     int multi;
-    fpos_t filePos;
+    long pos;
     
     
     while (hold != NULL){
-    	fpos_t filePos;
-    	fgetpos(fp,&filePos);
-    	printf("%d: %s\n", &filePos, current);
+    	
+    	pos = ftell(fp);
+    	printf("%d: %s\n", pos, current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
@@ -339,8 +339,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
                         //create a event object
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         *eventPtr = temp;
-                        
-                        //fsetpos(fp,); // go back one line in the file 
+                        *posHold = pos;
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
@@ -487,10 +486,9 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                     if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                         //go to parseEvent 
                         printf("Going to parseEvent\n");
-                        ErrorCode eCode = parseEvent(fp, next, eventPtr);
-                        fpos_t filePos;
-                        fgetpos(fp,&filePos);
-                        fsetpos(fp,&filePos);
+                        long * pos;
+                        ErrorCode eCode = parseEvent(fp, next, eventPtr,pos);
+                        fseek(fp,pos,SEEK_SET);
                         if (eCode != OK){
                             free(value);
                             return eCode;
