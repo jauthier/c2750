@@ -212,13 +212,13 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, long * po
     char next[75];
     char * hold = currentLine; /* this is so hold isn't NULL */
     int multi;
-    long pos;
+    //long pos;
     
     
     while (hold != NULL){
     	
-    	pos = ftell(fp);
-    	printf("%d: %s\n", pos, current);
+    	*posHold = ftell(fp);
+    	printf("%d: %s\n", *posHold, current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
@@ -339,7 +339,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, long * po
                         //create a event object
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         *eventPtr = temp;
-                        *posHold = pos;
                         return OK;
                     } else {
                         freeEv(&propList, &alarmList, value);
