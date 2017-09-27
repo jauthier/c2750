@@ -2,17 +2,4 @@
     	
 COMMENT: this is a comment
 BEGIN:VCALENDAR
-PRODID:blah
-PRODID://test/1234 cats are for life //test/1234 cats are for life //test
- /1234
-
-VERSION:2.0
-VERSION:2.0
-BEGIN:VEVENT
-UDI:test@uoguelph.ca
-DTSTAMP:20170918T120000Z
-SUMMARY:This is a summary for testing purposes only. Its must be a multi 
- multi line value because I don't know if this will work out for I wanted
-  it to.
-END:VEVENT
 END:VCALENDAR

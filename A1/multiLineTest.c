@@ -551,16 +551,16 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                 and INV_CAL is returned */
                 if (strcmp(value, "VCALENDAR") == 0){
                     ErrorCode eCode = parseCalendar(fp, obj);
-                    fclose(fp);
+                    //fclose(fp);
                     return eCode;
                 } else {
-                    freeCal(value, fp);
+                    //freeCal(value, fp);
                     return INV_CAL;
                 }
             } else {
                 /* Comments can be ignored, anything else is invalid */
                 if (strcmp(token, "COMMENT") != 0){
-                    freeCal(value, fp);
+                    //freeCal(value, fp);
                     return INV_CAL;
                 }
                 char next[75];
