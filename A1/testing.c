@@ -348,7 +348,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         char * hold = printEvent(temp);
                         printf("%s\n", hold);
-                        *eventPrt = temp;
+                        *eventPtr = temp;
                         
                         fsetpos(fp,&filePos); // go back one line in the file 
                         return OK;
