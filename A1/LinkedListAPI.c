@@ -236,7 +236,9 @@ char* toString(List list){
         }
         return str;
     } else {
-        return NULL;
+        char * str = malloc(sizeof(char));
+        strcpy(str,"\0");
+        return str;
     }
 }
 
