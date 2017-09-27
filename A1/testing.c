@@ -623,7 +623,7 @@ const char * printError (ErrorCode err){
 int main(int argc, char * argv[]){
     
     char * fileName = "simpleICFile.ics";
-    Calendar ** cal;
+    Calendar ** cal = malloc(sizeof(Calendar*));
     ErrorCode code =  createCalendar(fileName, cal);
     printf("%s\n", printError(code));
 
