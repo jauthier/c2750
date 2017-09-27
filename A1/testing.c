@@ -34,6 +34,10 @@ int checkMultiLine (char * firstLine, char * secondLine){
     return 0;
 }
 
+void deleteDT(DateTime * toDelete){
+    free(toDelete);
+}
+
 void deleteEvent (Event * toDelete){
     deleteDT(&toDelete->creationDateTime);
     clearList(&(toDelete->properties));
