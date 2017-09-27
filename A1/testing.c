@@ -34,9 +34,21 @@ int checkMultiLine (char * firstLine, char * secondLine){
     return 0;
 }
 
+void deleteEvent (Event * toDelete){
+    deleteDT(&toDelete->creationDateTime);
+    clearList(&(toDelete->properties));
+    clearList(&(toDelete->alarms));
+    free(toDelete);
+}
+
 void freeCal(char * value, FILE * fp){
     free(value);
     fclose(fp);
+}
+
+ErrorCode parseEvent(FILE * fp, char * currentLine, Event ** eventPtr){
+	return OK;
+
 }
 
 ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
