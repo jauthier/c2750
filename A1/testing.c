@@ -174,20 +174,6 @@ void deleteEvent (Event * toDelete){
     free(toDelete);
 }
 
-// char * printEvent(Event * toPrint){
-// 	char * uID = toPrint->UID;
-// 	char * dt = printDT(&(toPrint->creationDateTime));
-// 	char * prop = toString(toPrint->properties);
-// 	char * alarm = toString(toPrint->alarms);
-// 	int len = strlen(uID) + strlen(dt) + strlen(prop) + strlen(alarm) + 5;
-// 	char * eventStr = malloc(sizeof(char)*len);
-// 	sprintf(eventStr, "%s\n%s\n%s\n%s\n",uID,dt,prop,alarm);
-// 	free(dt);
-// 	free(prop);
-// 	free(alarm);
-// 	return eventStr;
-// }
-
 void freeCal(char * value, FILE * fp){
     free(value);
     fclose(fp);
@@ -346,7 +332,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr){
                     if (strcmp(value, "VEVENT") == 0 && checkUID == 1 && checkDT == 1){
                         //create a event object
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
-                        //char * hold = printEvent(temp);
                         *eventPtr = temp;
                         
                         fsetpos(fp,&filePos); // go back one line in the file 
