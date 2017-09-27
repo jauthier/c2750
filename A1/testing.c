@@ -187,6 +187,10 @@ void freeEv(List *list1, List *list2, char * value){
     free(value);
 }
 
+ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
+    return OK;
+}
+
 ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
     // the file pointer will be pointing to the next line so we must pass the current line 
 
@@ -305,7 +309,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPrt){
                     if (strcmp(value, "ALARM") == 0 && checkUID == 1 && checkDT == 1){
                         //go to parseAlarm 
                         Alarm ** newAlarm = malloc(sizeof(Alarm*));
-                        //ErrorCode eCode = parseAlarm(fp, next, newAlarm);
+                        ErrorCode eCode = parseAlarm(fp, next, newAlarm);
                         //add alarm to the list
 
                         if (eCode != OK){
