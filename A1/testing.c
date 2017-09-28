@@ -532,6 +532,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         ErrorCode eCode = parseAlarm(fp, next, newAlarm, holdLong);
                         //add alarm to the list
                         insertFront(&alarmList, *newAlarm);
+                        free(newAlarm);
                         if (eCode != OK){
                             freeEv(&propList, &alarmList, value);
                             if (checkUID == 1)
