@@ -526,11 +526,10 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                 } else if (strcmp(token,"BEGIN")==0){ /* only allow one Event per calendar object */
                     if (strcmp(value, "VALARM") == 0 && checkUID == 1 && checkDT == 1){
                         //go to parseAlarm 
-                        //Alarm ** newAlarm = malloc(sizeof(Alarm*));
-                        //ErrorCode eCode = parseAlarm(fp, next, newAlarm);
+                        Alarm ** newAlarm = malloc(sizeof(Alarm*));
+                        ErrorCode eCode = parseAlarm(fp, next, newAlarm);
                         //add alarm to the list
-                        //deleteAlarm(newAlarm);
-                        ErrorCode eCode = INV_EVENT;
+                        insertFront(&alarmList, *newAlarm);
                         if (eCode != OK){
                             freeEv(&propList, &alarmList, value);
                             if (checkUID == 1)
