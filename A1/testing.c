@@ -256,6 +256,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
     while (hold != NULL){
     	pos = ftell(fp);
         hold = fgets(next,75,fp);
+        printf("%s\n", current);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
             /* this handles the case where there are chracters but no : or ; 
