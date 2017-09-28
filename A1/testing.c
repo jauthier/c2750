@@ -235,11 +235,163 @@ int evPropCheck(Property * prop, List propList){
 
 ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * holdLong){
 
-    //List propList = initializeList(printProperty, deleteProperty, compareProperty);
+    List propList = initializeList(printProperty, deleteProperty, compareProperty);
 
+    int checkAction = 0;
+    int checkTrigger = 0;
+    int checkDuration = 0;
+    int checkRepeat = 0;
 
+    char * action;
+    char * trigger;
 
-    return OK;
+    /* parsing bits */
+    char current[75];
+    strcpy(current,currentLine);
+    char next[75];
+    char * hold = currentLine; /* this is so hold isn't NULL */
+    int multi;
+    long pos;
+
+    while (hold != NULL){
+    	pos = ftell(fp);
+        hold = fgets(next,75,fp);
+        /* make sure the line can be parsed */
+        if (strchr(current,':') == NULL && strchr(current,';') == NULL){
+            /* this handles the case where there are chracters but no : or ; 
+               if the line is just whitespace it will be ignored */
+            if (isWhitespace(current) != 1){
+                clearList(&propList);
+                clearList(&alarmList);
+                if (checkAction == 1)
+                	free(action);
+                if  (checkTrigger == 1)
+                	deleteDT(trigger);
+                return INV_EVENT;
+            }
+
+        } else {
+        	/* parse the line */
+            char * token = strtok(current, ":; \t");
+            char * holdVal = strtok(NULL, ":;\n");
+
+            /* For comments it doesn't matter if the value is empty */
+            if (strcmp(token,"COMMENT") == 0){
+                /* if the line doesnt exist then it can't be a multi line */
+                if (hold != NULL)
+                    multi = checkMultiLine(current, next);
+                else
+                    multi = 0;
+                while (multi == 1){
+                    /* check if the line after the next line is also a multi line */
+                    char buffer[75];
+                    hold = fgets(buffer, 75, fp);
+            
+                    if (hold != NULL)
+                        multi = checkMultiLine(next, buffer);
+                    else 
+                        multi = 0;
+                    strcpy(next, buffer);
+                }
+            } else {
+            	/* check if the value following the key word is NULL */
+                if (holdVal == NULL){
+                    clearList(&propList);
+                    clearList(&alarmList);
+                    if (checkAction == 1)
+                		free(action);
+                	if  (checkTrigger == 1)
+                		deleteDT(trigger);
+                    return INV_EVENT;
+                }
+                int len = strlen(holdVal) + 1;
+                char * value = malloc(sizeof(char)*len);
+                strcpy(value, holdVal);
+
+                /* ------------Check for multi lines----------- */
+                if (hold != NULL)
+                    multi = checkMultiLine(current, next);
+                else
+                    multi = 0;
+                while (multi == 1){ /* check if the line after the next line is also a multi line */
+                    char buffer[75];
+                    hold = fgets(buffer, 75, fp);
+            
+                    if (hold != NULL)
+                        multi = checkMultiLine(next, buffer);
+                    else 
+                        multi = 0;
+                    /* realloc and add the next line to the end of value */
+                    char * temp = strtok(next, "\n");
+                    temp++;
+                    len = len + strlen(temp);
+                    value = realloc(value, len);
+                    strcat(value, temp);
+                    strcpy(next, buffer);
+                }
+                /* ------------Identify Key Word----------- */
+                if (strcmp(token,"ACTION")==0){
+                	if (checkAction == 0){
+                		action = malloc(sizeof(char)*(strlen(value)+1));
+                		strcpy(action, value);
+                		checkAction = 1;
+                	} else {
+                		free(value);
+                		clearList(propList);
+                		free(action);
+                		if (checkTrigger == 1)
+                			free(trigger);
+                		return INV_EVENT;
+                	}
+                } else if (strcmp(token,"TRIGGER")==0){
+                	if (checkTrigger == 0){
+                		trigger = malloc(sizeof(char)*(strlen(value)+1));
+                		strcpy(trigger,value);
+                		checkTrigger = 1;
+                	} else {
+                		free(value);
+                		clearList(propList);
+                		free(trigger);
+                		if (checkAction == 1)
+                			free(action);
+                		return INV_EVENT;
+                	}
+                } else if (strcmp(token,"END")==0){
+                	if (strcmp(value,"VALARM")==0&&checkAction == 1 && checkAction == 1){
+                		if (checkDuration == 1 || checkRepeat == 1){
+                			if (!(checkDuration == 1 && checkRepeat == 1)){
+                				free(value);
+                				clearList(propList);
+                				free(trigger);
+                				if (checkAction == 1)
+                					free(action);
+                				return INV_EVENT;
+                			}
+                		}
+                		// the alarm is good to be made
+                		Alarm * newAlarm = initAlarm(action, trigger, propList);
+                		*alarmPtr = newAlarm;
+                		sprintf(holdLong,"%d",pos);
+                        free(value);
+                        free(action);
+                        free(trigger);
+                		return OK;
+                	} else {
+                		free(value);
+                		clearList(propList);
+                		free(trigger);
+                		if (checkAction == 1)
+                			free(action);
+                		return INV_EVENT;
+                	}
+
+                } else {
+                	return INV_EVENT;
+                }
+                free(value);
+            }
+        }
+    }
 }
 
 ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * holdLong){
@@ -367,7 +519,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         return INV_EVENT;
                     }
                 } else if (strcmp(token,"BEGIN")==0){ /* only allow one Event per calendar object */
-                    if (strcmp(value, "ALARM") == 0 && checkUID == 1 && checkDT == 1){
+                    if (strcmp(value, "VALARM") == 0 && checkUID == 1 && checkDT == 1){
                         //go to parseAlarm 
                         //Alarm ** newAlarm = malloc(sizeof(Alarm*));
                         //ErrorCode eCode = parseAlarm(fp, next, newAlarm);
