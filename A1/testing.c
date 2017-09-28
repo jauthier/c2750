@@ -262,11 +262,10 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
                if the line is just whitespace it will be ignored */
             if (isWhitespace(current) != 1){
                 clearList(&propList);
-                clearList(&alarmList);
                 if (checkAction == 1)
                 	free(action);
                 if  (checkTrigger == 1)
-                	deleteDT(trigger);
+                	free(trigger);
                 return INV_EVENT;
             }
 
