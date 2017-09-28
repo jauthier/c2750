@@ -527,6 +527,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                     if (strcmp(value, "VALARM") == 0 && checkUID == 1 && checkDT == 1){
                         //go to parseAlarm 
                         Alarm ** newAlarm = malloc(sizeof(Alarm*));
+                        char * holdLong = malloc(sizeof(char)*10);
                         ErrorCode eCode = parseAlarm(fp, next, newAlarm);
                         //add alarm to the list
                         insertFront(&alarmList, *newAlarm);
@@ -538,6 +539,10 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                             	deleteDT(evDT);
                             return eCode;
                         }
+                        long pos = atol(holdLong);
+                        fseek(fp,pos,SEEK_SET);
+                        fgets(next,75,fp);
+                        free(holdLong);
                     } else {
                         freeEv(&propList, &alarmList, value);
                         if (checkUID == 1)
