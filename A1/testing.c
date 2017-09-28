@@ -412,7 +412,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                 	int check = evPropCheck(newProp,propList);
 
                 	if (check == 1){
-                		insertFront((void *)propList, newProp);
+                		insertFront(&propList, (void *)newProp);
                 	} else {
                 		deleteProperty(newProp);
 	                    freeEv(&propList, &alarmList, value);
