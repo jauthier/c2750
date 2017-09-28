@@ -297,11 +297,10 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
             	/* check if the value following the key word is NULL */
                 if (holdVal == NULL){
                     clearList(&propList);
-                    clearList(&alarmList);
                     if (checkAction == 1)
                 		free(action);
                 	if  (checkTrigger == 1)
-                		deleteDT(trigger);
+                		free(trigger);
                     return INV_EVENT;
                 }
                 int len = strlen(holdVal) + 1;
@@ -337,7 +336,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
                 		checkAction = 1;
                 	} else {
                 		free(value);
-                		clearList(propList);
+                		clearList(&propList);
                 		free(action);
                 		if (checkTrigger == 1)
                 			free(trigger);
@@ -350,7 +349,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
                 		checkTrigger = 1;
                 	} else {
                 		free(value);
-                		clearList(propList);
+                		clearList(&propList);
                 		free(trigger);
                 		if (checkAction == 1)
                 			free(action);
@@ -361,10 +360,9 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
                 		if (checkDuration == 1 || checkRepeat == 1){
                 			if (!(checkDuration == 1 && checkRepeat == 1)){
                 				free(value);
-                				clearList(propList);
+                				clearList(&propList);
                 				free(trigger);
-                				if (checkAction == 1)
-                					free(action);
+                				free(action);
                 				return INV_EVENT;
                 			}
                 		}
@@ -378,14 +376,21 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
                 		return OK;
                 	} else {
                 		free(value);
-                		clearList(propList);
-                		free(trigger);
+                		clearList(&propList);
+                		if (checkTrigger == 1)
+                			free(trigger);
                 		if (checkAction == 1)
                 			free(action);
                 		return INV_EVENT;
                 	}
 
                 } else {
+                	free(value);
+                	clearList(&propList);
+                	if (checkTrigger == 1)
+                		free(trigger);
+               		if (checkAction == 1)
+               			free(action);
                 	return INV_EVENT;
                 }
                 free(value);
