@@ -188,6 +188,51 @@ void freeEv(List *list1, List *list2, char * value){
     free(value);
 }
 
+/* returns 0 if the property is not valid
+   returns 1 if the property is valid
+*/
+int evPropCheck(Property * prop, List propList){
+    char * propName = prop->propName;    
+
+    if (strcmp(propName,"DSTART")==0||strcmp(propName,"CLASS")==0||strcmp(propName,"CREATED")==0||
+        strcmp(propName,"DESCRIPTION")==0||strcmp(propName,"GEO")==0||strcmp(propName,"LAST-MOD")==0||
+        strcmp(propName,"LOCATION")==0||strcmp(propName,"ORGANIZER")==0||strcmp(propName,"SEQ")==0||
+        strcmp(propName,"PRIORITY")==0||strcmp(propName,"STATUS")==0||strcmp(propName,"SUMMARY")==0||
+        strcmp(propName,"TRANSP")==0||strcmp(propName,"URL")==0||strcmp(propName,"RECURID")==0||
+        strcmp(propName,"RRULE")==0){
+
+        //check the list for duplicates
+        int check = findElement((void*)prop, list);
+        if (check == 1)
+            return 0;
+        else 
+            return 1;
+    } else if (strcmp(propName,"DURATION")==0||strcmp(propName,"DTEND")==0){
+        //check the list for the other
+        //need to make a temporary struct of the other
+        Property *temp;
+        if  (strcmp(propName,"DURATION")==0){
+            temp = initProperty("DTEND","temp");
+        } else {
+            temp = initProperty("DURATION","temp");
+        }
+        int check = findElement((void*)temp, list);
+        free(temp);
+        if (check == 1)
+            return 0;
+        else 
+            return 1;
+    } else if (strcmp(propName,"ATTACH")==0||strcmp(propName,"ATTENDEE")==0||strcmp(propName,"CATEGORIES")==0||
+        strcmp(propName,"COMMENT")==0||strcmp(propName,"CONTACT")==0||strcmp(propName,"EXDATE")==0||
+        strcmp(propName,"RSTATUS")==0||strcmp(propName,"RELATED")==0||strcmp(propName,"REASOURSES")==0||
+        strcmp(propName,"RDATE")==0||strcmp(propName,"X-PROP")==0||strcmp(propName,"IANA-PROP")==0){
+
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
     return OK;
 }
@@ -361,21 +406,28 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                     }
                 } else {
                     // handle properties
+                	// create a property
+                	Property * newProp = initProperty(token,value);
+                	//check if the property is valid
+                	int check = evPropCheck(newProp,propList);
 
-                    freeEv(&propList, &alarmList, value);
-                    if (checkUID == 1)
-                        free(evUID);
-                    if (checkDT == 1)
-                        deleteDT(evDT);
-                    return INV_EVENT;
+                	if (check == 1){
+                		insertFront(propList, newProp);
+                	} else {
+                		deleteProperty(newProp);
+	                    freeEv(&propList, &alarmList, value);
+    	                if (checkUID == 1)
+        	                free(evUID);
+            	        if (checkDT == 1)
+                	        deleteDT(evDT);
+                    	return INV_EVENT;
+                	}
                 }
                 free(value);
             }
         }
         strcpy(current,next);
     }
-
-    
 }
 
 ErrorCode parseCalendar (FILE * fp, Calendar ** obj){

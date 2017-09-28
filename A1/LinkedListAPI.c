@@ -255,3 +255,13 @@ void* nextElement(ListIterator* iter){
 
     return iter->current->data;
 }
+
+int findElement(void * toFind, List list){
+    Node * current = list.head;
+    while (current != NULL){
+        if (list.compare(toFind,current->data) == 0)
+            return 1;
+        current = current->next;
+    }
+    return 0;
+}

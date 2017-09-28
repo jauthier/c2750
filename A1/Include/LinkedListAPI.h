@@ -174,4 +174,6 @@ ListIterator createIterator(List list);
 **/
 void* nextElement(ListIterator* iter);
 
+int findElement(void * toFind, List list);
+
 #endif
