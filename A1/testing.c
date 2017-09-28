@@ -560,15 +560,17 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
                         eventPtr = malloc(sizeof(Event*));
                         char * holdLong = malloc(sizeof(char)*10);
                         ErrorCode eCode = parseEvent(fp, next, eventPtr,holdLong);
+                        if (eCode != OK){
+                        	free(eventPtr);
+                            free(value);
+                            free(calID);
+                            free(holdLong);
+                            return eCode;
+                        }
                         long pos = atol(holdLong);
                         fseek(fp,pos,SEEK_SET);
                         fgets(next,75,fp);
                         free(holdLong);
-                        if (eCode != OK){
-                            free(value);
-                            free(calID);
-                            return eCode;
-                        }
                         eventEnd = 1;   
                     } else {
                         free(value);
