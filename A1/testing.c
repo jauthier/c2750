@@ -202,7 +202,7 @@ int evPropCheck(Property * prop, List propList){
         strcmp(propName,"RRULE")==0){
 
         //check the list for duplicates
-        int check = findElement((void*)prop, list);
+        int check = findElement((void*)prop, propList);
         if (check == 1)
             return 0;
         else 
@@ -216,7 +216,7 @@ int evPropCheck(Property * prop, List propList){
         } else {
             temp = initProperty("DURATION","temp");
         }
-        int check = findElement((void*)temp, list);
+        int check = findElement((void*)temp, propList);
         free(temp);
         if (check == 1)
             return 0;
@@ -412,7 +412,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                 	int check = evPropCheck(newProp,propList);
 
                 	if (check == 1){
-                		insertFront(propList, newProp);
+                		insertFront((void *)propList, newProp);
                 	} else {
                 		deleteProperty(newProp);
 	                    freeEv(&propList, &alarmList, value);
