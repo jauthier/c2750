@@ -528,7 +528,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         //go to parseAlarm 
                         Alarm ** newAlarm = malloc(sizeof(Alarm*));
                         char * holdLong = malloc(sizeof(char)*10);
-                        ErrorCode eCode = parseAlarm(fp, next, newAlarm);
+                        ErrorCode eCode = parseAlarm(fp, next, newAlarm, holdLong);
                         //add alarm to the list
                         insertFront(&alarmList, *newAlarm);
                         if (eCode != OK){
