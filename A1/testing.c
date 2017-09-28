@@ -396,6 +396,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
                 free(value);
             }
         }
+        strcpy(current,next);
     }
 }
 
@@ -423,7 +424,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
     
     
     while (hold != NULL){
-    	
+    	printf("%s\n", current);
     	pos = ftell(fp);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
