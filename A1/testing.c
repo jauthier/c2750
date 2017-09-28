@@ -233,7 +233,12 @@ int evPropCheck(Property * prop, List propList){
     }
 }
 
-ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr){
+ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * holdLong){
+
+    //List propList = initializeList(printProperty, deleteProperty, compareProperty);
+
+
+
     return OK;
 }
 
