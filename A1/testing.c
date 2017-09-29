@@ -272,8 +272,8 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
 
         } else {
         	/* parse the line */
-            char * token = strtok(current, ":; \t");
-            char * holdVal = strtok(NULL, ":;\n");
+            char * token = strtok(current, ":;\t");
+            char * holdVal = strtok(NULL, "\n");
 
             /* For comments it doesn't matter if the value is empty */
             if (strcmp(token,"COMMENT") == 0){
@@ -443,8 +443,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
 
         } else {
             /* parse the line */
-            char * token = strtok(current, ":; \t");
-            char * holdVal = strtok(NULL, ":;\n");
+            char * token = strtok(current, ":;\t");
+            char * holdVal = strtok(NULL, "\n");
 
             /* For comments it doesn't matter if the value is empty */
             if (strcmp(token,"COMMENT") == 0){
@@ -630,8 +630,8 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
             } 
         } else {
             /* parse the line */
-            char * token = strtok(current, ":; \t");
-            char * holdVal = strtok(NULL, ":;\n");
+            char * token = strtok(current, ":;\t");
+            char * holdVal = strtok(NULL, "\n");
 
             /* For comments it doesn't matter if the value is empty */
             if (strcmp(token,"COMMENT") == 0){
@@ -800,8 +800,8 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
                 hold = fgets(current,75,fp);
         } else {
             /* parse the line */
-            char * token = strtok(current, ":; \t");
-            char * holdVal = strtok(NULL, ":;\n");
+            char * token = strtok(current, ":;\t");
+            char * holdVal = strtok(NULL, "\n");
             int len = strlen(holdVal) + 1;
             char * value = malloc(sizeof(char)*len);
             strcpy(value, holdVal);
