@@ -135,6 +135,7 @@ void insertSorted(List *list, void *toBeAdded){
             /* add middle */
             newNode->next = hold;
             newNode->previous = hold->previous;
+            hold->previous->next = newNode;
             hold->previous = newNode;
 
         } else {
