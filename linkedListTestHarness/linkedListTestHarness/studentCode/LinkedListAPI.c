@@ -153,6 +153,8 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
         return NULL;
     if (list->head == NULL)
         return NULL;
+    if (toBeDeleted == NULL)
+        return NULL;
     /*create an iterator*/
     ListIterator iter = createIterator(*list);
 
