@@ -15,6 +15,8 @@ TRIGGER:door bell
 END:VALARM
 URL:http://www.google.com
 BEGIN:VALARM
+ACTION:Answer door
+TRIGGER:door bell
 DURATION:2 days
 REPEAT:2 weeks
 END:VALARM
