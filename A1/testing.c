@@ -369,7 +369,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
                 		// the alarm is good to be made
                 		Alarm * newAlarm = initAlarm(action, trigger, propList);
                 		*alarmPtr = newAlarm;
-                		sprintf(holdLong,"%d",pos);
+                		sprintf(holdLong,"%ld",pos);
                         free(value);
                         free(action);
                         free(trigger);
@@ -398,6 +398,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
         }
         strcpy(current,next);
     }
+    return INV_EVENT;
 }
 
 ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * holdLong){
@@ -559,7 +560,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         //create a event object
                         Event * temp = initEvent(evUID,evDT,propList,alarmList);
                         *eventPtr = temp;
-                        sprintf(holdLong,"%d",pos);
+                        sprintf(holdLong,"%ld",pos);
                         free(value);
                         free(evUID);
                         deleteDT(evDT);
@@ -596,6 +597,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
         }
         strcpy(current,next);
     }
+    return INV_EVENT;
 }
 
 ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
@@ -870,6 +872,7 @@ const char * printError (ErrorCode err){
         return "Duplicate Product ID\n";
     if (err == INV_CREATEDT)
         return "Invaid DateTime\n";
+    return "Other Error\n";
 }
 
 int main(int argc, char * argv[]){
