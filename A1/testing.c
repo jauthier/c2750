@@ -10,6 +10,7 @@
 
 
 void deleteEvent (Event * toDelete);
+char * printEvent(Event * event)
 
 
 /* determines whether or no a line is completely composed of whitespace */
@@ -162,7 +163,7 @@ char* printCalendar(const Calendar* obj){
 	char * event = printEvent(obj->event);
 	int len = strlen(obj->prodID) + strlen(obj->event->UID) + strlen(event) + 40; 
 	str = malloc(sizeof(char)*len);
-	sprintf(str, "Product ID: %s\nVersion: %s\n", obj->prodID, obj->version)
+	sprintf(str, "Product ID: %s\nVersion: %s\n", obj->prodID, obj->version);
 	free(event);
 	return str;
 }
@@ -187,7 +188,7 @@ void deleteEvent (Event * toDelete){
 
 char * printEvent(Event * event){
 	char * str;
-	char * dt = printDT(event->creationDateTime);
+	char * dt = printDT(&(event->creationDateTime));
 	char * list1 = toString(event->properties);
 	char * list2 = toString(event->alarms);
 	int len = strlen(dt) + strlen(list1) + strlen(list2) + strlen(event->UID) + 60;
