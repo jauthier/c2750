@@ -29,6 +29,10 @@ Node * initializeNode(void * data){
 }
 
 void insertFront(List *list, void *toBeAdded){
+    if(list == NULL)
+        return;
+    if (toBeAdded == NULL)
+        return;
     /*create the node*/
     Node * toAdd = initializeNode(toBeAdded);
     if (list->head == NULL){
@@ -52,6 +56,10 @@ void insertFront(List *list, void *toBeAdded){
 }
 
 void insertBack(List *list, void *toBeAdded){
+    if(list == NULL)
+        return;
+    if (toBeAdded == NULL)
+        return;
     /*create the node*/
     Node * toAdd = initializeNode(toBeAdded);
     if (list->head == NULL){
@@ -75,7 +83,8 @@ void insertBack(List *list, void *toBeAdded){
 }
 
 void clearList(List *list){
-    
+    if(list == NULL)
+        return;
     if (list->head == NULL)
         return;
 
@@ -92,6 +101,10 @@ void clearList(List *list){
 }
 
 void insertSorted(List *list, void *toBeAdded){
+    if(list == NULL)
+        return;
+    if(list->head == NULL)
+        return;
     // for the compare function should return 0 when nodes are the same
     // greater than 0 if the first node is greater than
     // less than 0 if the first node is less than 
@@ -134,9 +147,10 @@ void insertSorted(List *list, void *toBeAdded){
 
 void* deleteDataFromList(List *list, void *toBeDeleted){
     /* if there is no list data */
-    if (list->head == NULL){
+    if(list == NULL)
+        return;
+    if (list->head == NULL)
         return NULL;
-    }
 
     /*create an iterator*/
     ListIterator iter = createIterator(*list);
