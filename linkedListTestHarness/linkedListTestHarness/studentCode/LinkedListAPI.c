@@ -153,7 +153,6 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
         return NULL;
     if (list->head == NULL)
         return NULL;
-    printf("list is good\n");
     /*create an iterator*/
     ListIterator iter = createIterator(*list);
 
@@ -163,12 +162,13 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
         Node * next = iter.current->next;
         /* hold the data */    
         void * dataHold = iter.current->data;
-        printf("%s\n", (char *)dataHold);
         /* delete the node */
         free(iter.current);
         /* reassemble the list */
         next->previous = NULL;
         list->head = next;
+        if (next->next == NULL)
+            list->tail = next;
         return dataHold;
     /* check the middle nodes and end node */
     } else {
