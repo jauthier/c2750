@@ -133,7 +133,7 @@ char * printDT(DateTime * dt){
 
     int len = strlen(dt->date)+strlen(dt->time)+10;
     char * dtStr = malloc(sizeof(char)*len);
-    sprintf(dtStr, "%s, %s\0", dt->date, dt->time);
+    sprintf(dtStr, "%s, %s", dt->date, dt->time);
     if (dt->UTC == true)
         strcat(dtStr," UTC");
     return dtStr;
