@@ -98,6 +98,8 @@ void clearList(List *list){
     }
     list->deleteData(current->data);
     free(current);
+    list->head = NULL;
+    list->tail = NULL;
 }
 
 void insertSorted(List *list, void *toBeAdded){
