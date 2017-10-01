@@ -408,10 +408,12 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
 
                 } else {
                 	if (strcmp(token,"DURATION")==0||strcmp(token,"REPEAT")==0||strcmp(token,"ATTACH")==0){
-						int check = findElement((void*)prop, propList);
+						
+
+						Property * newProp = initProperty(token, value);
+						int check = findElement((void*)newProp, propList);
 						if (check == 0){
 							//add to the list 
-							Property * newProp = initProperty(token, value);
 							insertFront(&propList,(void*)newProp);
 							if (strcmp(token,"DURATION")==0)
 								checkDuration = 1;
@@ -419,6 +421,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
 								checkRepeat = 1;
 						} else {
 							free(value);
+							free(newProp);
                 			clearList(&propList);
                 			if (checkTrigger == 1)
                 				free(trigger);
