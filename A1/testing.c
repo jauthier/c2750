@@ -408,7 +408,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
 
                 } else {
 
-                	
+
                 	free(value);
                 	clearList(&propList);
                 	if (checkTrigger == 1)
@@ -555,7 +555,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         char * holdLong = malloc(sizeof(char)*10);
                         ErrorCode eCode = parseAlarm(fp, next, newAlarm, holdLong);
                         //add alarm to the list
-                        insertFront(&alarmList, *newAlarm);
+                        Alarm * hold = * newAlarm;
+                        insertFront(&alarmList, hold);
                         free(newAlarm);
                         if (eCode != OK){
                             freeEv(&propList, &alarmList, value);

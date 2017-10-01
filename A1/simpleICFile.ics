@@ -14,6 +14,5 @@ ACTION:Answer door
 TRIGGER:door bell
 END:VALARM
 URL:http://www.google.com
-BEGIN:VALARM
 END:VEVENT
 END:VCALENDAR
