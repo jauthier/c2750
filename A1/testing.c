@@ -163,7 +163,7 @@ char* printCalendar(const Calendar* obj){
 	char * event = printEvent(obj->event);
 	int len = strlen(obj->prodID) + strlen(obj->event->UID) + strlen(event) + 40; 
 	str = malloc(sizeof(char)*len);
-	sprintf(str, "Product ID: %s\nVersion: %s\n", obj->prodID, obj->version);
+	sprintf(str, "Product ID: %s\nVersion: %ld\n", obj->prodID, obj->version);
 	free(event);
 	return str;
 }
@@ -906,7 +906,7 @@ int main(int argc, char * argv[]){
     if (code == OK){
     	char * hold = printCalendar(*cal);
     	printf("%s\n", hold);
-    	deleteCal(*cal);
+    	deleteCalendar(*cal);
     }
     free(cal);
 
