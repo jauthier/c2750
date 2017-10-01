@@ -133,10 +133,9 @@ void insertSorted(List *list, void *toBeAdded){
 
         if (hold->next != NULL){
             /* add middle */
-            Node * before = hold->previous;
-            before->next = newNode;
-            newNode->previous = before;
+            newNode->previous = hold->previous;
             newNode->next = hold;
+            (hold->previous)->next = newNode;
             hold->previous = newNode;
 
         } else {
