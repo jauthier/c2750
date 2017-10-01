@@ -131,9 +131,8 @@ void insertSorted(List *list, void *toBeAdded){
             hold = hold->next;
         }
 
-        if (hold->next != NULL){
+        if (list->compare(newNode->data, hold->data) <= 0 && hold->next == NULL){
             /* add middle */
-            printf("here\n");
             newNode->previous = hold->previous;
             newNode->next = hold;
             (hold->previous)->next = newNode;
