@@ -554,8 +554,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         Alarm ** newAlarm = malloc(sizeof(Alarm*));
                         char * holdLong = malloc(sizeof(char)*10);
                         ErrorCode eCode = parseAlarm(fp, next, newAlarm, holdLong);
-                        free(newAlarm);
                         if (eCode != OK){
+                        	free(newAlarm);
                             freeEv(&propList, &alarmList, value);
                             if (checkUID == 1)
                             	free(evUID);
@@ -564,8 +564,8 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                             return eCode;
                         }
                         //add alarm to the list
-                        Alarm * hold = * newAlarm;
-                        insertFront(&alarmList, hold);
+                        insertFront(&alarmList, *newAlarm);
+                        free(newAlarm);
                         long pos = atol(holdLong);
                         fseek(fp,pos,SEEK_SET);
                         fgets(next,75,fp);
