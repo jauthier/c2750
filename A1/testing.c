@@ -277,6 +277,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
     long pos;
 
     while (hold != NULL){
+    	printf("%s\n", current);
     	pos = ftell(fp);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
@@ -474,6 +475,7 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
     
     
     while (hold != NULL){
+    	printf("%s\n", current);
     	pos = ftell(fp);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
@@ -668,6 +670,7 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
     Event ** eventPtr;
 
     while (hold != NULL){
+    	printf("%s\n", current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
