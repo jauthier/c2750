@@ -412,7 +412,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
 						if (check == 0){
 							//add to the list 
 							Property * newProp = initProperty(token, value);
-							insertFront(propList,(void*)newProp);
+							insertFront(&propList,(void*)newProp);
 							if (strcmp(token,"DURATION")==0)
 								checkDuration = 1;
 							if (strcmp(token,"REPEAT")==0)
@@ -428,7 +428,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
 						}
                 	} else if (strcmp(token,"X-PROP")==0||strcmp(token,"IANA-PROP")==0){
 						Property * newProp = initProperty(token, value);
-						insertFront(propList,(void*)newProp);
+						insertFront(&propList,(void*)newProp);
                 	} else {
             	    	free(value);
                 		clearList(&propList);
