@@ -148,7 +148,7 @@ void insertSorted(List *list, void *toBeAdded){
 void* deleteDataFromList(List *list, void *toBeDeleted){
     /* if there is no list data */
     if(list == NULL)
-        return;
+        return NULL;
     if (list->head == NULL)
         return NULL;
 
