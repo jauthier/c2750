@@ -152,10 +152,19 @@ Calendar * initCal (float ver, char * id, Event * event){
     return newCal;
 }
 
-void deleteCal(Calendar * toDelete){
-    deleteEvent(toDelete->event);
-    printf("here\n");
-    free(toDelete);
+void deleteCalendar(Calendar * obj){
+    deleteEvent(obj->event);
+    free(obj);
+}
+
+char* printCalendar(const Calendar* obj){
+	char * str;
+	char * event = printEvent(obj->event);
+	int len = strlen(obj->prodID) + strlen(obj->event->UID) + strlen(event) + 40; 
+	str = malloc(sizeof(char)*len);
+	sprintf(str, "Product ID: %s\nVersion: %s\n", obj->prodID, obj->version)
+	free(event);
+	return str;
 }
 
 /* ------------------------Event------------------------ */
@@ -173,8 +182,21 @@ void deleteEvent (Event * toDelete){
     /*deleteDT(&(toDelete->creationDateTime));*/
     clearList(&(toDelete->properties));
     clearList(&(toDelete->alarms));
-    printf("here\n");
     free(toDelete);
+}
+
+char * printEvent(Event * event){
+	char * str;
+	char * dt = printDT(event->creationDateTime);
+	char * list1 = toString(event->properties);
+	char * list2 = toString(event->alarms);
+	int len = strlen(dt) + strlen(list1) + strlen(list2) + strlen(event->UID) + 60;
+	str = malloc(sizeof(char)*len);
+	sprintf(str,"UID: %s\nDate and Time of Creation: %s\nAlarms:\n%s\nProperties:\n%s\n",event->UID,dt,list2,list1);
+	free(dt);
+	free(list1);
+	free(list2);
+	return str;
 }
 
 void freeCal(char * value, FILE * fp){
@@ -256,7 +278,6 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
     while (hold != NULL){
     	pos = ftell(fp);
         hold = fgets(next,75,fp);
-        printf("%s\n", current);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
             /* this handles the case where there are chracters but no : or ; 
@@ -425,7 +446,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
     
     
     while (hold != NULL){
-    	printf("%s\n", current);
     	pos = ftell(fp);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
@@ -619,7 +639,6 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
     Event ** eventPtr;
 
     while (hold != NULL){
-    	printf("%s\n", current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
@@ -883,8 +902,11 @@ int main(int argc, char * argv[]){
     printf("%s\n", printError(code));
 
 
-    if (code == OK)
+    if (code == OK){
+    	char * hold = printCalendar(*cal);
+    	printf("%s\n", hold);
     	deleteCal(*cal);
+    }
     free(cal);
 
     return 0;
