@@ -127,7 +127,7 @@ void insertSorted(List *list, void *toBeAdded){
     } else {
         /* compare the middle nodes */
         hold = hold->next;
-        while (list->compare(newNode->data, hold->data) >= 0 && hold->next != NULL){
+        while (list->compare(newNode->data, hold->data) > 0 && hold->next != NULL){
             hold = hold->next;
         }
 
@@ -138,7 +138,6 @@ void insertSorted(List *list, void *toBeAdded){
             newNode->previous = before;
             newNode->next = hold;
             hold->previous = newNode;
-        
 
         } else {
             /* add end */ 
