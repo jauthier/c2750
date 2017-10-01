@@ -378,7 +378,7 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
                 		return INV_EVENT;
                 	}
                 } else if (strcmp(token,"END")==0){
-                	if (strcmp(value,"VALARM")==0&&checkAction == 1 && checkAction == 1){
+                	if (strcmp(value,"VALARM")==0 &&checkAction == 1 && checkTrigger == 1){
                 		if (checkDuration == 1 || checkRepeat == 1){
                 			if (!(checkDuration == 1 && checkRepeat == 1)){
                 				free(value);
@@ -554,9 +554,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                         Alarm ** newAlarm = malloc(sizeof(Alarm*));
                         char * holdLong = malloc(sizeof(char)*10);
                         ErrorCode eCode = parseAlarm(fp, next, newAlarm, holdLong);
-                        //add alarm to the list
-                        Alarm * hold = * newAlarm;
-                        insertFront(&alarmList, hold);
                         free(newAlarm);
                         if (eCode != OK){
                             freeEv(&propList, &alarmList, value);
@@ -566,6 +563,9 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
                             	deleteDT(evDT);
                             return eCode;
                         }
+                        //add alarm to the list
+                        Alarm * hold = * newAlarm;
+                        insertFront(&alarmList, hold);
                         long pos = atol(holdLong);
                         fseek(fp,pos,SEEK_SET);
                         fgets(next,75,fp);
