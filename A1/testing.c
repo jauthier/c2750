@@ -193,7 +193,7 @@ char * printEvent(Event * event){
 	char * list2 = toString(event->alarms);
 	int len = strlen(dt) + strlen(list1) + strlen(list2) + strlen(event->UID) + 60;
 	str = malloc(sizeof(char)*len);
-	sprintf(str,"UID: %s\nDate and Time of Creation: %s\nAlarms:\n%s\nProperties:\n%s\n",event->UID,dt,list2,list1);
+	sprintf(str,"UID: %s\nDate and Time of Creation: %s\nAlarms:\n%sProperties:\n%s",event->UID,dt,list2,list1);
 	free(dt);
 	free(list1);
 	free(list2);
@@ -407,6 +407,8 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
                 	}
 
                 } else {
+
+                	
                 	free(value);
                 	clearList(&propList);
                 	if (checkTrigger == 1)
