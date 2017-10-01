@@ -10,7 +10,7 @@
 
 
 void deleteEvent (Event * toDelete);
-char * printEvent(Event * event)
+char * printEvent(Event * event);
 
 
 /* determines whether or no a line is completely composed of whitespace */
