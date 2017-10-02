@@ -274,3 +274,13 @@ void* nextElement(ListIterator* iter){
 
     return iter->current->data;
 }
+
+int findElement(void * data, List list){
+    Node * hold = list.head;
+    while (hold != NULL){
+        if (list.compare(hold->data,data) == 0)
+            return 1;
+        hold = hold->next;
+    }
+    return 0;
+}
