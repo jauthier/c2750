@@ -104,6 +104,7 @@ int compareAlarm(const void * first,const void * second){
 
 void deleteAlarm(void * toDelete){
     free(((Alarm *)toDelete)->trigger);
+    clearList(toDelete->properties);
     free((Alarm *)toDelete);
 }
 
@@ -186,7 +187,6 @@ Event * initEvent (char * uID, DateTime * dt, List propList, List alarmList){
 }
 
 void deleteEvent (Event * toDelete){
-    /*deleteDT(&(toDelete->creationDateTime));*/
     clearList(&(toDelete->properties));
     clearList(&(toDelete->alarms));
     free(toDelete);
