@@ -949,6 +949,7 @@ int main(int argc, char * argv[]){
     if (code == OK){
     	char * hold = printCalendar(*cal);
     	printf("%s\n", hold);
+    	free(hold);
     	deleteCalendar(*cal);
     }
     free(cal);
