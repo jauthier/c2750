@@ -57,7 +57,7 @@ char * printProperty(void * toBePrinted){
     sprintf(str,"%s\n%s\n", toPrint->propName,toPrint->propDescr);
     return str;
 }
-//TEST
+
 int compareProperty(const void * first,const void * second){
     char * name1 = ((Property *)first)->propName;
     char * name2 = ((Property *)second)->propName;
@@ -89,7 +89,7 @@ char * printAlarm(void * toBePrinted){
     free(list);
     return str;
 }
-//TEST
+
 int compareAlarm(const void * first,const void * second){
     char * action1 = ((Alarm *)first)->action;
     char * action2 = ((Alarm *)second)->action;
@@ -211,9 +211,6 @@ void freeEv(List *list1, List *list2, char * value){
     free(value);
 }
 
-/* returns 0 if the property is not valid
-   returns 1 if the property is valid
-*/
 int evPropCheck(Property * prop, List propList){
     char * propName = prop->propName;    
 

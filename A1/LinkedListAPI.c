@@ -98,12 +98,14 @@ void clearList(List *list){
     }
     list->deleteData(current->data);
     free(current);
+    list->head = NULL;
+    list->tail = NULL;
 }
 
 void insertSorted(List *list, void *toBeAdded){
-    if(list == NULL)
+    if (list == NULL )
         return;
-    if(list->head == NULL)
+    if (toBeAdded == NULL)
         return;
     // for the compare function should return 0 when nodes are the same
     // greater than 0 if the first node is greater than
@@ -127,14 +129,16 @@ void insertSorted(List *list, void *toBeAdded){
     } else {
         /* compare the middle nodes */
         hold = hold->next;
-        while (list->compare(newNode->data, hold->data) >= 0 && hold->next != NULL){
+        while (list->compare(newNode->data, hold->data) > 0 && hold->next != NULL){
             hold = hold->next;
         }
 
-        if (hold->next != NULL){
+        if (list->compare(newNode->data, hold->data) <= 0 && hold->next == NULL){
             /* add middle */
-            newNode->next = hold;
             newNode->previous = hold->previous;
+            newNode->next = hold;
+            (hold->previous)->next = newNode;
+            hold->previous = newNode;
 
         } else {
             /* add end */ 
@@ -148,10 +152,11 @@ void insertSorted(List *list, void *toBeAdded){
 void* deleteDataFromList(List *list, void *toBeDeleted){
     /* if there is no list data */
     if(list == NULL)
-        return;
+        return NULL;
     if (list->head == NULL)
         return NULL;
-
+    if (toBeDeleted == NULL)
+        return NULL;
     /*create an iterator*/
     ListIterator iter = createIterator(*list);
 
@@ -166,6 +171,8 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
         /* reassemble the list */
         next->previous = NULL;
         list->head = next;
+        if (next->next == NULL)
+            list->tail = next;
         return dataHold;
     /* check the middle nodes and end node */
     } else {
@@ -250,9 +257,7 @@ char* toString(List list){
         }
         return str;
     } else {
-        char * str = malloc(sizeof(char));
-        strcpy(str,"\0");
-        return str;
+        return NULL;
     }
 }
 
@@ -268,14 +273,4 @@ void* nextElement(ListIterator* iter){
         return NULL;
 
     return iter->current->data;
-}
-
-int findElement(void * toFind, List list){
-    Node * current = list.head;
-    while (current != NULL){
-        if (list.compare(toFind,current->data) == 0)
-            return 1;
-        current = current->next;
-    }
-    return 0;
 }
