@@ -941,7 +941,7 @@ const char * printError (ErrorCode err){
 
 int main(int argc, char * argv[]){
     
-    char * fileName = "simpleICFile.ics";
+    char * fileName = "testCalLong.ics";
     Calendar ** cal = malloc(sizeof(Calendar*));
     ErrorCode code =  createCalendar(fileName, cal);
     printf("%s\n", printError(code));
