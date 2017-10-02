@@ -82,7 +82,7 @@ Alarm * initAlarm(char * action, char * trigger, List propList){
 char * printAlarm(void * toBePrinted){
     Alarm * toPrint = (Alarm *)toBePrinted;
     char * list = toString(toPrint->properties);
-    int len = strlen(list)+200+strlen(toPrint->trigger)+8;
+    int len = strlen(list)+strlen(toPrint->action)+200+8;
     char * str = malloc(sizeof(char)*len);
     sprintf(str,"%s\n%s\n%s\n", toPrint->action,toPrint->trigger,list);
     free(list);
