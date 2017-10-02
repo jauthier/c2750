@@ -103,8 +103,9 @@ int compareAlarm(const void * first,const void * second){
 }
 
 void deleteAlarm(void * toDelete){
+
     free(((Alarm *)toDelete)->trigger);
-    clearList(&((Alarm *)toDelete->properties));
+    clearList(&(((Alarm *)toDelete)->properties));
     free((Alarm *)toDelete);
 }
 
