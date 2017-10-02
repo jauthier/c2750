@@ -197,9 +197,21 @@ char * printEvent(Event * event){
 	char * dt = printDT(&(event->creationDateTime));
 	char * list1 = toString(event->properties);
 	char * list2 = toString(event->alarms);
-	int len = strlen(dt) + strlen(list1) + strlen(list2) + strlen(event->UID) + 60;
+	int len = strlen(dt) + strlen(event->UID) + 60;
+	if (list1 != NULL)
+		len = len +  strlen(list1);
+	if (list2 != NULL)
+		len = len + strlen(list2);
 	str = malloc(sizeof(char)*len);
-	sprintf(str,"UID: %s\nDate and Time of Creation: %s\nAlarms:\n%sProperties:\n%s",event->UID,dt,list2,list1);
+	if (list1 != NULL && list2 != NULL)
+		sprintf(str,"UID: %s\nDate and Time of Creation: %s\nAlarms:\n%sProperties:\n%s",event->UID,dt,list2,list1);
+	else if (list1 != NULL && list2 == NULL)
+		sprintf(str,"UID: %s\nDate and Time of Creation: %s\nProperties:\n%s",event->UID,dt,list1);
+	else if (list1 == NULL && list2 != NULL)
+		sprintf(str,"UID: %s\nDate and Time of Creation: %s\nAlarms:\n%s",event->UID,dt,list2);
+	else 
+		sprintf(str,"UID: %s\nDate and Time of Creation: %s\n",event->UID,dt);
+
 	free(dt);
 	free(list1);
 	free(list2);
@@ -280,7 +292,6 @@ ErrorCode parseAlarm(FILE * fp, char * currentLine, Alarm ** alarmPtr, char * ho
     long pos;
 
     while (hold != NULL){
-    	printf("%s\n", current);
     	pos = ftell(fp);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
@@ -478,7 +489,6 @@ ErrorCode parseEvent (FILE * fp,char * currentLine, Event ** eventPtr, char * ho
     
     
     while (hold != NULL){
-    	printf("%s\n", current);
     	pos = ftell(fp);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
@@ -673,7 +683,6 @@ ErrorCode parseCalendar (FILE * fp, Calendar ** obj){
     Event ** eventPtr;
 
     while (hold != NULL){
-    	printf("%s\n", current);
         hold = fgets(next,75,fp);
         /* make sure the line can be parsed */
         if (strchr(current,':') == NULL && strchr(current,';') == NULL){
