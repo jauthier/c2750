@@ -48,7 +48,7 @@ int checkMultiLine (char * firstLine, char * secondLine){
     return 0;
 }
 
-int fileToList(char * fileName, List ** list){
+int fileToList(char * fileName, List * list){
 
     // open the file
     FILE * fp = fopen(fileName, "r");
@@ -56,7 +56,7 @@ int fileToList(char * fileName, List ** list){
         return 0;
 
     // create a list
-    **list = (initializeList(printLine, deleteLine, compareLine));
+    *list = (initializeList(printLine, deleteLine, compareLine));
 
     // iterate through the list putting the lines in the list
     char current[LINELEN], next[LINELEN];
@@ -95,7 +95,7 @@ int fileToList(char * fileName, List ** list){
                 strcpy(next, buffer);
             }
             printf("%s\n", value);
-            insertFront(*list, (void *)value);
+            insertFront(list, (void *)value);
         }
         strcpy(current, next);
     }
@@ -109,10 +109,10 @@ int fileToList(char * fileName, List ** list){
 int main(int argc, char const *argv[]){
     
     char * fileName = "simpleICFile.ics";
-    List ** list = malloc(sizeof(List *));
+    List * list = malloc(sizeof(List));
     fileToList(fileName, list);
     printf("done reading\n");
-    char * hold = toString(**list);
+    char * hold = toString(*list);
     printf("%s\n", hold);
     free(hold);
     clearList(*list);
