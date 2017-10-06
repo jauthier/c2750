@@ -38,15 +38,10 @@ int isWhitespace (char * str){
 }
 
 int checkMultiLine (char * firstLine, char * secondLine){
-    /*check if the first line reached its length limit */
-    int len = strlen(firstLine);
-    printf("%c\n", firstLine[len]);
-    if (firstLine[len] == '\n'){
-        /* check if the second line has a : or ; and starts with whitespace */
-        if (secondLine[0] == ' '){
-            return 1;
-        }
+    if (secondLine[0] == ' '){
+        return 1;
     }
+    
     return 0;
 }
 
@@ -72,7 +67,7 @@ int fileToList(char * fileName, List * list){
             int len = strlen(holdCurrent) + 1;
             char * value = malloc(sizeof(char)*len);
             strcpy(value, holdCurrent);
-
+                                                                                                                                                        
             /* ---- check for multi lines ---- */
             int multi;
             if (hold != NULL)
