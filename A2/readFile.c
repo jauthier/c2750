@@ -95,9 +95,9 @@ int fileToList(char * fileName, List ** list){
                 strcpy(next, buffer);
             }
 
-            insertFront(list, (void *)value);
+            insertFront(*list, (void *)value);
         }
-        strcpy(curretn, next);
+        strcpy(current, next);
     }
 
     // close the file
@@ -108,7 +108,7 @@ int fileToList(char * fileName, List ** list){
 
 int main(int argc, char const *argv[]){
     
-    char * fileName = "simpleICFile.ics"
+    char * fileName = "simpleICFile.ics";
     List ** list = malloc(sizeof(List *));
     fileToList(fileName, list);
     char * hold = toString(**list);
