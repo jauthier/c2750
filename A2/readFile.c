@@ -56,7 +56,7 @@ int fileToList(char * fileName, List ** list){
         return 0;
 
     // create a list
-    *list = &(initializeList(printLine, deleteLine, compareLine));
+    **list = (initializeList(printLine, deleteLine, compareLine));
 
     // iterate through the list putting the lines in the list
     char current[LINELEN], next[LINELEN];
