@@ -15,14 +15,14 @@ char * printLine(void * toBePrinted){
 }
 
 void deleteLine(void * toBeDeleted){
-    char * hold = (char *)toBePrinted;
+    char * hold = (char *)toBeDeleted;
     free(hold);
 }
 
 int compareLine(const void *first,const void *second){
     char * str1 = (char *)first;
     char * str2 = (char *)second;
-    return strtcmp(str1, str2);
+    return strcmp(str1, str2);
 }
 
 int isWhitespace (char * str){
@@ -56,7 +56,7 @@ int fileToList(char * fileName, List ** list){
         return 0;
 
     // create a list
-    *list = &initalizeList(printLine, deleteLine, compareLine);
+    *list = &(initializeList(printLine, deleteLine, compareLine));
 
     // iterate through the list putting the lines in the list
     char current[LINELEN], next[LINELEN];
