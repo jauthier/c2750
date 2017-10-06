@@ -39,7 +39,8 @@ int isWhitespace (char * str){
 
 int checkMultiLine (char * firstLine, char * secondLine){
     /*check if the first line reached its length limit */
-    if (firstLine[strlen(firstLine)] == '\n'){
+    int len = strlen(firstLine);
+    if (firstLine[len - 2] == '\n'){
         /* check if the second line has a : or ; and starts with whitespace */
         if (secondLine[0] == ' '){
             return 1;
