@@ -115,7 +115,7 @@ int main(int argc, char const *argv[]){
     char * hold = toString(*list);
     printf("%s\n", hold);
     free(hold);
-    clearList(*list);
+    clearList(list);
     free(list);
 
     return 0;
