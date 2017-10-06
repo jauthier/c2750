@@ -39,7 +39,7 @@ int isWhitespace (char * str){
 
 int checkMultiLine (char * firstLine, char * secondLine){
     /*check if the first line reached its length limit */
-    if (firstLine[strlen(firstLine) - 1] == '\n'){
+    if (firstLine[strlen(firstLine)] == '\n'){
         /* check if the second line has a : or ; and starts with whitespace */
         if (secondLine[0] == ' '){
             return 1;
@@ -94,8 +94,7 @@ int fileToList(char * fileName, List * list){
                 strcat(value, temp);
                 strcpy(next, buffer);
             }
-            printf("%s\n", value);
-            insertFront(list, (void *)value);
+            insertBack(list, (void *)value);
         }
         strcpy(current, next);
     }
