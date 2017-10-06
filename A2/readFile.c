@@ -94,7 +94,7 @@ int fileToList(char * fileName, List ** list){
                 strcat(value, temp);
                 strcpy(next, buffer);
             }
-
+            printf("%s\n", value);
             insertFront(*list, (void *)value);
         }
         strcpy(current, next);
@@ -111,6 +111,7 @@ int main(int argc, char const *argv[]){
     char * fileName = "simpleICFile.ics";
     List ** list = malloc(sizeof(List *));
     fileToList(fileName, list);
+    printf("done reading\n");
     char * hold = toString(**list);
     printf("%s\n", hold);
     free(hold);
