@@ -1,11 +1,11 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-#include "LinkedListAPI.h"
-
-#define LINELEN 75
-
+/*
+** readFile.c
+** Author: Jessica Authier
+** Date Modified: 10/11/2017
+** This file contains the functions that takes a file and 
+** puts each line of the file into a list
+*/
+#include "readFile.h"
 
 char * printLine(void * toBePrinted){
     char * hold = (char *)toBePrinted;
@@ -40,8 +40,7 @@ int isWhitespace (char * str){
 int checkMultiLine (char * firstLine, char * secondLine){
     if (secondLine[0] == ' '){
         return 1;
-    }
-    
+    } 
     return 0;
 }
 
@@ -67,7 +66,7 @@ int fileToList(char * fileName, List * list){
             int len = strlen(holdCurrent) + 1;
             char * value = malloc(sizeof(char)*len);
             strcpy(value, holdCurrent);
-                                                                                                                                                        
+
             /* ---- check for multi lines ---- */
             int multi;
             if (hold != NULL)
@@ -99,20 +98,4 @@ int fileToList(char * fileName, List * list){
     // close the file
     fclose(fp);
     return 1;
-}
-
-
-int main(int argc, char const *argv[]){
-    
-    char * fileName = "simpleICFile.ics";
-    List * list = malloc(sizeof(List));
-    fileToList(fileName, list);
-    printf("done reading\n");
-    char * hold = toString(*list);
-    printf("%s\n", hold);
-    free(hold);
-    clearList(list);
-    free(list);
-
-    return 0;
 }
