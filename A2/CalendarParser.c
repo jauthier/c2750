@@ -448,6 +448,7 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
                     return eCode;
                 }
                 current = *returnPos;
+                printf("%s\n", (char *)current->data);
                 free(returnPos);
                 eventEnd = 1;
 
