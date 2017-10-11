@@ -298,8 +298,8 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
             if (strcmp(value, "VALARM") == 0 && checkUID == 1 && checkDT == 1){
                 //go to parseAlarm 
                 Alarm ** newAlarm = malloc(sizeof(Alarm*));
-                char * holdLong = malloc(sizeof(char)*10);
-                ErrorCode eCode = parseAlarm(fp, next, newAlarm, holdLong);
+                Node ** returnPos = malloc(sizeof(Node*));
+                ErrorCode eCode = OK; //parseAlarm(fp, next, newAlarm, holdLong);
                 if (eCode != OK){
                     free(newAlarm);
                     freeEv(&propList, &alarmList, value);
@@ -312,10 +312,8 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
                 //add alarm to the list
                 insertFront(&alarmList, *newAlarm);
                 free(newAlarm);
-                long pos = atol(holdLong);
-                fseek(fp,pos,SEEK_SET);
-                fgets(next,75,fp);
-                free(holdLong);
+                current = *returnPos;
+                free(returnPos);
             } else {
                 freeEv(&propList, &alarmList, value);
                 if (checkUID == 1)
