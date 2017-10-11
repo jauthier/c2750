@@ -248,6 +248,7 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
 
     while(current != NULL){
         char * line = (char *)current->data;
+        printf("%s\n", line);
         /* make sure the line can be parsed */
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             return INV_EVENT;
@@ -381,6 +382,7 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
 
     while (current != NULL){
         char * line = (char *)current->data;
+        printf("%s\n", line);
         /* make sure the line can be parsed */
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             return INV_CAL;
@@ -507,6 +509,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
 
     while (current != NULL){
         char * line = (char *)current->data;
+        printf("%s\n", line);
         /* make sure the line can be parsed */
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             clearList(list);
