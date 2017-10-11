@@ -332,7 +332,7 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
                 free(value);
                 free(evUID);
                 deleteDT(evDT);
-                printf("here\n");
+                *returnPos = current;
                 return OK;
             } else {
                 freeEv(&propList, &alarmList, value);
