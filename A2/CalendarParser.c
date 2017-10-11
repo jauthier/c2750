@@ -439,7 +439,6 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
                 eventPtr = malloc(sizeof(Event*));
                 Node ** returnPos = malloc(sizeof(Node*));
                 ErrorCode eCode = parseEvent(current, eventPtr, returnPos);
-                printf("end of parse event:%s\n",printError(eCode));
                 if (eCode != OK){
                     free(eventPtr);
                     free(value);
@@ -448,7 +447,6 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
                     return eCode;
                 }
                 current = *returnPos;
-                printf("%s\n", (char *)current->data);
                 free(returnPos);
                 eventEnd = 1;
 
