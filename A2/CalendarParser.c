@@ -328,7 +328,6 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
                 //create a event object
                 Event * temp = initEvent(evUID,evDT,propList,alarmList);
                 *eventPtr = temp;
-                sprintf(holdLong,"%ld",pos);
                 free(value);
                 free(evUID);
                 deleteDT(evDT);
@@ -374,7 +373,7 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
     int checkID = 0;
     /* hold the values of the version and porduct ID */
     float calVer;
-    char * calID
+    char * calID;
     /* for determining if we have found the end of the event or not */
     int eventEnd = 0;
     int end = 0;
