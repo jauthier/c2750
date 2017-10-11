@@ -494,7 +494,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     lines are unfolded and all lines with only white space are removes */
     List * list = malloc(sizeof(List));
     int fileCheck = fileToList(fileName, list);
-    if (checkFile == 0){
+    if (fileCheck == 0){
         free(list);
         return INV_FILE;
     }
