@@ -1,6 +1,9 @@
 #include "CalendarParser.h"
 #include "readFile.h"
 
+void deleteEvent (Event * toDelete);
+char * printEvent(Event * event);
+
 /* ------------------------Property------------------------ */
 Property * initProperty(char * name, char * descr){
     Property * newProp = malloc(sizeof(Property) + (sizeof(int)*strlen(descr)));
@@ -508,14 +511,14 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     while (current != NULL){
         char * line = (char *)current->data;
         /* make sure the line can be parsed */
-        if (strchr(current,':') == NULL && strchr(current,';') == NULL){
+        if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             clearList(list);
             free(list);
             return INV_CAL;
         }
 
         /* parse the line */
-        char * token = strtok(current, ":;\t");
+        char * token = strtok(line, ":;\t");
         char * holdVal = strtok(NULL, "\n");
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
