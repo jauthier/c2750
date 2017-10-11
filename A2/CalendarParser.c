@@ -332,6 +332,7 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
                 free(value);
                 free(evUID);
                 deleteDT(evDT);
+                printf("here\n");
                 return OK;
             } else {
                 freeEv(&propList, &alarmList, value);
@@ -438,6 +439,7 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
                 eventPtr = malloc(sizeof(Event*));
                 Node ** returnPos = malloc(sizeof(Node*));
                 ErrorCode eCode = parseEvent(current, eventPtr, returnPos);
+                printf("end of parse event:%s\n",printError(eCode))
                 if (eCode != OK){
                     free(eventPtr);
                     free(value);
@@ -447,7 +449,8 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
                 }
                 current = *returnPos;
                 free(returnPos);
-                eventEnd = 1;   
+                eventEnd = 1;
+
             } else {
                 free(value);
                 if (checkID == 1)
