@@ -569,6 +569,22 @@ const char * printError (ErrorCode err){
     return "Other Error\n";
 }
 
-int main(int argc, char * argv[]){
+ErrorCode writeCalendar(char* fileName, const Calendar* obj){
+    return OK;
+}
 
+ErrorCode validateCalendar(const Calendar* obj){
+    return OK;
+}
+
+int main(int argc, char * argv[]){
+    Calendar ** obj = malloc(sizeof(Calendar *));
+    char fileName[30] = "testCalSimpleNoUTS.ics";
+    ErrorCode ec = createCalendar(fileName, obj);
+    printf("%s\n", printError(ec));
+    if (ec == OK){
+        deleteCalendar(*obj);
+    }
+    free(obj);
+    return 0;
 }
