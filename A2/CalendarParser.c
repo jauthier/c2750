@@ -196,7 +196,7 @@ char * toUpper(char * str){
 
 int evPropCheck(Property * prop, List propList){
     char * propName = toUpper(prop->propName);
-
+    printf("%s\n", propName);
     if (strcmp(propName,"DTSTART")==0||strcmp(propName,"CLASS")==0||strcmp(propName,"CREATED")==0||
         strcmp(propName,"DESCRIPTION")==0||strcmp(propName,"GEO")==0||strcmp(propName,"LAST-MOD")==0||
         strcmp(propName,"LOCATION")==0||strcmp(propName,"ORGANIZER")==0||strcmp(propName,"SEQ")==0||
@@ -368,7 +368,7 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
             Property * newProp = initProperty(token,value);
             //check if the property is valid
             int check = evPropCheck(newProp,propList);
-
+            printf("%d\n", check);
             if (check == 1){
                 insertFront(&propList, (void *)newProp);
             } else {
