@@ -128,9 +128,9 @@ void deleteCalendar(Calendar * obj){
 char* printCalendar(const Calendar* obj){
     char * str;
     char * event = printEvent(obj->event);
-    int len = strlen(obj->prodID) + strlen(obj->event->UID) + strlen(event) + 40; 
+    int len = strlen(obj->prodID) + strlen(obj->event->UID) + strlen(event) + 45; 
     str = malloc(sizeof(char)*len);
-    sprintf(str, "Product ID: %s\nVersion: %0.1f\n%s", obj->prodID, obj->version,event);
+    sprintf(str, "Calendar\n  Product ID: %s\n  Version: %0.1f\n%s", obj->prodID, obj->version,event);
     free(event);
     return str;
 }
@@ -163,13 +163,13 @@ char * printEvent(Event * event){
         len = len + strlen(list2);
     str = malloc(sizeof(char)*len);
     if (list1 != NULL && list2 != NULL)
-        sprintf(str,"UID: %s\nDate and Time of Creation: %s\nAlarms:\n%sProperties:\n%s",event->UID,dt,list2,list1);
+        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Alarms:\n%s    Properties:\n%s",event->UID,dt,list2,list1);
     else if (list1 != NULL && list2 == NULL)
-        sprintf(str,"UID: %s\nDate and Time of Creation: %s\nProperties:\n%s",event->UID,dt,list1);
+        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Properties:\n%s",event->UID,dt,list1);
     else if (list1 == NULL && list2 != NULL)
-        sprintf(str,"UID: %s\nDate and Time of Creation: %s\nAlarms:\n%s",event->UID,dt,list2);
+        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Alarms:\n%s",event->UID,dt,list2);
     else 
-        sprintf(str,"UID: %s\nDate and Time of Creation: %s\n",event->UID,dt);
+        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n",event->UID,dt);
 
     free(dt);
     free(list1);
