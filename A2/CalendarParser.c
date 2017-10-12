@@ -78,7 +78,7 @@ DateTime * initDT (char * str){
     char date[9] = "";
     char time[7] = "";
 
-    if (strlen(str) == 15)
+    if (strlen(str) == 16)
         newDT->UTC = true;
     else
         newDT->UTC = false;
@@ -88,7 +88,7 @@ DateTime * initDT (char * str){
     }
     int j = 0;
     i = 8;
-    for (i=8;i<14;i++){
+    for (i=9;i<15;i++){
         time[j] = str[i];
         j++;
     }
