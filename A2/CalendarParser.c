@@ -186,9 +186,9 @@ char * toUpper(char * str){
     if (str == NULL)
         return NULL;
     int len = strlen(str);
-    
+
     printf("%d\n", len);
-    char * result =  malloc(sizeof(char)*(len+1));
+    char * result =  malloc(sizeof(char)*(len));
     int i = 0;
     for (i = 0; i < len; ++i){
         result[i] = toupper(str[i]);
