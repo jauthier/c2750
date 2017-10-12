@@ -21,9 +21,12 @@ char * printProperty(void * toBePrinted){
 }
 
 int compareProperty(const void * first,const void * second){
-    char * name1 = ((Property *)first)->propName;
-    char * name2 = ((Property *)second)->propName;
-    return strcmp(name1, name2);
+    char * name1 = toUpper(((Property *)first)->propName);
+    char * name2 = toUpper(((Property *)second)->propName);
+    check = strcmp(name1, name2);
+    free(name1);
+    free(name2);
+    return check;
 }
 
 void deleteProperty(void * toDelete){
@@ -177,8 +180,20 @@ char * printEvent(Event * event){
     return str;
 }
 
+char * toUpper(char * str){
+    if (str == NULL)
+        return NULL;
+    int len = strlen(str);
+    char * result =  malloc(sizeof(char)*(len+1));
+    int i = 0;
+    for (i = 0; i < len; ++i){
+        result[i] = toupper(str[i]);
+    }
+    return result;
+}
+
 int evPropCheck(Property * prop, List propList){
-    char * propName = prop->propName;    
+    char * propName = toUpper(prop->propName);
 
     if (strcmp(propName,"DTSTART")==0||strcmp(propName,"CLASS")==0||strcmp(propName,"CREATED")==0||
         strcmp(propName,"DESCRIPTION")==0||strcmp(propName,"GEO")==0||strcmp(propName,"LAST-MOD")==0||
@@ -189,6 +204,7 @@ int evPropCheck(Property * prop, List propList){
 
         //check the list for duplicates
         int check = findElement((void*)prop, propList);
+        free(propName);
         if (check == 1)
             return 0;
         else 
@@ -204,6 +220,7 @@ int evPropCheck(Property * prop, List propList){
         }
         int check = findElement((void*)temp, propList);
         free(temp);
+        free(propName);
         if (check == 1)
             return 0;
         else 
@@ -212,9 +229,10 @@ int evPropCheck(Property * prop, List propList){
         strcmp(propName,"COMMENT")==0||strcmp(propName,"CONTACT")==0||strcmp(propName,"EXDATE")==0||
         strcmp(propName,"RSTATUS")==0||strcmp(propName,"RELATED")==0||strcmp(propName,"REASOURSES")==0||
         strcmp(propName,"RDATE")==0||strcmp(propName,"X-PROP")==0||strcmp(propName,"IANA-PROP")==0){
-
+        free(propName);
         return 1;
     } else {
+        free(propName);
         return 0;
     }
 }
