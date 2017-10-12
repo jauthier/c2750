@@ -216,19 +216,17 @@ int evPropCheck(Property * prop, List propList){
     } else if (strcmp(propName,"DURATION")==0||strcmp(propName,"DTEND")==0){
         //check the list for the other
         //need to make a temporary struct of the other
-        Property *temp;
-        if  (strcmp(propName,"DURATION")==0){
-            temp = initProperty("DTEND","temp");
-        } else {
-            temp = initProperty("DURATION","temp");
-        }
+        Property * temp = initProperty("DTEND","temp");
+        Property * temp2 = initProperty("DURATION","temp");
         int check = findElement((void*)temp, propList);
+        int check2 = findElement((void*)temp2, propList);
         free(temp);
+        free(temp2);
         free(propName);
-        if (check == 1)
-            return 0;
-        else 
+        if (check == 0 && check2 == 0)
             return 1;
+        else 
+            return 0;
     } else if (strcmp(propName,"ATTACH")==0||strcmp(propName,"ATTENDEE")==0||strcmp(propName,"CATEGORIES")==0||
         strcmp(propName,"COMMENT")==0||strcmp(propName,"CONTACT")==0||strcmp(propName,"EXDATE")==0||
         strcmp(propName,"RSTATUS")==0||strcmp(propName,"RELATED")==0||strcmp(propName,"REASOURSES")==0||
