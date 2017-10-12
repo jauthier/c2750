@@ -587,6 +587,9 @@ int main(int argc, char * argv[]){
     char fileName[30] = "testCalSimpleNoUTC.ics";
     ErrorCode ec = createCalendar(fileName, obj);
     printf("%s\n", printError(ec));
+    char * hold = printCalendar(*obj);
+    printf("%s\n", hold);
+    free(hold);
     if (ec == OK){
         deleteCalendar(*obj);
     }
