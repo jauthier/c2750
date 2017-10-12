@@ -584,7 +584,7 @@ ErrorCode validateCalendar(const Calendar* obj){
 
 int main(int argc, char * argv[]){
     Calendar ** obj = malloc(sizeof(Calendar *));
-    char fileName[30] = "testCalSimpleNoUTC.ics";
+    char fileName[30] = "testCalEvtProp.ics";
     ErrorCode ec = createCalendar(fileName, obj);
     printf("%s\n", printError(ec));
     char * hold = printCalendar(*obj);
