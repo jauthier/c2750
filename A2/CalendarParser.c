@@ -1,8 +1,10 @@
 #include "CalendarParser.h"
 #include "readFile.h"
+#include <ctype.h>
 
 void deleteEvent (Event * toDelete);
 char * printEvent(Event * event);
+char * toUpper(char * str);
 
 /* ------------------------Property------------------------ */
 Property * initProperty(char * name, char * descr){
@@ -23,7 +25,7 @@ char * printProperty(void * toBePrinted){
 int compareProperty(const void * first,const void * second){
     char * name1 = toUpper(((Property *)first)->propName);
     char * name2 = toUpper(((Property *)second)->propName);
-    check = strcmp(name1, name2);
+    int check = strcmp(name1, name2);
     free(name1);
     free(name2);
     return check;
