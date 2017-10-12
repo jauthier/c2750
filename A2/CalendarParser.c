@@ -130,7 +130,7 @@ char* printCalendar(const Calendar* obj){
     char * event = printEvent(obj->event);
     int len = strlen(obj->prodID) + strlen(obj->event->UID) + strlen(event) + 40; 
     str = malloc(sizeof(char)*len);
-    sprintf(str, "Product ID: %s\nVersion: %f\n%s", obj->prodID, obj->version,event);
+    sprintf(str, "Product ID: %s\nVersion: %0.1f\n%s", obj->prodID, obj->version,event);
     free(event);
     return str;
 }
