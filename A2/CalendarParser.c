@@ -128,7 +128,7 @@ void deleteCalendar(Calendar * obj){
 char* printCalendar(const Calendar* obj){
     char * str;
     char * event = printEvent(obj->event);
-    int len = strlen(obj->prodID) + strlen(obj->event->UID) + strlen(event) + 45; 
+    int len = strlen(obj->prodID) + strlen(event) + 50; 
     str = malloc(sizeof(char)*len);
     sprintf(str, "Calendar\n  Product ID: %s\n  Version: %0.1f\n%s", obj->prodID, obj->version,event);
     free(event);
@@ -156,7 +156,7 @@ char * printEvent(Event * event){
     char * dt = printDT(&(event->creationDateTime));
     char * list1 = toString(event->properties);
     char * list2 = toString(event->alarms);
-    int len = strlen(dt) + strlen(event->UID) + 60;
+    int len = strlen(dt) + strlen(event->UID) + 80;
     if (list1 != NULL)
         len = len +  strlen(list1);
     if (list2 != NULL)
