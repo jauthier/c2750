@@ -188,7 +188,7 @@ char * toUpper(char * str){
         return NULL;
     int len = strlen(str);
 
-    char * result =  malloc(sizeof(char)*(len));
+    char * result =  malloc(sizeof(char)*(len+1));
     int i = 0;
     for (i = 0; i < len; ++i){
         result[i] = toupper(str[i]);
