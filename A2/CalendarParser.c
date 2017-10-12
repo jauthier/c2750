@@ -186,6 +186,7 @@ char * toUpper(char * str){
     if (str == NULL)
         return NULL;
     int len = strlen(str);
+    printf("%d\n", len);
     char * result =  malloc(sizeof(char)*(len+1));
     int i = 0;
     for (i = 0; i < len; ++i){
@@ -195,6 +196,7 @@ char * toUpper(char * str){
 }
 
 int evPropCheck(Property * prop, List propList){
+    printf("%s\n", prop->propName);
     char * propName = toUpper(prop->propName);
     printf("%s\n", propName);
     if (strcmp(propName,"DTSTART")==0||strcmp(propName,"CLASS")==0||strcmp(propName,"CREATED")==0||
