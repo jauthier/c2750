@@ -26,6 +26,7 @@ int compareProperty(const void * first,const void * second){
     char * name1 = toUpper(((Property *)first)->propName);
     char * name2 = toUpper(((Property *)second)->propName);
     int check = strcmp(name1, name2);
+    printf("%s, %s\n", name1, name2);
     free(name1);
     free(name2);
     return check;
@@ -187,21 +188,17 @@ char * toUpper(char * str){
         return NULL;
     int len = strlen(str);
 
-    printf("%d\n", len);
     char * result =  malloc(sizeof(char)*(len));
     int i = 0;
     for (i = 0; i < len; ++i){
         result[i] = toupper(str[i]);
     }
     result[len] = '\0';
-    printf("result: %s\n", result);
     return result;
 }
 
 int evPropCheck(Property * prop, List propList){
-    printf("%s\n", prop->propName);
     char * propName = toUpper(prop->propName);
-    printf("%s\n", propName);
     if (strcmp(propName,"DTSTART")==0||strcmp(propName,"CLASS")==0||strcmp(propName,"CREATED")==0||
         strcmp(propName,"DESCRIPTION")==0||strcmp(propName,"GEO")==0||strcmp(propName,"LAST-MOD")==0||
         strcmp(propName,"LOCATION")==0||strcmp(propName,"ORGANIZER")==0||strcmp(propName,"SEQ")==0||
