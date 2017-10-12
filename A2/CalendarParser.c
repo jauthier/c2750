@@ -180,7 +180,7 @@ char * printEvent(Event * event){
 int evPropCheck(Property * prop, List propList){
     char * propName = prop->propName;    
 
-    if (strcmp(propName,"DSTART")==0||strcmp(propName,"CLASS")==0||strcmp(propName,"CREATED")==0||
+    if (strcmp(propName,"DTSTART")==0||strcmp(propName,"CLASS")==0||strcmp(propName,"CREATED")==0||
         strcmp(propName,"DESCRIPTION")==0||strcmp(propName,"GEO")==0||strcmp(propName,"LAST-MOD")==0||
         strcmp(propName,"LOCATION")==0||strcmp(propName,"ORGANIZER")==0||strcmp(propName,"SEQ")==0||
         strcmp(propName,"PRIORITY")==0||strcmp(propName,"STATUS")==0||strcmp(propName,"SUMMARY")==0||
@@ -587,10 +587,10 @@ int main(int argc, char * argv[]){
     char fileName[30] = "testCalEvtProp.ics";
     ErrorCode ec = createCalendar(fileName, obj);
     printf("%s\n", printError(ec));
-    char * hold = printCalendar(*obj);
-    printf("%s\n", hold);
-    free(hold);
     if (ec == OK){
+        char * hold = printCalendar(*obj);
+        printf("%s\n", hold);
+        free(hold);
         deleteCalendar(*obj);
     }
     free(obj);
