@@ -57,9 +57,8 @@ int fileToList(char * fileName, List * list){
     char current[LINELEN], next[LINELEN];
 
     char * hold = fgets(current,LINELEN,fp);
-    while (hold != NULL){
-        if (strstr(current,"\r\n") == NULL)
-            return 0;
+        int l = strlen(current);
+        printf("%c%c\n", current[l-2],current[l-1]);
         hold = fgets(next, LINELEN, fp);
         if (isWhitespace(current) == 0){ // if the line is only whitespace it is skipped
 
