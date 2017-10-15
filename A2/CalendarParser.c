@@ -635,7 +635,7 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
             }
         } else {
             /* skip over any comments */
-            if (strcmp(value, "COMMENT") != 0){ 
+            if (strcmp(token, "COMMENT") != 0){ 
                 free(value);                        
                 if (checkID == 1)
                     free(calID);
