@@ -705,6 +705,9 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
+        if (token == NULL){
+            continue;
+        }
 
         /* this should be the beginning of the calendar object */
         if (strcmp(token, "BEGIN") == 0){
