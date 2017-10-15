@@ -661,16 +661,19 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
 ErrorCode createCalendar(char* fileName, Calendar ** obj){
     /* check file extension */
     int l = strlen(fileName);
-    char ext[4];
-    ext[0] = fileName[l-3];
-    ext[1] = fileName[l-2];
-    ext[2] = fileName[l-1];
-    ext[3] = '\0';
-    printf("%s\n", ext);
-    int check = strcmp(ext, "ics");
+    char ext[5];
+    ext[0] = fileName[l-4];
+    ext[1] = fileName[l-3];
+    ext[2] = fileName[l-2];
+    ext[3] = fileName[l-1];
+    ext[4] = '\0';
+    int check = strcmp(ext, ".ics");
     if (check != 0){
         return INV_FILE;
     }
+
+    if (fileName == NULL)
+        return INV_FILE;
     /* call fileToList to read the file and put it in a list all multi 
     lines are unfolded and all lines with only white space are removes */
     List * list = malloc(sizeof(List));
