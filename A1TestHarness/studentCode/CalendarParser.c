@@ -294,6 +294,11 @@ ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
+        if (token == NULL){
+            free(value);
+            current = current->next;
+            continue;
+        }
 
         if (strcmp(token,"ACTION")==0){
             if (checkAction == 0){
@@ -434,6 +439,11 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
+        if (token == NULL){
+            free(value);
+            current = current->next;
+            continue;
+        }
 
         if (strcmp(token, "DTSTAMP") == 0){
             if (checkDT == 0){ /* make sure this is the only dtstamp */
@@ -568,6 +578,12 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
+        if (token == NULL){
+            free(value);
+            current = current->next;
+            continue;
+        }
+
         if (strcmp(token, "VERSION") == 0 && eventEnd == 0){
             if (checkVer == 0){
                 /* make sure this is the only version */
@@ -706,6 +722,8 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
         if (token == NULL){
+            free(value);
+            current = current->next;
             continue;
         }
 
