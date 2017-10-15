@@ -391,7 +391,7 @@ ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
         free(value);
         current = current->next;
     }
-
+    return INV_EVENT;
 }
 
 ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
@@ -737,27 +737,4 @@ const char * printError (ErrorCode err){
     if (err == INV_CREATEDT)
         return "Invaid DateTime\n";
     return "Other Error\n";
-}
-
-ErrorCode writeCalendar(char* fileName, const Calendar* obj){
-    return OK;
-}
-
-ErrorCode validateCalendar(const Calendar* obj){
-    return OK;
-}
-
-int main(int argc, char * argv[]){
-    Calendar ** obj = malloc(sizeof(Calendar *));
-    char fileName[30] = "testCalEvtPropAlm.ics";
-    ErrorCode ec = createCalendar(fileName, obj);
-    printf("%s\n", printError(ec));
-    if (ec == OK){
-        char * hold = printCalendar(*obj);
-        printf("%s\n", hold);
-        free(hold);
-        deleteCalendar(*obj);
-    }
-    free(obj);
-    return 0;
 }
