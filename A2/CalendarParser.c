@@ -462,7 +462,7 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
                 //go to parseAlarm 
                 Alarm ** newAlarm = malloc(sizeof(Alarm*));
                 Node ** returnPos = malloc(sizeof(Node*));
-                ErrorCode eCode = parseAlarm(current, next, newAlarm, returnPos);
+                ErrorCode eCode = parseAlarm(current, newAlarm, returnPos);
                 if (eCode != OK){
                     free(newAlarm);
                     freeEv(&propList, &alarmList, value);
