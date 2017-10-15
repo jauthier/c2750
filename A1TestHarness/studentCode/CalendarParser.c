@@ -268,6 +268,10 @@ ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
         char * line = (char *)current->data;
         printf("%s\n", line);
 
+        if (line[0] == ';'){
+            current = current->next;
+            continue;
+        }
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             clearList(&propList);
             if (checkAction == 1)
@@ -294,11 +298,6 @@ ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
-        if (token == NULL){
-            free(value);
-            current = current->next;
-            continue;
-        }
 
         if (strcmp(token,"ACTION")==0){
             if (checkAction == 0){
@@ -418,6 +417,10 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
         char * line = (char *)current->data;
         printf("%s\n", line);
         /* make sure the line can be parsed */
+        if (line[0] == ';'){
+            current = current->next;
+            continue;
+        }
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             return INV_EVENT;
         }
@@ -439,11 +442,6 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
-        if (token == NULL){
-            free(value);
-            current = current->next;
-            continue;
-        }
 
         if (strcmp(token, "DTSTAMP") == 0){
             if (checkDT == 0){ /* make sure this is the only dtstamp */
@@ -556,6 +554,10 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
     while (current != NULL){
         char * line = (char *)current->data;
         printf("%s\n", line);
+        if (line[0] == ';'){
+            current = current->next;
+            continue;
+        }
         /* make sure the line can be parsed */
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             return INV_CAL;
@@ -578,11 +580,6 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
-        if (token == NULL){
-            free(value);
-            current = current->next;
-            continue;
-        }
 
         if (strcmp(token, "VERSION") == 0 && eventEnd == 0){
             if (checkVer == 0){
@@ -690,6 +687,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
         return INV_FILE;
     }
 
+
     /* call fileToList to read the file and put it in a list all multi 
     lines are unfolded and all lines with only white space are removes */
     List * list = malloc(sizeof(List));
@@ -708,6 +706,10 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     while (current != NULL){
         char * line = (char *)current->data;
         printf("%s\n", line);
+        if (line[0] == ';'){
+            current = current->next;
+            continue;
+        }
         /* make sure the line can be parsed */
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             clearList(list);
@@ -721,11 +723,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
-        if (token == NULL){
-            free(value);
-            current = current->next;
-            continue;
-        }
+        
 
         /* this should be the beginning of the calendar object */
         if (strcmp(token, "BEGIN") == 0){
