@@ -660,7 +660,7 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
 
 ErrorCode createCalendar(char* fileName, Calendar ** obj){
     /* check file extension */
-    char * save;
+    char * save1,save2;
     char * ext = strtok_r(fileName, ".",&save);
     ext = strtok_r(NULL, ".",&save);
     int check = strcmp(ext, "ics");
@@ -694,8 +694,8 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
         }
 
         /* parse the line */
-        char * token = strtok(line, ":;\t");
-        char * holdVal = strtok(NULL, "\n");
+        char * token = strtok_r(line, ":;\t",&save2);
+        char * holdVal = strtok_r(NULL, "\n",&save2);
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
