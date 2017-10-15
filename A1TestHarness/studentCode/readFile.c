@@ -59,7 +59,7 @@ int fileToList(char * fileName, List * list){
 
     char * hold = fgets(current,LINELEN,fp);
     while (hold != NULL){
-        if (strstr(current, "\r\n") == NULL){
+        if (strstr(current, "\0") == NULL){
             return 0;
         }
         hold = fgets(next, LINELEN, fp);
