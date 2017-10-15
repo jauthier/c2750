@@ -48,15 +48,15 @@ Alarm * initAlarm(char * action, char * trigger, List propList){
 char * printAlarm(void * toBePrinted){
     Alarm * toPrint = (Alarm *)toBePrinted;
     char * list = toString(toPrint->properties);
-    int len = strlen(toPrint->action)+strlen(toPrint->trigger)+8;
+    int len = strlen(toPrint->action)+strlen(toPrint->trigger)+50;
     if (list != NULL)
         len = len + strlen(list);
     char * str = malloc(sizeof(char)*len);
 
     if (list == NULL)
-        sprintf(str,"%s\n%s\n", toPrint->action,toPrint->trigger);
+        sprintf(str,"    Alarm:\nAction:%s\nTrigger:%s\n", toPrint->action,toPrint->trigger);
     else 
-        sprintf(str,"%s\n%s\n%s\n", toPrint->action,toPrint->trigger,list);
+        sprintf(str,"    Alarm:\nAction:%s\nTrigger:%s\nProperties:\n%s\n", toPrint->action,toPrint->trigger,list);
 
     free(list);
     return str;
