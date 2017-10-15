@@ -131,6 +131,8 @@ void deleteCalendar(Calendar * obj){
 }
 
 char* printCalendar(const Calendar* obj){
+    if (obj == NULL)
+        return NULL;
     char * str;
     char * event = printEvent(obj->event);
     int len = strlen(obj->prodID) + strlen(event) + 50; 
