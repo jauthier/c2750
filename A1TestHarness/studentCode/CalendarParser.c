@@ -660,11 +660,12 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
 
 ErrorCode createCalendar(char* fileName, Calendar ** obj){
     /* check file extension */
-    char * ext = strtok(fileName, ".");
+    /*char * ext = strtok(fileName, ".");
     ext = strtok(NULL, ". \t\r\n");
     printf("%s\n", ext);
-    if (strcmp(ext, "ics") == 0)
+    if (strcmp(ext, "ics") == 0){
         return INV_FILE;
+    }*/
 
     /* call fileToList to read the file and put it in a list all multi 
     lines are unfolded and all lines with only white space are removes */
