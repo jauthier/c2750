@@ -45,14 +45,13 @@ int checkMultiLine (char * firstLine, char * secondLine){
 }
 
 int fileToList(char * fileName, List * list){
+    // create a list
+    *list = (initializeList(printLine, deleteLine, compareLine));
 
     // open the file
     FILE * fp = fopen(fileName, "r");
     if (fp == NULL)
         return 0;
-
-    // create a list
-    *list = (initializeList(printLine, deleteLine, compareLine));
 
     // iterate through the list putting the lines in the list
     char current[LINELEN], next[LINELEN];
