@@ -663,7 +663,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     char * ext = strtok(fileName, ".");
     ext = strtok(NULL, ".");
     printf("%s\n", ext);
-    if (strcmp(ext, "ics") == 0){
+    if (strcmp(ext, "ics") != 0){
         return INV_FILE;
     }
 
