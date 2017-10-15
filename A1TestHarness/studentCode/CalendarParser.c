@@ -662,8 +662,8 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     /* check file extension */
     char * ext = strtok(fileName, ".");
     ext = strtok(fileName, ".\n");
-    if (strcmp(ext, "ics") != 0)
-        return INV_FILE;
+    /*if (strcmp(ext, "ics") != 0)
+        return INV_FILE;*/
 
     /* call fileToList to read the file and put it in a list all multi 
     lines are unfolded and all lines with only white space are removes */
