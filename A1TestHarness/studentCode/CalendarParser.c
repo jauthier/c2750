@@ -663,11 +663,10 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     char * ext = strtok(fileName, ".");
     ext = strtok(NULL, ".");
     int check = strcmp(ext, "ics");
-    printf("%d\n", check);
     if (check != 0){
         return INV_FILE;
     }
-
+    printf("here\n");
     /* call fileToList to read the file and put it in a list all multi 
     lines are unfolded and all lines with only white space are removes */
     List * list = malloc(sizeof(List));
