@@ -91,6 +91,10 @@ DateTime * initDT (char * str){
     for (i=0;i<8;i++){
         date[i] = str[i];
     }
+    if (str[8] != 'T'){
+        free(newDT);
+        return NULL;
+    }
     int j = 0;
     i = 8;
     for (i=9;i<15;i++){
@@ -448,6 +452,11 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
         if (strcmp(token, "DTSTAMP") == 0){
             if (checkDT == 0){ /* make sure this is the only dtstamp */
                 evDT = initDT(value);
+                if (evDT == NULL){
+                    if (checkUID == 1)
+                        free(evUID);
+                    return INV_CREATEDT;
+                }
                 checkDT = 1;
             } else {
                 freeEv(&propList, &alarmList, value);
