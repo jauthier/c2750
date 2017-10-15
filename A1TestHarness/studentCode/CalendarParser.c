@@ -660,7 +660,7 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
 
 ErrorCode createCalendar(char* fileName, Calendar ** obj){
     /* check file extension */
-    int l = strtok(fileName);
+    int l = strlen(fileName);
     char ext[4];
     ext[0] = fileName[l-3];
     ext[1] = fileName[l-2];
