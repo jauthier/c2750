@@ -18,7 +18,7 @@ char * printProperty(void * toBePrinted){
     Property * toPrint = (Property *)toBePrinted;
     int len = strlen(toPrint->propName)+strlen(toPrint->propDescr)+10;
     char * str = malloc(sizeof(char)*len);
-    sprintf(str,"      %s:%s\n", toPrint->propName,toPrint->propDescr);
+    sprintf(str,"      %s:%s", toPrint->propName,toPrint->propDescr);
     return str;
 }
 
@@ -56,7 +56,7 @@ char * printAlarm(void * toBePrinted){
     if (list == NULL)
         sprintf(str,"      Action:%s\n      Trigger:%s\n", toPrint->action,toPrint->trigger);
     else 
-        sprintf(str,"    Action:%s\n      Trigger:%s\n      Properties:\n%s\n", toPrint->action,toPrint->trigger,list);
+        sprintf(str,"      Action:%s\n      Trigger:%s\n      Properties:\n%s\n", toPrint->action,toPrint->trigger,list);
 
     free(list);
     return str;
