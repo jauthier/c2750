@@ -335,7 +335,7 @@ ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                 // the alarm is good to be made
                 Alarm * newAlarm = initAlarm(action, trigger, propList);
                 *alarmPtr = newAlarm;
-                sprintf(holdLong,"%ld",pos);
+                *returnPos = current;
                 free(value);
                 free(action);
                 free(trigger);
