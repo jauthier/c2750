@@ -26,7 +26,6 @@ int compareProperty(const void * first,const void * second){
     char * name1 = toUpper(((Property *)first)->propName);
     char * name2 = toUpper(((Property *)second)->propName);
     int check = strcmp(name1, name2);
-    printf("%s, %s\n", name1, name2);
     free(name1);
     free(name2);
     return check;
@@ -251,6 +250,149 @@ void freeEv(List *list1, List *list2, char * value){
     free(value);
 }
 
+ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
+    current = current->next;
+
+    List propList = initializeList(printProperty, deleteProperty, compareProperty);
+
+    int checkAction = 0;
+    int checkTrigger = 0;
+    int checkDuration = 0;
+    int checkRepeat = 0;
+
+    char * action;
+    char * trigger;
+
+    while(current != NULL){
+
+        char * line = (char *)current->data;
+        printf("%s\n", line);
+
+        if (strchr(line,':') == NULL && strchr(line,';') == NULL){
+            clearList(&propList);
+            if (checkAction == 1)
+                free(action);
+            if  (checkTrigger == 1)
+                free(trigger);
+            return INV_EVENT;
+        }
+
+        /* parse the line */
+        char * token = strtok(line, ":;\t");
+        char * holdVal = strtok(NULL, "\n");
+        
+        /* check if the value following the key word is NULL */
+        if (holdVal == NULL){
+            clearList(&propList);
+            if (checkAction == 1)
+                free(action);
+            if  (checkTrigger == 1)
+                free(trigger);
+            return INV_EVENT;
+        }
+
+        int len = strlen(holdVal) + 1;
+        char * value = malloc(sizeof(char)*len);
+        strcpy(value, holdVal);
+
+        if (strcmp(token,"ACTION")==0){
+            if (checkAction == 0){
+                action = malloc(sizeof(char)*(strlen(value)+1));
+                strcpy(action, value);
+                checkAction = 1;
+            } else {
+                free(value);
+                clearList(&propList);
+                free(action);
+                if (checkTrigger == 1)
+                    free(trigger);
+                return INV_EVENT;
+            }
+        } else if (strcmp(token,"TRIGGER")==0){
+            if (checkTrigger == 0){
+                trigger = malloc(sizeof(char)*(strlen(value)+1));
+                strcpy(trigger,value);
+                checkTrigger = 1;
+            } else {
+                free(value);
+                clearList(&propList);
+                free(trigger);
+                if (checkAction == 1)
+                    free(action);
+                return INV_EVENT;
+            }
+        } else if (strcmp(token,"END")==0){
+            if (strcmp(value,"VALARM")==0 &&checkAction == 1 && checkTrigger == 1){
+                if (checkDuration == 1 || checkRepeat == 1){
+                    if (!(checkDuration == 1 && checkRepeat == 1)){
+                        free(value);
+                        clearList(&propList);
+                        free(trigger);
+                        free(action);
+                        return INV_EVENT;
+                    }
+                }
+                // the alarm is good to be made
+                Alarm * newAlarm = initAlarm(action, trigger, propList);
+                *alarmPtr = newAlarm;
+                sprintf(holdLong,"%ld",pos);
+                free(value);
+                free(action);
+                free(trigger);
+                 return OK;
+            } else {
+                free(value);
+                clearList(&propList);
+                if (checkTrigger == 1)
+                    free(trigger);
+                if (checkAction == 1)
+                    free(action);
+                return INV_EVENT;
+            }
+
+        } else {
+            // porperties - eliminate case sensitivity
+            char * temp = toUpper(token);
+            if (strcmp(temp,"DURATION")==0||strcmp(temp,"REPEAT")==0||strcmp(temp,"ATTACH")==0){
+
+                Property * newProp = initProperty(token, value);
+                int check = findElement((void*)newProp, propList);
+                if (check == 0){
+                    //add to the list 
+                    insertFront(&propList,(void*)newProp);
+                    if (strcmp(temp,"DURATION")==0)
+                        checkDuration = 1;
+                    if (strcmp(temp,"REPEAT")==0)
+                        checkRepeat = 1;
+                } else {
+                    free(value);
+                    free(newProp);
+                    clearList(&propList);
+                    if (checkTrigger == 1)
+                        free(trigger);
+                    if (checkAction == 1)
+                        free(action);
+                    return INV_EVENT;
+                }
+            } else if (strcmp(temp,"X-PROP")==0||strcmp(temp,"IANA-PROP")==0){
+                Property * newProp = initProperty(token, value);
+                insertFront(&propList,(void*)newProp);
+            } else {
+                free(value);
+                clearList(&propList);
+                if (checkTrigger == 1)
+                    free(trigger);
+                if (checkAction == 1)
+                    free(action);
+                return INV_EVENT;   
+            }
+        }
+        free(value);
+        current = current->next;
+    }
+
+}
+
 ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
     current = current->next;
 
@@ -368,7 +510,6 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
             Property * newProp = initProperty(token,value);
             //check if the property is valid
             int check = evPropCheck(newProp,propList);
-            printf("%d\n", check);
             if (check == 1){
                 insertFront(&propList, (void *)newProp);
             } else {
@@ -493,14 +634,17 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
                 return INV_CAL;
             }
         } else {
-            free(value);                        
-            if (checkID == 1)
-                free(calID);
-            if (eventEnd == 1){
-                deleteEvent(*eventPtr);
-                free(eventPtr);
+            /* skip over any comments */
+            if (strcmp(value, "COMMENT") != 0){ 
+                free(value);                        
+                if (checkID == 1)
+                    free(calID);
+                if (eventEnd == 1){
+                    deleteEvent(*eventPtr);
+                    free(eventPtr);
+                }
+                return INV_CAL;
             }
-            return INV_CAL;
         }
         free(value);
 
