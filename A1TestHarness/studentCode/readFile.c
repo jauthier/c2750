@@ -57,6 +57,7 @@ int fileToList(char * fileName, List * list){
     char current[LINELEN], next[LINELEN];
 
     char * hold = fgets(current,LINELEN,fp);
+    while (hold != NULL){
         int l = strlen(current);
         printf("%c%c\n", current[l-2],current[l-1]);
         hold = fgets(next, LINELEN, fp);
