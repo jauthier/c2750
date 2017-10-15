@@ -234,7 +234,7 @@ int evPropCheck(Property * prop, List propList){
         return 1;
     } else {
         free(propName);
-        return 0;
+        return 1;
     }
 }
 
