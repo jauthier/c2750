@@ -353,7 +353,8 @@ ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
         } else {
             // porperties - eliminate case sensitivity
             char * temp = toUpper(token);
-            if (strcmp(temp,"DURATION")==0||strcmp(temp,"REPEAT")==0||strcmp(temp,"ATTACH")==0){
+            if (strcmp(temp,"DURATION")==0||strcmp(temp,"REPEAT")==0||strcmp(temp,"ATTACH")==0
+                ||strcmp(temp,"DESCRIPTION")==0||strcmp(temp,"SUMMARY")==0){
 
                 Property * newProp = initProperty(token, value);
                 int check = findElement((void*)newProp, propList);
