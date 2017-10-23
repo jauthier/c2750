@@ -235,7 +235,7 @@ void* getFromBack(List list){
 }
 
 char* toString(List list){
-    if (list == NULL)
+    if (&list == NULL)
         return NULL;
     /* create an iterator */
     ListIterator iter = createIterator(list);
@@ -287,13 +287,13 @@ void* nextElement(ListIterator* iter){
 
 int getLength(List list){
     /* invalid list */
-    if (list == NULL)
+    if (&list == NULL)
         return -1;
     /* empty list */
-    if (list->head == NULL)
+    if (list.head == NULL)
         return 0;
 
-    return list->length;
+    return list.length;
 }
 
 void * findElement(List list, bool (*customCompare)(const void* first,const void* second), void * data){

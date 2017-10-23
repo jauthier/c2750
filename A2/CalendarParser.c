@@ -31,6 +31,18 @@ int compareProperty(const void * first,const void * second){
     return check;
 }
 
+bool custCompareProp(const void * first,const void * second){
+    char * name1 = toUpper(((Property *)first)->propName);
+    char * name2 = toUpper(((Property *)second)->propName);
+    int check = strcmp(name1, name2);
+    free(name1);
+    free(name2);
+    if (check == 0)
+        return true;
+    else
+        return false;
+}
+
 void deleteProperty(void * toDelete){
     free((Property *)toDelete);
 }
@@ -66,6 +78,15 @@ int compareAlarm(const void * first,const void * second){
     char * action1 = ((Alarm *)first)->action;
     char * action2 = ((Alarm *)second)->action;
     return strcmp(action1, action2);
+}
+
+bool custCompareAlarm(const void * first,const void * second){
+    char * action1 = ((Alarm *)first)->action;
+    char * action2 = ((Alarm *)second)->action;
+    if (strcmp(action1, action2)==0)
+        return true;
+    else
+        return false;
 }
 
 void deleteAlarm(void * toDelete){
@@ -207,7 +228,7 @@ int calPropCheck(Property * prop, List propList){
     char * propName = toUpper(prop->propName);
     if (strcmp(propName,"CALSCALE")==0||strcmp(propName,"METHOD")==0||strcmp(propName,"CALSCALE")==0){ //only one
         //check the list for duplicates
-        int check = findElement((void*)prop, propList);
+        int check = findElement(propList, custCompareProp, (void*)prop);
         free(propName);
         if (check == 1)
             return 0;
@@ -230,7 +251,7 @@ int evPropCheck(Property * prop, List propList){
         strcmp(propName,"RRULE")==0){
 
         //check the list for duplicates
-        int check = findElement((void*)prop, propList);
+        int check = findElement(propList,custCompareProp, (void*)prop);
         free(propName);
         if (check == 1)
             return 0;
@@ -241,8 +262,8 @@ int evPropCheck(Property * prop, List propList){
         //need to make a temporary struct of the other
         Property * temp = initProperty("DTEND","temp");
         Property * temp2 = initProperty("DURATION","temp");
-        int check = findElement((void*)temp, propList);
-        int check2 = findElement((void*)temp2, propList);
+        int check = findElement(propList, custCompareProp, (void*)temp);
+        int check2 = findElement(propList, custCompareProp, (void*)temp2);
         free(temp);
         free(temp2);
         free(propName);
@@ -385,7 +406,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                 ||strcmp(temp,"DESCRIPTION")==0||strcmp(temp,"SUMMARY")==0){
 
                 Property * newProp = initProperty(token, value);
-                int check = findElement((void*)newProp, propList);
+                int check = findElement(propList, custCompareProp, (void*)newProp);
                 if (check == 0){
                     //add to the list 
                     insertFront(&propList,(void*)newProp);
