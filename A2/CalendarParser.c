@@ -768,6 +768,7 @@ ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
 
     while (current != NULL){
         char * line = (char *)current->data;
+        if (line[0] == ';'){
             current = current->next;
             continue;
         }
