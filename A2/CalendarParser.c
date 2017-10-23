@@ -203,9 +203,9 @@ char * printEvent(void * event){
         len = len + strlen(list2);
     str = malloc(sizeof(char)*len);
     if (list1 != NULL && list2 != NULL)
-        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Alarms:\n%s    Properties:\n%s",event->UID,dt,list2,list1);
+        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Alarms:\n%s    Properties:\n%s",evt->UID,dt,list2,list1);
     else if (list1 != NULL && list2 == NULL)
-        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Properties:\n%s",event->UID,dt,list1);
+        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Properties:\n%s",evt->UID,dt,list1);
     else if (list1 == NULL && list2 != NULL)
         sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Alarms:\n%s",evt->UID,dt,list2);
     else 
