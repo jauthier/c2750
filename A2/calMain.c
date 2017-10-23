@@ -21,6 +21,7 @@ int main(int argc, char const *argv[]){
 		char * errMesg = printError(err);
 		printf("%s\n", errMesg);
 		free(errMesg);
+		printf("Deleting\n");
 		deleteCalendar(*obj);
 	}
 

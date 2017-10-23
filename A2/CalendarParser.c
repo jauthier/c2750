@@ -323,7 +323,6 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
     while(current != NULL){
 
         char * line = (char *)current->data;
-        printf("%s\n", line);
         if (line[0] == ';'){
             current = current->next;
             continue;
@@ -468,7 +467,6 @@ ICalErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
 
     while(current != NULL){
         char * line = (char *)current->data;
-        printf("%s\n", line);
         /* make sure the line can be parsed */
         if (line[0] == ';'){
             current = current->next;
@@ -613,7 +611,6 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
 
     while (current != NULL){
         char * line = (char *)current->data;
-        printf("%s\n", line);
         if (line[0] == ';'){
             current = current->next;
             continue;
@@ -771,8 +768,6 @@ ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
 
     while (current != NULL){
         char * line = (char *)current->data;
-        printf("%s\n", line);
-        if (line[0] == ';'){
             current = current->next;
             continue;
         }
