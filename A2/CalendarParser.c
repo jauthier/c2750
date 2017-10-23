@@ -156,8 +156,8 @@ Calendar * initCal (float ver, char * id, List eventList, List propList){
 }
 
 void deleteCalendar(Calendar * obj){
-    clearList(obj->events);
-    clearList(obj->properties);
+    clearList(&(obj->events));
+    clearList(&(obj->properties));
     free(obj);
 }
 
