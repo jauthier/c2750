@@ -32,6 +32,7 @@ typedef struct listNode{
 typedef struct listHead{
     Node *head;
     Node *tail;
+    int length;
     void (*deleteData)(void *toBeDeleted);
     int (*compare)(const void *first,const void *second);
     char* (*printData)(void *toBePrinted);
@@ -174,6 +175,26 @@ ListIterator createIterator(List list);
 **/
 void* nextElement(ListIterator* iter);
 
-int findElement(void * toFind, List list);
+/**Returns the number of elements in the list.
+ *@pre List must exist, but does not have to have elements.
+ *@param list - the list struct.
+ *@return on success: number of eleemnts in the list (0 or more).  on failure: -1 (e.g. list not initlized correctly)
+ **/
+int getLength(List list);
+
+/** Function that searches for an element in the list using a comparator function.
+ * If an element is found, a pointer to the data of that element is returned
+ * Returns NULL if the element is not found.
+ *@pre List exists and is valid.  Comparator function has been provided.
+ *@post List remains unchanged.
+ *@return The data associated with the list element that matches the search criteria.  If element is not found, return NULL.
+ *@param list - a list sruct
+ *@param customCompare - a pointer to comparator fuction for customizing the search
+ *@param searchRecord - a pointer to search data, which contains seach criteria
+ *Note: while the arguments of compare() and searchRecord are all void, it is assumed that records they point to are
+ *      all of the same type - just like arguments to the compare() function in the List struct
+ **/
+void* findElement(List list, bool (*customCompare)(const void* first,const void* second), const void* searchRecord);
+
 
 #endif

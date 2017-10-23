@@ -3,7 +3,7 @@
 * CIS 2750
 * Assignment 0
 * Author: Jessica Authier, 0849720
-* 2017/09/15
+* 2017/10/23
 * 
 * This file contains the functions to create, manipulate and destroy a double linked list.
 */
