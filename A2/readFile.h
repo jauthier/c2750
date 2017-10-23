@@ -35,7 +35,7 @@ int isWhitespace (char * str);
 ** Checks if secondLine is part of the firstLine.
 ** return: 1 if multi line and 0 if not
 */
-int checkMultiLine (char * firstLine, char * secondLine);
+int checkMultiLine (char * secondLine);
 
 /*
 ** parameters: fileName - the name of the file
