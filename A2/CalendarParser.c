@@ -185,9 +185,9 @@ Event * initEvent (char * uID, DateTime * dt, List propList, List alarmList){
 
 void deleteEvent (void * toDelete){
 
-    clearList(&((Event*)toDelete->properties));
-    clearList(&((Event*)toDelete->alarms));
-    free(toDelete);
+    clearList(&(((Event*)toDelete)->properties));
+    clearList(&(((Event*)toDelete)->alarms));
+    free((Event *)toDelete);
 }
 
 char * printEvent(void * event){
