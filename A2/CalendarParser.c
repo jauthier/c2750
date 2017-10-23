@@ -183,9 +183,10 @@ Event * initEvent (char * uID, DateTime * dt, List propList, List alarmList){
     return newEvent;
 }
 
-void deleteEvent (Event * toDelete){
-    clearList(&(toDelete->properties));
-    clearList(&(toDelete->alarms));
+void deleteEvent (void * toDelete){
+
+    clearList(&((Event*)toDelete->properties));
+    clearList(&((Event*)toDelete->alarms));
     free(toDelete);
 }
 
@@ -915,7 +916,7 @@ ICalErrorCode validateAlarms(List alarmList){
             return INV_ALARM;
         if(((Alarm *)hold->data)->trigger == NULL)
             return INV_ALARM;
-        ICalErrorCode ec = validateProperties(((Alarm *)hold->data)->propertie);
+        ICalErrorCode ec = validateProperties(((Alarm *)hold->data)->properties);
         if (ec != OK)
             return INV_ALARM;
         hold = hold->next;
