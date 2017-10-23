@@ -894,7 +894,7 @@ ICalErrorCode validateEvent(Event * event){
 
 ICalErrorCode validateProperties(List * propList){
 
-    Node * hold == propList->head;
+    Node * hold = propList->head;
     while(hold != NULL){
         if(hold->data == NULL)
             return INV_CAL; 
@@ -908,7 +908,7 @@ ICalErrorCode validateProperties(List * propList){
 }
 
 ICalErrorCode validateAlarms(List * alarmList){
-    Node * hold == alarmList->head;
+    Node * hold = alarmList->head;
     while(hold != NULL){
         if(hold->data == NULL)
             return INV_ALARM; 
