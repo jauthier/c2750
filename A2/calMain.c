@@ -9,7 +9,7 @@
 int main(int argc, char const *argv[]){
 	
 
-	char fileName[40] = "megaCal1";
+	char fileName[40] = "megaCal1.ics";
 	Calendar ** obj = malloc(sizeof(Calendar *));
 	IcalErrorCode ec = createCalendar(fileName, obj);
 	char * errMes = printError(ec);
