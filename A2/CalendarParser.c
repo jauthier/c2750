@@ -190,12 +190,13 @@ void deleteEvent (void * toDelete){
     free(toDelete);
 }
 
-char * printEvent(Event * event){
+char * printEvent(void * event){
+    Event * evt = (Event *) event;
     char * str;
-    char * dt = printDT(&(event->creationDateTime));
-    char * list1 = toString(event->properties);
-    char * list2 = toString(event->alarms);
-    int len = strlen(dt) + strlen(event->UID) + 80;
+    char * dt = printDT(&(evt->creationDateTime));
+    char * list1 = toString(evt->properties);
+    char * list2 = toString(evt->alarms);
+    int len = strlen(dt) + strlen(evt->UID) + 80;
     if (list1 != NULL)
         len = len +  strlen(list1);
     if (list2 != NULL)
@@ -206,9 +207,9 @@ char * printEvent(Event * event){
     else if (list1 != NULL && list2 == NULL)
         sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Properties:\n%s",event->UID,dt,list1);
     else if (list1 == NULL && list2 != NULL)
-        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Alarms:\n%s",event->UID,dt,list2);
+        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n    Alarms:\n%s",evt->UID,dt,list2);
     else 
-        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n",event->UID,dt);
+        sprintf(str,"  Event\n    UID: %s\n    Date and Time of Creation: %s\n",evt->UID,dt);
 
     free(dt);
     free(list1);
