@@ -668,7 +668,7 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
                 free(value);
                 return DUP_PRODID;
             }
-        } else if (strcmp(token,"BEGIN")==0 && eventEnd == 0){ /* only allow one Event per calendar object */
+        } else if (strcmp(token,"BEGIN")==0){ /* only allow one Event per calendar object */
             if (strcmp(value, "VEVENT") == 0 && checkID == 1 && checkVer == 1){
                 //go to parseEvent 
                 eventPtr = malloc(sizeof(Event*));
