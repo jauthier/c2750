@@ -867,6 +867,7 @@ ICalErrorCode validateCalendar(const Calendar * obj){
         ICalErrorCode ec = validateEvent((Event *)hold->data);
         if (ec != OK)
             return ec;
+        hold = hold->next;
     }
     //check properties
     ICalErrorCode ec2 = validateProperties(obj->properties);
