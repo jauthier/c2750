@@ -863,9 +863,9 @@ ICalErrorCode validateCalendar(Calendar * obj){
             return ec;
     }
     //check properties
-    ICalErrorCode ec2 = validateProperties(&(event->properties));
+    ICalErrorCode ec2 = validateProperties(&(obj->properties));
     if (ec2 != OK)
-        return ec;
+        return ec2;
 
     return OK;
 }
@@ -875,8 +875,6 @@ ICalErrorCode validateEvent(Event * event){
     if (event->UID == NULL)
         return INV_EVENT;
     //check datetime
-    if (event->creationDateTime == NULL)
-        return INV_CREATEDT;
     if (event->creationDateTime.date == NULL)
         return INV_CREATEDT;
     if (event->creationDateTime.time == NULL)
@@ -916,7 +914,7 @@ ICalErrorCode validateAlarms(List * alarmList){
             return INV_ALARM;
         if(((Alarm *)hold->data)->trigger == NULL)
             return INV_ALARM;
-        ICalErrorCode ec = validateProperties(((Alarm *)hold->data)->porperties);
+        ICalErrorCode ec = validateProperties(((Alarm *)hold->data)->properties);
         if (ec != OK)
             return INV_ALARM;
         hold = hold->next;
