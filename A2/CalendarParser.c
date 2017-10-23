@@ -6,6 +6,10 @@ void deleteEvent (Event * toDelete);
 char * printEvent(Event * event);
 char * toUpper(char * str);
 
+ICalErrorCode validateEvent(Event * event);
+ICalErrorCode validateProperties(List * propList);
+ICalErrorCode validateAlarms(List * alarmList);
+
 /* ------------------------Property------------------------ */
 Property * initProperty(char * name, char * descr){
     Property * newProp = malloc(sizeof(Property) + (sizeof(int)*strlen(descr)));
@@ -887,7 +891,6 @@ ICalErrorCode validateEvent(Event * event){
         return ec;
     return OK;  
 }
-
 
 ICalErrorCode validateProperties(List * propList){
 

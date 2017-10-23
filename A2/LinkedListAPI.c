@@ -235,8 +235,6 @@ void* getFromBack(List list){
 }
 
 char* toString(List list){
-    if (&list == NULL)
-        return NULL;
     /* create an iterator */
     ListIterator iter = createIterator(list);
     
@@ -286,9 +284,6 @@ void* nextElement(ListIterator* iter){
 }
 
 int getLength(List list){
-    /* invalid list */
-    if (&list == NULL)
-        return -1;
     /* empty list */
     if (list.head == NULL)
         return 0;
@@ -296,11 +291,11 @@ int getLength(List list){
     return list.length;
 }
 
-void * findElement(List list, bool (*customCompare)(const void* first,const void* second), void * data){
+void * findElement(List list, bool (*customCompare)(const void* first,const void* second), const void * searchRecord){
     Node * hold = list.head;
     while (hold != NULL){
-        if (customCompare(hold->data,data) == true)
-            return (void *)hold->data;
+        if (customCompare(hold->data,searchRecord) == true)
+            return hold->data;
         hold = hold->next;
     }
     return NULL;
