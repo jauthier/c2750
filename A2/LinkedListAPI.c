@@ -14,6 +14,7 @@ List initializeList(char* (*printFunction)(void *toBePrinted),void (*deleteFunct
     List newList;
     newList.head = NULL;
     newList.tail = NULL;
+    newList.length = 0;
     newList.deleteData = deleteFunction;
     newList.compare = compareFunction;
     newList.printData = printFunction;
@@ -53,6 +54,7 @@ void insertFront(List *list, void *toBeAdded){
         hold->previous = toAdd;
         list->head = toAdd;
     }
+    list->length++;
 }
 
 void insertBack(List *list, void *toBeAdded){
@@ -80,6 +82,7 @@ void insertBack(List *list, void *toBeAdded){
         hold->next = toAdd;
         list->tail = toAdd;
     }
+    list->length++;
 }
 
 void clearList(List *list){
@@ -100,6 +103,7 @@ void clearList(List *list){
     free(current);
     list->head = NULL;
     list->tail = NULL;
+    list->length = 0;
 }
 
 void insertSorted(List *list, void *toBeAdded){
@@ -147,6 +151,7 @@ void insertSorted(List *list, void *toBeAdded){
             list->tail = newNode;
         }
     }
+    list->length++;
 }
 
 void* deleteDataFromList(List *list, void *toBeDeleted){
@@ -173,6 +178,7 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
         list->head = next;
         if (next->next == NULL)
             list->tail = next;
+        list->length--;
         return dataHold;
     /* check the middle nodes and end node */
     } else {
@@ -192,6 +198,7 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
             /* reassemble the list */
             previous->next = next;
             next->previous = previous;
+            list->length--;
             return dataHold;
         
         /* if we found a match and are at the last node */
@@ -205,6 +212,7 @@ void* deleteDataFromList(List *list, void *toBeDeleted){
             /* reassemble the list */
             previous->next = NULL;
             list->tail = previous;
+            list->length--;
             return dataHold;
 
         /* if we didn't find a match but are at the last node */
@@ -227,6 +235,8 @@ void* getFromBack(List list){
 }
 
 char* toString(List list){
+    if (list == NULL)
+        return NULL;
     /* create an iterator */
     ListIterator iter = createIterator(list);
     
@@ -275,12 +285,23 @@ void* nextElement(ListIterator* iter){
     return iter->current->data;
 }
 
-int findElement(void * data, List list){
+int getLength(List list){
+    /* invalid list */
+    if (list == NULL)
+        return -1;
+    /* empty list */
+    if (list->head == NULL)
+        return 0;
+
+    return list->length;
+}
+
+void * findElement(List list, bool (*customCompare)(const void* first,const void* second), void * data){
     Node * hold = list.head;
     while (hold != NULL){
-        if (list.compare(hold->data,data) == 0)
-            return 1;
+        if (customCompare(hold->data,data) == true)
+            return (void *)hold->data;
         hold = hold->next;
     }
-    return 0;
+    return NULL;
 }

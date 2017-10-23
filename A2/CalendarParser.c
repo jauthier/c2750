@@ -91,6 +91,10 @@ DateTime * initDT (char * str){
     for (i=0;i<8;i++){
         date[i] = str[i];
     }
+    if (str[8] != 'T'){
+        free(newDT);
+        return NULL;
+    }
     int j = 0;
     i = 8;
     for (i=9;i<15;i++){
@@ -117,11 +121,12 @@ void deleteDT(DateTime * toDelete){
 }
 
 /* ------------------------Calendar------------------------ */
-Calendar * initCal (float ver, char * id, Event * event){
+Calendar * initCal (float ver, char * id, List eventList, List propList){
     Calendar * newCal = malloc(sizeof(Calendar));
     newCal->version = ver;
     strcpy(newCal->prodID, id);
-    newCal->event = event;
+    newCal->events = eventList;
+    newCal->properties = propList;
     return newCal;
 }
 
@@ -131,6 +136,8 @@ void deleteCalendar(Calendar * obj){
 }
 
 char* printCalendar(const Calendar* obj){
+    if (obj == NULL)
+        return NULL;
     char * str;
     char * event = printEvent(obj->event);
     int len = strlen(obj->prodID) + strlen(event) + 50; 
@@ -196,6 +203,23 @@ char * toUpper(char * str){
     return result;
 }
 
+int calPropCheck(Property * prop, List propList){
+    char * propName = toUpper(prop->propName);
+    if (strcmp(propName,"CALSCALE")==0||strcmp(propName,"METHOD")==0||strcmp(propName,"CALSCALE")==0){ //only one
+        //check the list for duplicates
+        int check = findElement((void*)prop, propList);
+        free(propName);
+        if (check == 1)
+            return 0;
+        else 
+            return 1;
+    } else {
+        free(propName);
+        return 0;
+    }
+
+}
+
 int evPropCheck(Property * prop, List propList){
     char * propName = toUpper(prop->propName);
     if (strcmp(propName,"DTSTART")==0||strcmp(propName,"CLASS")==0||strcmp(propName,"CREATED")==0||
@@ -229,12 +253,12 @@ int evPropCheck(Property * prop, List propList){
     } else if (strcmp(propName,"ATTACH")==0||strcmp(propName,"ATTENDEE")==0||strcmp(propName,"CATEGORIES")==0||
         strcmp(propName,"COMMENT")==0||strcmp(propName,"CONTACT")==0||strcmp(propName,"EXDATE")==0||
         strcmp(propName,"RSTATUS")==0||strcmp(propName,"RELATED")==0||strcmp(propName,"REASOURSES")==0||
-        strcmp(propName,"RDATE")==0||strcmp(propName,"X-PROP")==0||strcmp(propName,"IANA-PROP")==0){
+        strcmp(propName,"RDATE")==0){
         free(propName);
         return 1;
     } else {
         free(propName);
-        return 1;
+        return 0;
     }
 }
 
@@ -250,7 +274,8 @@ void freeEv(List *list1, List *list2, char * value){
     free(value);
 }
 
-ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
+ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
+    // check that it is an audio alarms
     current = current->next;
 
     List propList = initializeList(printProperty, deleteProperty, compareProperty);
@@ -266,8 +291,11 @@ ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
     while(current != NULL){
 
         char * line = (char *)current->data;
-        printf("%s\n", line);
 
+        if (line[0] == ';'){
+            current = current->next;
+            continue;
+        }
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             clearList(&propList);
             if (checkAction == 1)
@@ -375,9 +403,6 @@ ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                         free(action);
                     return INV_EVENT;
                 }
-            } else if (strcmp(temp,"X-PROP")==0||strcmp(temp,"IANA-PROP")==0){
-                Property * newProp = initProperty(token, value);
-                insertFront(&propList,(void*)newProp);
             } else {
                 free(value);
                 clearList(&propList);
@@ -391,10 +416,10 @@ ErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
         free(value);
         current = current->next;
     }
-
+    return INV_EVENT;
 }
 
-ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
+ICalErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
     current = current->next;
 
     List propList = initializeList(printProperty, deleteProperty, compareProperty);
@@ -411,8 +436,11 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
 
     while(current != NULL){
         char * line = (char *)current->data;
-        printf("%s\n", line);
         /* make sure the line can be parsed */
+        if (line[0] == ';'){
+            current = current->next;
+            continue;
+        }
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             return INV_EVENT;
         }
@@ -438,6 +466,11 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
         if (strcmp(token, "DTSTAMP") == 0){
             if (checkDT == 0){ /* make sure this is the only dtstamp */
                 evDT = initDT(value);
+                if (evDT == NULL){
+                    if (checkUID == 1)
+                        free(evUID);
+                    return INV_CREATEDT;
+                }
                 checkDT = 1;
             } else {
                 freeEv(&propList, &alarmList, value);
@@ -463,7 +496,7 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
                 //go to parseAlarm 
                 Alarm ** newAlarm = malloc(sizeof(Alarm*));
                 Node ** returnPos = malloc(sizeof(Node*));
-                ErrorCode eCode = parseAlarm(current, newAlarm, returnPos);
+                ICalErrorCode eCode = parseAlarm(current, newAlarm, returnPos);
                 if (eCode != OK){
                     free(newAlarm);
                     freeEv(&propList, &alarmList, value);
@@ -529,7 +562,7 @@ ErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
     return INV_EVENT;
 }
 
-ErrorCode parseCalendar (Node * current, Calendar ** obj){
+ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
     current = current->next;
     /* Keeps track of whether or not there has been a version and product ID 
     declared. There must be only one version declared and only one product ID declared */
@@ -542,10 +575,15 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
     int eventEnd = 0;
     int end = 0;
     Event ** eventPtr;
+    List propList = initializeList(printProperty, deleteProperty, compareProperty);
+    List eventList = initializeList(printEvent, deleteEvent, compareEvent); // make a compare event
 
     while (current != NULL){
         char * line = (char *)current->data;
-        printf("%s\n", line);
+        if (line[0] == ';'){
+            current = current->next;
+            continue;
+        }
         /* make sure the line can be parsed */
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             return INV_CAL;
@@ -568,6 +606,7 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
+
         if (strcmp(token, "VERSION") == 0 && eventEnd == 0){
             if (checkVer == 0){
                 /* make sure this is the only version */
@@ -600,7 +639,7 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
                 //go to parseEvent 
                 eventPtr = malloc(sizeof(Event*));
                 Node ** returnPos = malloc(sizeof(Node*));
-                ErrorCode eCode = parseEvent(current, eventPtr, returnPos);
+                ICalErrorCode eCode = parseEvent(current, eventPtr, returnPos);
                 if (eCode != OK){
                     free(eventPtr);
                     free(value);
@@ -608,6 +647,8 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
                     free(returnPos);
                     return eCode;
                 }
+                /* add the event to the event list */
+                insertFront(&eventList, *eventPtr);
                 current = *returnPos;
                 free(returnPos);
                 eventEnd = 1;
@@ -635,8 +676,12 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
                 return INV_CAL;
             }
         } else {
-            /* skip over any comments */
-            if (strcmp(token, "COMMENT") != 0){ 
+            /* properties */
+            Property * newProp = initProperty(token,value);
+            if (calPropCheck(newProp, propList) == 1){ // the property is valid
+                insertFront(&propList, (void *)newProp);
+            } else { 
+                deleteProperty(newProp);
                 free(value);                        
                 if (checkID == 1)
                     free(calID);
@@ -658,7 +703,23 @@ ErrorCode parseCalendar (Node * current, Calendar ** obj){
         return INV_CAL;
 }
 
-ErrorCode createCalendar(char* fileName, Calendar ** obj){
+ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
+    if (fileName == NULL)
+        return INV_FILE;
+    /* check file extension */
+    int l = strlen(fileName);
+    char ext[5];
+    ext[0] = fileName[l-4];
+    ext[1] = fileName[l-3];
+    ext[2] = fileName[l-2];
+    ext[3] = fileName[l-1];
+    ext[4] = '\0';
+    int check = strcmp(ext, ".ics");
+    if (check != 0){
+        return INV_FILE;
+    }
+
+
     /* call fileToList to read the file and put it in a list all multi 
     lines are unfolded and all lines with only white space are removes */
     List * list = malloc(sizeof(List));
@@ -676,7 +737,10 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
 
     while (current != NULL){
         char * line = (char *)current->data;
-        printf("%s\n", line);
+        if (line[0] == ';'){
+            current = current->next;
+            continue;
+        }
         /* make sure the line can be parsed */
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             clearList(list);
@@ -690,13 +754,14 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
+        
 
         /* this should be the beginning of the calendar object */
         if (strcmp(token, "BEGIN") == 0){
             /* if the next word is not VCALENDAR then the file is wrong
             and INV_CAL is returned */
             if (strcmp(value, "VCALENDAR") == 0){
-                ErrorCode eCode = parseCalendar(current,obj);
+                ICalErrorCode eCode = parseCalendar(current,obj);
                 free1(value, list);
                 return eCode;
             } else {
@@ -717,7 +782,7 @@ ErrorCode createCalendar(char* fileName, Calendar ** obj){
     return INV_CAL;
 }
 
-const char * printError (ErrorCode err){
+const char * printError (ICalErrorCode err){
     if (err == INV_CAL)
         return "Invaid Calendar\n";
     if (err == OK)
@@ -739,25 +804,89 @@ const char * printError (ErrorCode err){
     return "Other Error\n";
 }
 
-ErrorCode writeCalendar(char* fileName, const Calendar* obj){
-    return OK;
-}
+ICalErrorCode validateCalendar(Calendar * obj){
 
-ErrorCode validateCalendar(const Calendar* obj){
-    return OK;
-}
-
-int main(int argc, char * argv[]){
-    Calendar ** obj = malloc(sizeof(Calendar *));
-    char fileName[30] = "testCalEvtPropAlm.ics";
-    ErrorCode ec = createCalendar(fileName, obj);
-    printf("%s\n", printError(ec));
-    if (ec == OK){
-        char * hold = printCalendar(*obj);
-        printf("%s\n", hold);
-        free(hold);
-        deleteCalendar(*obj);
+    //make sure the calendar exists
+    if (obj == NULL)
+        return INV_CAL;
+    //check version
+    if (obj->version <= 0)
+        return INV_VER;
+    //check prodid
+    if (obj->prodID == NULL)
+        return INV_PRODID;
+    //check for an event
+    if (obj->events.head == NULL)
+        return INV_CAL;
+    if (obj->events.head.data == NULL)
+        return INV_CAL;
+    //check the events
+    Node * hold = obj->events.head;
+    while (hold != NULL){
+        ICalErrorCode ec = validateEvent((Event *)hold->data);
+        if (ec != OK)
+            return ec;
     }
-    free(obj);
-    return 0;
+    //check properties
+    ICalErrorCode ec2 = validateProperties(&(event->properties));
+    if (ec2 != OK)
+        return ec;
+
+    return OK;
+}
+
+ICalErrorCode validateEvent(Event * event){
+    //check uid
+    if (event->UID == NULL)
+        return INV_EVENT;
+    //check datetime
+    if (event->creationDateTime == NULL)
+        return INV_CREATEDT;
+    if (event->creationDateTime.date == NULL)
+        return INV_CREATEDT;
+    if (event->creationDateTime.time == NULL)
+        return INV_CREATEDT;
+    //check properties
+    ICalErrorCode ec = validateProperties(&(event->properties));
+    if (ec != OK)
+        return INV_EVENT;
+    //check alarms
+    ec = validateAlarms(&(event->alarms));
+    if (ec != OK)
+        return ec;
+    return OK;  
+}
+
+
+ICalErrorCode validateProperties(List * propList){
+
+    Node * hold == propList->head;
+    while(hold != NULL){
+        if(hold->data == NULL)
+            return INV_CAL; 
+        if(((Property *)hold->data)->propName == NULL)
+            return INV_CAL;
+        if(((Property *)hold->data)->propDescr == NULL)
+            return INV_CAL;
+        hold = hold->next;
+    }
+    return OK;
+}
+
+ICalErrorCode validateAlarms(List * alarmList){
+    Node * hold == alarmList->head;
+    while(hold != NULL){
+        if(hold->data == NULL)
+            return INV_ALARM; 
+        if(((Alarm *)hold->data)->action == NULL)
+            return INV_ALARM;
+        if(((Alarm *)hold->data)->trigger == NULL)
+            return INV_ALARM;
+        ICalErrorCode ec = validateProperties(((Alarm *)hold->data)->porperties);
+        if (ec != OK)
+            return INV_ALARM;
+        hold = hold->next;
+    }
+    return OK;
+
 }

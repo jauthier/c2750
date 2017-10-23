@@ -37,8 +37,9 @@ int isWhitespace (char * str){
     return 1;
 }
 
-int checkMultiLine (char * firstLine, char * secondLine){
-    if (secondLine[0] == ' '){
+int checkMultiLine (char * secondLine){
+    /* if the line starts with a space or a tab */
+    if (secondLine[0] == ' ' || secondLine[0] == '\t'){
         return 1;
     } 
     return 0;
@@ -70,7 +71,7 @@ int fileToList(char * fileName, List * list){
             /* ---- check for multi lines ---- */
             int multi;
             if (hold != NULL)
-                multi = checkMultiLine(current, next);
+                multi = checkMultiLine(next);
             else
                 multi = 0;
             /* check if the line after the next line is also a multi line */
@@ -78,7 +79,7 @@ int fileToList(char * fileName, List * list){
                 char buffer[75];
                 hold = fgets(buffer, 75, fp);
                 if (hold != NULL)
-                    multi = checkMultiLine(next, buffer);
+                    multi = checkMultiLine(buffer);
                 else 
                     multi = 0;
 
