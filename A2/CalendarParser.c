@@ -689,7 +689,7 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
             if (strcmp(value, "VCALENDAR") == 0 && checkID == 1 && checkVer == 1 && eventEnd == 1){
                 end = 1;
                 //create a calendar object
-                Calendar * newCal = initCal(calVer,calID,*eventPtr, eventList, propList);
+                Calendar * newCal = initCal(calVer,calID, eventList, propList);
                 *obj = newCal;
                 free(eventPtr);
             } else {
@@ -839,7 +839,7 @@ const char * printError (ICalErrorCode err){
     return rtn;
 }
 
-ICalErrorCode validateCalendar(Calendar * obj){
+ICalErrorCode validateCalendar(const Calendar * obj){
 
     //make sure the calendar exists
     if (obj == NULL)
@@ -853,7 +853,7 @@ ICalErrorCode validateCalendar(Calendar * obj){
     //check for an event
     if (obj->events.head == NULL)
         return INV_CAL;
-    if (obj->events.head.data == NULL)
+    if (obj->events.head->data == NULL)
         return INV_CAL;
     //check the events
     Node * hold = obj->events.head;
@@ -914,7 +914,7 @@ ICalErrorCode validateAlarms(List * alarmList){
             return INV_ALARM;
         if(((Alarm *)hold->data)->trigger == NULL)
             return INV_ALARM;
-        ICalErrorCode ec = validateProperties(((Alarm *)hold->data)->properties);
+        ICalErrorCode ec = validateProperties(&(((Alarm *)hold->data)->properties));
         if (ec != OK)
             return INV_ALARM;
         hold = hold->next;
