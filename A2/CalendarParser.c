@@ -2,8 +2,8 @@
 #include "readFile.h"
 #include <ctype.h>
 
-void deleteEvent (Event * toDelete);
-char * printEvent(Event * event);
+void deleteEvent (void * toDelete);
+char * printEvent(void * event);
 char * toUpper(char * str);
 
 ICalErrorCode validateEvent(Event * event);
@@ -165,7 +165,7 @@ char* printCalendar(const Calendar* obj){
     if (obj == NULL)
         return NULL;
     char * str;
-    char * event = printEvent(obj->event);
+    char * event = printEvent((void *)(obj->event));
     int len = strlen(obj->prodID) + strlen(event) + 50; 
     str = malloc(sizeof(char)*len);
     sprintf(str, "Calendar\n  Product ID: %s\n  Version: %0.1f\n%s", obj->prodID, obj->version,event);
