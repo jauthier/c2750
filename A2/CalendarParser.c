@@ -7,8 +7,8 @@ char * printEvent(Event * event);
 char * toUpper(char * str);
 
 ICalErrorCode validateEvent(Event * event);
-ICalErrorCode validateProperties(List * propList);
-ICalErrorCode validateAlarms(List * alarmList);
+ICalErrorCode validateProperties(List propList);
+ICalErrorCode validateAlarms(List alarmList);
 
 /* ------------------------Property------------------------ */
 Property * initProperty(char * name, char * descr){
