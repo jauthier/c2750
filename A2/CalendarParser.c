@@ -664,7 +664,7 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
             if (strcmp(value, "VCALENDAR") == 0 && checkID == 1 && checkVer == 1 && eventEnd == 1){
                 end = 1;
                 //create a calendar object
-                Calendar * newCal = initCal(calVer,calID,*eventPtr);
+                Calendar * newCal = initCal(calVer,calID,*eventPtr, eventList, propList);
                 *obj = newCal;
                 free(eventPtr);
             } else {
@@ -783,25 +783,35 @@ ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
 }
 
 const char * printError (ICalErrorCode err){
+    char buffer[100];
     if (err == INV_CAL)
-        return "Invaid Calendar\n";
-    if (err == OK)
-        return "Ok\n";
-    if (err == INV_FILE)
-        return "Invaid File\n";
-    if (err == INV_VER)
-        return "Invaid Version\n";
-    if (err == INV_PRODID)
-        return "Invaid Product ID\n";
-    if (err == INV_EVENT)
-        return "Invaid Event\n";
-    if (err == DUP_VER)
-        return "Duplicate Version\n";
-    if (err == DUP_PRODID)
-        return "Duplicate Product ID\n";
-    if (err == INV_CREATEDT)
-        return "Invaid DateTime\n";
-    return "Other Error\n";
+        strcpy(buffer, "Invaid Calendar");
+    else if (err == OK)
+        strcpy(buffer, "Ok");
+    else if (err == INV_FILE)
+        strcpy(buffer, "Invaid File");
+    else if (err == INV_VER)
+        strcpy(buffer, "Invaid Version");
+    else if (err == INV_PRODID)
+        strcpy(buffer, "Invaid Product ID");
+    else if (err == INV_EVENT)
+        strcpy(buffer, "Invaid Event");
+    else if (err == DUP_VER)
+        strcpy(buffer, "Duplicate Version");
+    else if (err == DUP_PRODID)
+        strcpy(buffer, "Duplicate Product ID");
+    else if (err == INV_CREATEDT)
+        strcpy(buffer, "Invaid Date-Time");
+    else if (err == INV_ALARM)
+        strcpy(buffer, "Invaid Alarm");
+    else if (err == WRITE_ERROR)
+        strcpy(buffer, "Write Error");
+    else
+        strcpy(buffer, "Other Error");
+    
+    char * rtn = malloc(sizeof(char)*(strlen(buffer)+1));
+    strcpy(rtn, buffer);
+    return rtn;
 }
 
 ICalErrorCode validateCalendar(Calendar * obj){
