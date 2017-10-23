@@ -156,7 +156,8 @@ Calendar * initCal (float ver, char * id, List eventList, List propList){
 }
 
 void deleteCalendar(Calendar * obj){
-    deleteEvent(obj->event);
+    clearList(obj->events);
+    clearList(obj->properties);
     free(obj);
 }
 
@@ -232,9 +233,9 @@ int calPropCheck(Property * prop, List propList){
     char * propName = toUpper(prop->propName);
     if (strcmp(propName,"CALSCALE")==0||strcmp(propName,"METHOD")==0||strcmp(propName,"CALSCALE")==0){ //only one
         //check the list for duplicates
-        int check = findElement(propList, custCompareProp, (void*)prop);
+        void * check = findElement(propList, custCompareProp, (void*)prop);
         free(propName);
-        if (check == 1)
+        if (check != NULL)
             return 0;
         else 
             return 1;
@@ -255,9 +256,9 @@ int evPropCheck(Property * prop, List propList){
         strcmp(propName,"RRULE")==0){
 
         //check the list for duplicates
-        int check = findElement(propList,custCompareProp, (void*)prop);
+        void * check = findElement(propList,custCompareProp, (void*)prop);
         free(propName);
-        if (check == 1)
+        if (check != NULL)
             return 0;
         else 
             return 1;
@@ -266,12 +267,12 @@ int evPropCheck(Property * prop, List propList){
         //need to make a temporary struct of the other
         Property * temp = initProperty("DTEND","temp");
         Property * temp2 = initProperty("DURATION","temp");
-        int check = findElement(propList, custCompareProp, (void*)temp);
-        int check2 = findElement(propList, custCompareProp, (void*)temp2);
+        void * check = findElement(propList, custCompareProp, (void*)temp);
+        void * check2 = findElement(propList, custCompareProp, (void*)temp2);
         free(temp);
         free(temp2);
         free(propName);
-        if (check == 0 && check2 == 0)
+        if (check == NULL && check2 == NULL)
             return 1;
         else 
             return 0;
@@ -410,8 +411,8 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                 ||strcmp(temp,"DESCRIPTION")==0||strcmp(temp,"SUMMARY")==0){
 
                 Property * newProp = initProperty(token, value);
-                int check = findElement(propList, custCompareProp, (void*)newProp);
-                if (check == 0){
+                void * check = findElement(propList, custCompareProp, (void*)newProp);
+                if (check == NULL){
                     //add to the list 
                     insertFront(&propList,(void*)newProp);
                     if (strcmp(temp,"DURATION")==0)
@@ -807,7 +808,7 @@ ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
     return INV_CAL;
 }
 
-const char * printError (ICalErrorCode err){
+char * printError (ICalErrorCode err){
     char buffer[100];
     if (err == INV_CAL)
         strcpy(buffer, "Invaid Calendar");
@@ -863,7 +864,7 @@ ICalErrorCode validateCalendar(const Calendar * obj){
             return ec;
     }
     //check properties
-    ICalErrorCode ec2 = validateProperties(&(obj->properties));
+    ICalErrorCode ec2 = validateProperties(obj->properties);
     if (ec2 != OK)
         return ec2;
 
@@ -880,19 +881,19 @@ ICalErrorCode validateEvent(Event * event){
     if (event->creationDateTime.time == NULL)
         return INV_CREATEDT;
     //check properties
-    ICalErrorCode ec = validateProperties(&(event->properties));
+    ICalErrorCode ec = validateProperties(event->properties);
     if (ec != OK)
         return INV_EVENT;
     //check alarms
-    ec = validateAlarms(&(event->alarms));
+    ec = validateAlarms(event->alarms);
     if (ec != OK)
         return ec;
     return OK;  
 }
 
-ICalErrorCode validateProperties(List * propList){
+ICalErrorCode validateProperties(List propList){
 
-    Node * hold = propList->head;
+    Node * hold = propList.head;
     while(hold != NULL){
         if(hold->data == NULL)
             return INV_CAL; 
@@ -905,8 +906,8 @@ ICalErrorCode validateProperties(List * propList){
     return OK;
 }
 
-ICalErrorCode validateAlarms(List * alarmList){
-    Node * hold = alarmList->head;
+ICalErrorCode validateAlarms(List alarmList){
+    Node * hold = alarmList.head;
     while(hold != NULL){
         if(hold->data == NULL)
             return INV_ALARM; 
@@ -914,7 +915,7 @@ ICalErrorCode validateAlarms(List * alarmList){
             return INV_ALARM;
         if(((Alarm *)hold->data)->trigger == NULL)
             return INV_ALARM;
-        ICalErrorCode ec = validateProperties(&(((Alarm *)hold->data)->properties));
+        ICalErrorCode ec = validateProperties(((Alarm *)hold->data)->propertie);
         if (ec != OK)
             return INV_ALARM;
         hold = hold->next;
