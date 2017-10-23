@@ -76,8 +76,8 @@ int fileToList(char * fileName, List * list){
                 multi = 0;
             /* check if the line after the next line is also a multi line */
             while (multi == 1){
-                char buffer[75];
-                hold = fgets(buffer, 75, fp);
+                char buffer[76];
+                hold = fgets(buffer, 76, fp);
                 if (hold != NULL)
                     multi = checkMultiLine(buffer);
                 else 
