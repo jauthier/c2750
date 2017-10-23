@@ -217,6 +217,10 @@ char * printEvent(void * event){
     return str;
 }
 
+int compareEvent(const void * first,const void * second){
+    return 0;
+}
+
 char * toUpper(char * str){
     if (str == NULL)
         return NULL;
