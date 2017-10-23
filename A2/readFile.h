@@ -7,7 +7,7 @@
 
 #include "LinkedListAPI.h"
 
-#define LINELEN 76
+#define LINELEN 77
 
 /*
 ** Returns the the line in the form of a string that must be freed
