@@ -13,7 +13,7 @@ void mainScr(WINDOW * win){
 	waddstr(win, "1. Read iCalendar File");
 	wrefresh(win);
 	
-	wmove(win, 6, );
+	wmove(win, 6, 4);
 	waddstr(win, "2. Display File");
 	wrefresh(win);
 
