@@ -43,7 +43,8 @@ int main(int argc, char const *argv[]){
 	int x0 = 1;
 	WINDOW * win = newwin(nlines, ncols, y0, x0);
 	mainScr(win);
-
+	getch();
 	delwin(win);
+	endwin();
 	return 0;
 }
