@@ -13,15 +13,15 @@ void mainScr(WINDOW * win){
 	waddstr(win, "1. Read iCalendar File");
 	wrefresh(win);
 	
-	wmove(win, 4, 6);
+	wmove(win, 6, );
 	waddstr(win, "2. Display File");
 	wrefresh(win);
 
-	wmove(win, 4, 8);
+	wmove(win, 8, 4);
 	waddstr(win, "3. Create iCalendar");
 	wrefresh(win);
 
-	wmove(win, 4, 10);
+	wmove(win, 10, 4);
 	waddstr(win, "4. Exit");
 	wrefresh(win);
 }
@@ -44,6 +44,6 @@ int main(int argc, char const *argv[]){
 	WINDOW * win = newwin(nlines, ncols, y0, x0);
 	mainScr(win);
 
-	
+	delwin(win);
 	return 0;
 }
