@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]){
 	keypad(stdscr, TRUE);
 
 	// create a new window
-	int nlines = COLUMNS - 3;
+	int nlines = COLS - 3;
 	int ncols = LINES - 3;
 	int y0 = 1;
 	int x0 = 1;
