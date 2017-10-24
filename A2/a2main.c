@@ -3,9 +3,9 @@
 #include <string.h>
 #include <curses.h>
 
-#include "CalendarParser.h"
+/*#include "CalendarParser.h"
 #include "LinkedListAPI.h"
-
+*/
 
 void mainScr(WINDOW * win){
 
@@ -34,7 +34,7 @@ int main(int argc, char const *argv[]){
 	initscr();
 	cbreak();
 	noecho();
-	keypad(strscr, TRUE);
+	keypad(stdscr, TRUE);
 
 	// create a new window
 	int nlines = COLUMNS - 3;
