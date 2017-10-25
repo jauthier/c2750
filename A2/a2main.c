@@ -4,6 +4,7 @@
 #include <curses.h>
 
 #include "CalendarParser.h"
+#include "BasicFunctions.h"
 
 int mainMenu(int yMax, int xMax){
 	// create a menu window
