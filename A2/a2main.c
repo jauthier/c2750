@@ -279,7 +279,8 @@ int errScr(char * msg){
 	WINDOW * errWin = newwin(yMax - 1, xMax - 1, 0, 0);
 	refresh();
 	wrefresh(errWin);
-	mvwprintw(errWin, 2,2,"%s",msg);
+	mvwprintw(errWin, 2,2,"Message: %s",msg);
+	wrefresh(errWin);
 	getch();
 	delwin(errWin);
 	return 0;
