@@ -279,7 +279,7 @@ int saveCalendar(Calendar * cal){
 
 	keypad(saveWin,TRUE);
 	while (1){
-		for (int i=0;i<4;i++){
+		for (int i=0;i<2;i++){
 			if (highlight == i)
 				wattron(saveWin, A_REVERSE);
 			mvwprintw(saveWin,i+2,2,"%s",menu[i]);
