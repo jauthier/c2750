@@ -198,6 +198,7 @@ int main(int argc, char const *argv[]){
 			// exit
 			break;
 		}
+		getch();
 	}	
 
 
