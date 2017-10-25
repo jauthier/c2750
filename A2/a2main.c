@@ -274,7 +274,7 @@ int saveCalendar(Calendar * cal){
 	menu[1] = malloc(sizeof(char)*16);
 	strcpy(menu[1],"2. Exit to Main Menu");
 
-	mvwprintw(saveWin,1,1,"Calendar was made! If you do not save the Calendar it will be deleted.")
+	mvwprintw(saveWin,1,1,"Calendar was made! If you do not save the Calendar it will be deleted.");
 
 	keypad(saveWin,TRUE);
 	while (1){
