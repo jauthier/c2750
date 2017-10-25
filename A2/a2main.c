@@ -5,7 +5,7 @@
 
 int mainMenu(int yMax, int xMax){
 	// create a menu window
-	WINDOW * menuWin = newwin(0, xMax - 1, yMax - 1, 0);
+	WINDOW * menuWin = newwin(yMax - 1, xMax - 1, 0, 0);
 	refresh();
 	wrefresh(menuWin);
 
