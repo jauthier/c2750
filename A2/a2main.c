@@ -8,6 +8,7 @@
 int mainMenu(int yMax, int xMax);
 int makeCal(int yMax, int xMax);
 Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char * action, char * trigger);
+int saveCalendar(Calendar * cal);
 int displayCal(int yMax, int xMax);
 int readICalFIle(int yMax, int xMax);
 void errScr(char * msg);
