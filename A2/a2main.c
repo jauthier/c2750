@@ -30,7 +30,7 @@ int mainMenu(int yMax, int xMax){
 		for (int i=0;i<4;i++){
 			if (highlight == i)
 				wattron(menuWin, A_REVERSE);
-			wmvprintw(i+1,2,"%s",menu[i]);
+			mvwprintw(i+1,2,"%s",menu[i]);
 			wattroff(menuWin, A_REVERSE);
 			
 		}
@@ -69,19 +69,19 @@ int readICalFIle(int yMax, int xMax){
 	wrefresh(readCalWin);
 
 	//
-	wmvprintw(2,2,"iCalendar Create");
-	wmvprintw(4,2,"Product ID:");
-	wmvprintw(6,2,"Version:");
-	wmvprintw(8,2,"Event");
-	wmvprintw(10,4,"UID:");
-	wmvprintw(12,4,"Date-Time:");
-	wmvprintw(14,4,"Alarm");
-	wmvprintw(16,6,"Trigger:");
-	wmvprintw(18,6,"Action:");
+	mvwprintw(2,2,"iCalendar Create");
+	mvwprintw(4,2,"Product ID:");
+	mvwprintw(6,2,"Version:");
+	mvwprintw(8,2,"Event");
+	mvwprintw(10,4,"UID:");
+	mvwprintw(12,4,"Date-Time:");
+	mvwprintw(14,4,"Alarm");
+	mvwprintw(16,6,"Trigger:");
+	mvwprintw(18,6,"Action:");
 
 	/* ----- Product ID ----- */
 	wmove(readCalWin, 4, 15);
-	refresh()
+	refresh();
 	wrefresh(readCalWin);
 	char buffer[200];
 	int i = 0;
@@ -100,7 +100,7 @@ int readICalFIle(int yMax, int xMax){
 
 	/* ----- Version ----- */
 	wmove(readCalWin, 6, 12);
-	refresh()
+	refresh();
 	wrefresh(readCalWin);
 	i = 0;
 	echo();
@@ -118,7 +118,7 @@ int readICalFIle(int yMax, int xMax){
 
 	/* ----- UID ----- */
 	wmove(readCalWin, 10, 12);
-	refresh()
+	refresh();
 	wrefresh(readCalWin);
 	i = 0;
 	echo();
@@ -134,7 +134,7 @@ int readICalFIle(int yMax, int xMax){
 	char * prodId = malloc(sizeof(char)*(strlen(buffer)+1));
 	strcpy(prodId, buffer);
 
-	delWin(readCalWin);
+	delwin(readCalWin);
 	return 0;
 }
 
