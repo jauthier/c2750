@@ -1,7 +1,7 @@
 #include "CalendarParser.h"
 #include "readFile.h"
 #include "BasicFunctions.h"
-#include <ctype.h>
+
 
 void deleteEvent (void * toDelete);
 char * printEvent(void * event);
