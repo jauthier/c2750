@@ -186,16 +186,16 @@ int main(int argc, char const *argv[]){
 		refresh();
 		getch();
 
-		if (choice == 1){
+		if (choice == 0){
 			// read file
 			readICalFIle(yMax, xMax);
-		} else if (choice == 2){
+		} else if (choice == 1){
 			// Display cal using printCalendar
 			displayCal(yMax, xMax);
-		} else if (choice == 3){
+		} else if (choice == 2){
 			// create cal
 			makeCal(yMax, xMax);
-		} else if (choice == 4){
+		} else if (choice == 3){
 			// exit
 			endwin();
 			return 0;
