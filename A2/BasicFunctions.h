@@ -20,7 +20,7 @@
 #include "LinkedListAPI.h"
 #include "CalendarParser.h"
 
-
+char * toUpper(char * str);
 Property * initProperty(char * name, char * descr);
 char * printProperty(void * toBePrinted);
 int compareProperty(const void * first,const void * second);
