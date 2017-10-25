@@ -202,6 +202,8 @@ int makeCal(int yMax, int xMax){
 	}
 
 	Calendar * cal = calInit(prodId,version,uid,dt,action,trigger);
+	if (cal != NULL)
+		errScr("Calendar was Made!");
 
 	delwin(readCalWin);
 	return 1;
@@ -278,6 +280,7 @@ int errScr(char * msg){
 	refresh();
 	wrefresh(errWin);
 	mvwprintw(errWin, 2,2,"%s",msg);
+	getch();
 	delwin(errWin);
 	return 0;
 }
