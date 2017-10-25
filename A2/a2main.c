@@ -10,7 +10,7 @@ int makeCal(int yMax, int xMax);
 Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char * action, char * trigger);
 int displayCal(int yMax, int xMax);
 int readICalFIle(int yMax, int xMax);
-int errScr(char * msg);
+void errScr(char * msg);
 
 int mainMenu(int yMax, int xMax){
 	// create a menu window
@@ -202,8 +202,14 @@ int makeCal(int yMax, int xMax){
 	}
 
 	Calendar * cal = calInit(prodId,version,uid,dt,action,trigger);
-	if (cal != NULL)
+	if (cal != NULL){
+		ICalErrorCode ec = validateCalendar(cal);
+		if (ec == OK){
+
+		}
 		errScr("Calendar was Made!");
+
+	}
 
 	delwin(readCalWin);
 	return 1;
@@ -252,6 +258,63 @@ Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char *
 	return cal;
 }
 
+int saveCalendar(Calendar * cal){
+	// create a menu window
+	WINDOW * saveWin = newwin(yMax - 1, xMax - 1, 0, 0);
+	refresh();
+	wrefresh(saveWin);
+
+	int choice;
+	int highlight = 0;
+	char ** menu = malloc(sizeof(char *)*2);
+	menu[0] = malloc(sizeof(char)*23);
+	strcpy(menu[0], "1. Save iCalendar to File");
+	menu[1] = malloc(sizeof(char)*16);
+	strcpy(menu[1],"2. Exit to Main Menu");
+
+	mvwprintw(saveWin,1,1,"Calendar was made! If you do not save the Calendar it will be deleted.")
+
+	keypad(saveWin,TRUE);
+	while (1){
+		for (int i=0;i<4;i++){
+			if (highlight == i)
+				wattron(saveWin, A_REVERSE);
+			mvwprintw(saveWin,i+2,2,"%s",menu[i]);
+			wattroff(saveWin, A_REVERSE);
+			
+		}
+		choice = wgetch(saveWin);
+
+		switch(choice){
+			case KEY_UP:
+				if (highlight-1 > -1)
+					highlight --;
+				break;
+			case KEY_DOWN:
+				if (highlight+1 < 2)
+					highlight++;
+				break;
+			default:
+				break;
+		}
+		if (choice == 10)
+			break;
+
+	}
+
+	for (int j=0;j<2;j++){
+		free(menu[j]);
+	}
+	free(menu);
+	
+	if (choice == 0){
+		//save the cal to a file
+	}
+	
+	delwin(menuWin);
+	return highlight;
+}
+
 int displayCal(int yMax, int xMax){
 
 	WINDOW * displayWin = newwin(yMax - 1, xMax - 1, 0, 0);
@@ -272,18 +335,18 @@ int readICalFIle(int yMax, int xMax){
 	return 0;
 }
 
-int errScr(char * msg){
+void errScr(char * msg){
 
 	int yMax, xMax;
 	getmaxyx(stdscr, yMax, xMax);
 	WINDOW * errWin = newwin(yMax - 1, xMax - 1, 0, 0);
 	refresh();
 	wrefresh(errWin);
-	mvwprintw(errWin, 2,2,"Message: %s",msg);
+	mvwprintw(errWin, 2,2,"%s",msg);
+	mvwprintw(errWin, 4,2,"Press any key to continue.");
 	wrefresh(errWin);
 	getch();
 	delwin(errWin);
-	return 0;
 }
 
 int main(int argc, char const *argv[]){
