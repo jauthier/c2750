@@ -5,7 +5,7 @@
 
 int mainMenu(int yMax, int xMax){
 	// create a menu window
-	WINDOW * menuWin = newwin(1, xMax - 6, yMax - 4, 1);
+	WINDOW * menuWin = newwin(0, xMax - 4, yMax - 4, 0);
 	refresh();
 	wrefresh(menuWin);
 
@@ -21,12 +21,14 @@ int mainMenu(int yMax, int xMax){
 	menu[3] = malloc(sizeof(char)*7);
 	strcpy(menu[3],"4. Exit");
 
+	mvwprintw(menuWin,1,1,"Hello World!");
+
 	while (1){
 
 		for (int i=0;i<4;i++){
 			if (highlight == i)
 				wattron(menuWin, A_REVERSE);
-			mvwprintw(menuWin,i+1,2,"%s",menu[i]);
+			mvwprintw(menuWin,i+2,2,"%s",menu[i]);
 			wattroff(menuWin, A_REVERSE);
 			
 		}
