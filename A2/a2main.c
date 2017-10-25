@@ -181,6 +181,8 @@ int main(int argc, char const *argv[]){
 
 		// start in main menu
 		int choice = mainMenu(yMax, xMax);
+		clear();
+		mvprint(1,1, "%d",choice);
 		refresh();
 
 		if (choice == 1){
