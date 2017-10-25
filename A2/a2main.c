@@ -202,7 +202,7 @@ int makeCal(int yMax, int xMax){
 		return 0;		
 	}
 
-	int checkCal = calInit(prodId,version,uid,dt,action,trigger);
+	Calendar * cal = calInit(prodId,version,uid,dt,action,trigger);
 
 	delwin(readCalWin);
 	return 1;
@@ -217,7 +217,7 @@ Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char *
 
 	/* make the event */
 	List alarmlist = initializeList(printAlarm, deleteAlarm, compareAlarm);
-	insertFront(alarmlist,alarm);
+	insertFront(&alarmlist,alarm);
 	DateTime * DT = initDT(dt);
 	free(dt);
 	if (DT == NULL){
@@ -235,7 +235,7 @@ Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char *
 
 	/* make the calendar */
 	List eventlist = initializeList(printAlarm, deleteAlarm, compareAlarm);
-	insertFront(eventlist,evt);
+	insertFront(&eventlist,evt);
 	float ver = atof(version);
 	free(version);
 	if (ver <= 0){
