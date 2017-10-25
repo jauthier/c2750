@@ -3,6 +3,9 @@
 #include <string.h>
 #include <curses.h>
 
+#include "LinkedListAPI.h"
+#include "CalendarParser.h"
+
 int mainMenu(int yMax, int xMax){
 	// create a menu window
 	WINDOW * menuWin = newwin(yMax - 1, xMax - 1, 0, 0);
@@ -64,8 +67,6 @@ int makeCal(int yMax, int xMax){
 	WINDOW * readCalWin = newwin(yMax - 1, xMax - 1, 0, 0);
 	refresh();
 	wrefresh(readCalWin);
-
-	//
 	mvwprintw(readCalWin,2,2,"iCalendar Create");
 	mvwprintw(readCalWin, 4,2,"Product ID:");
 	mvwprintw(readCalWin, 6,2,"Version:");
@@ -114,7 +115,7 @@ int makeCal(int yMax, int xMax){
 	strcpy(version, buffer);
 
 	/* ----- UID ----- */
-	wmove(readCalWin, 10, 12);
+	wmove(readCalWin, 10, 10);
 	refresh();
 	wrefresh(readCalWin);
 	i = 0;
@@ -131,8 +132,119 @@ int makeCal(int yMax, int xMax){
 	char * uid = malloc(sizeof(char)*(strlen(buffer)+1));
 	strcpy(uid, buffer);
 
+	/* ----- DTSTAMP ----- */
+	wmove(readCalWin, 12, 16);
+	refresh();
+	wrefresh(readCalWin);
+	i = 0;
+	echo();
+	c = wgetch(readCalWin);
+	while(c != '\n'){
+		buffer[i] = c;
+		i++;
+		c = wgetch(readCalWin);
+	}
+	noecho();
+	buffer[i] = '\0';
+	// save the input
+	char * dt = malloc(sizeof(char)*(strlen(buffer)+1));
+	strcpy(dt, buffer);
+
+	/* ----- Trigger ----- */
+	wmove(readCalWin, 16, 16);
+	refresh();
+	wrefresh(readCalWin);
+	i = 0;
+	echo();
+	c = wgetch(readCalWin);
+	while(c != '\n'){
+		buffer[i] = c;
+		i++;
+		c = wgetch(readCalWin);
+	}
+	noecho();
+	buffer[i] = '\0';
+	// save the input
+	char * trigger = malloc(sizeof(char)*(strlen(buffer)+1));
+	strcpy(trigger, buffer);
+
+	/* ----- Action ----- */
+	wmove(readCalWin, 18, 15);
+	refresh();
+	wrefresh(readCalWin);
+	i = 0;
+	echo();
+	c = wgetch(readCalWin);
+	while(c != '\n'){
+		buffer[i] = c;
+		i++;
+		c = wgetch(readCalWin);
+	}
+	noecho();
+	buffer[i] = '\0';
+	// save the input
+	char * action = malloc(sizeof(char)*(strlen(buffer)+1));
+	strcpy(action, buffer);
+
+	/* ----- Make iCal ----- */
+	/* check for empty fields */
+	if ((strlen(prodId)==0)||(strlen(version)==0)||(strlen(uid)==0)||
+		(strlen(dt)==0)||(strlen(trigger)==0)||(strlen(action)==0)){
+
+		delwin(readCalWin);
+		return 0;		
+	}
+
+	int checkCal = calInit(prodId,version,uid,dt,action,trigger);
+
 	delwin(readCalWin);
-	return 0;
+	return 1;
+}
+
+Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char * action, char * trigger){
+	/* make the alarm */
+	List * proplist = malloc(sizeof(List));
+	*proplist = initializeList(printProperty, deleteProperty, compareProperty);
+	Alarm * alarm = initAlarm(action,trigger,proplist);
+	free(action);
+	free(trigger);
+
+	/* make the event */
+	List * alarmlist = malloc(sizeof(List));
+	*alarmlist = initializeList(printAlarm, deleteAlarm, compareAlarm);
+	insertFront(alarmlist,alarm);
+	DateTime * DT = initDT(dt);
+	free(dt);
+	if (DT == NULL){
+		clearList(alarmlist);
+		clearList(proplist);
+		deleteDT(DT);
+		free(uid);
+		free(prodId);
+		free(version);
+		errScr("Calendar was not created: Invalid DateTime Format");
+		return NULL;
+	}
+	Event * evt = initEvent(uid, DT,proplist,alarmlist);
+	free(uid);
+
+	/* make the calendar */
+	List * eventlist = malloc(sizeof(List));
+	*eventlist = initializeList(printAlarm, deleteAlarm, compareAlarm);
+	insertFront(eventlist,evt);
+	float ver = atof(version);
+	free(version);
+	if (ver <= 0){
+		clearList(alarmlist);
+		clearList(proplist);
+		clearList(eventlist);
+		free(prodId);
+		errScr("Calendar was not created: Invalid Version");
+		return NULL;
+	}
+	Calendar * cal = initCal(ver,prodId,eventlist,proplist);
+	free(prodId);
+	return cal;
 }
 
 int displayCal(int yMax, int xMax){
@@ -155,12 +267,14 @@ int readICalFIle(int yMax, int xMax){
 	return 0;
 }
 
-int errScr(int yMax, int xMax){
+int errScr(char * msg){
 
+	int yMax, xMax;
+	getmaxyx(stdscr, yMax, xMax);
 	WINDOW * errWin = newwin(yMax - 1, xMax - 1, 0, 0);
 	refresh();
 	wrefresh(errWin);
-
+	mvwprintw(errWin, 2,2,"%s",msg);
 	delwin(errWin);
 	return 0;
 }
@@ -182,9 +296,7 @@ int main(int argc, char const *argv[]){
 		// start in main menu
 		int choice = mainMenu(yMax, xMax);
 		clear();
-		mvprintw(1,1, "%d",choice);
 		refresh();
-		getch();
 
 		if (choice == 0){
 			// read file
@@ -200,8 +312,7 @@ int main(int argc, char const *argv[]){
 			endwin();
 			return 0;
 		}
-	}	
-
+	}
 
 	getch();
 	endwin();
