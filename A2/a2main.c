@@ -30,7 +30,7 @@ int mainMenu(int yMax, int xMax){
 		for (int i=0;i<4;i++){
 			if (highlight == i)
 				wattron(menuWin, A_REVERSE);
-			mvwprintw(i+1,2,"%s",menu[i]);
+			mvwprintw(menuWin,i+1,2,"%s",menu[i]);
 			wattroff(menuWin, A_REVERSE);
 			
 		}
@@ -69,15 +69,15 @@ int readICalFIle(int yMax, int xMax){
 	wrefresh(readCalWin);
 
 	//
-	mvwprintw(2,2,"iCalendar Create");
-	mvwprintw(4,2,"Product ID:");
-	mvwprintw(6,2,"Version:");
-	mvwprintw(8,2,"Event");
-	mvwprintw(10,4,"UID:");
-	mvwprintw(12,4,"Date-Time:");
-	mvwprintw(14,4,"Alarm");
-	mvwprintw(16,6,"Trigger:");
-	mvwprintw(18,6,"Action:");
+	mvwprintw(readCalWin,2,2,"iCalendar Create");
+	mvwprintw(readCalWin, 4,2,"Product ID:");
+	mvwprintw(readCalWin, 6,2,"Version:");
+	mvwprintw(readCalWin, 8,2,"Event");
+	mvwprintw(readCalWin, 10,4,"UID:");
+	mvwprintw(readCalWin, 12,4,"Date-Time:");
+	mvwprintw(readCalWin,14,4,"Alarm");
+	mvwprintw(readCalWin,16,6,"Trigger:");
+	mvwprintw(readCalWin,18,6,"Action:");
 
 	/* ----- Product ID ----- */
 	wmove(readCalWin, 4, 15);
