@@ -30,7 +30,8 @@ int mainMenu(int yMax, int xMax){
 			wattroff(menuWin, A_REVERSE);
 			
 		}
-
+		refresh();
+		wrefresh(menuWin);
 		choice = wgetch(menuWin);
 
 		switch(choice){
