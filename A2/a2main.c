@@ -59,7 +59,7 @@ int mainMenu(int yMax, int xMax){
 	return highlight;
 }
 
-int readICalFIle(int yMax, int xMax){
+int makeCal(int yMax, int xMax){
 
 	WINDOW * readCalWin = newwin(yMax - 1, xMax - 1, 0, 0);
 	refresh();
@@ -145,7 +145,7 @@ int displayCal(int yMax, int xMax){
 	return 0;
 }
 
-int makeCal(int yMax, int xMax){
+int readICalFIle(int yMax, int xMax){
 
 	WINDOW * makeCalWin = newwin(yMax - 1, xMax - 1, 0, 0);
 	refresh();
@@ -184,6 +184,7 @@ int main(int argc, char const *argv[]){
 		clear();
 		mvprintw(1,1, "%d",choice);
 		refresh();
+		getch();
 
 		if (choice == 1){
 			// read file
@@ -198,7 +199,6 @@ int main(int argc, char const *argv[]){
 			// exit
 			break;
 		}
-		getch();
 	}	
 
 
