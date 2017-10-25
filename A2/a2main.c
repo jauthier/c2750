@@ -21,8 +21,7 @@ int mainMenu(int yMax, int xMax){
 	menu[3] = malloc(sizeof(char)*7);
 	strcpy(menu[3],"4. Exit");
 
-	mvwprintw(menuWin,1,1,"Hello World!");
-
+	keypad(menuWin,TRUE);
 	while (1){
 
 		for (int i=0;i<4;i++){
@@ -32,8 +31,6 @@ int mainMenu(int yMax, int xMax){
 			wattroff(menuWin, A_REVERSE);
 			
 		}
-		refresh();
-		wrefresh(menuWin);
 		choice = wgetch(menuWin);
 
 		switch(choice){
