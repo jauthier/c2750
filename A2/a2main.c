@@ -205,7 +205,7 @@ int makeCal(int yMax, int xMax){
 	if (cal != NULL){
 		ICalErrorCode ec = validateCalendar(cal);
 		if (ec == OK){
-
+			saveCalendar(cal);
 		}
 		errScr("Calendar was Made!");
 
