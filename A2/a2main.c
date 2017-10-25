@@ -6,6 +6,13 @@
 #include "CalendarParser.h"
 #include "BasicFunctions.h"
 
+int mainMenu(int yMax, int xMax);
+int makeCal(int yMax, int xMax);
+Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char * action, char * trigger);
+int displayCal(int yMax, int xMax);
+int readICalFIle(int yMax, int xMax);
+int errScr(char * msg);
+
 int mainMenu(int yMax, int xMax){
 	// create a menu window
 	WINDOW * menuWin = newwin(yMax - 1, xMax - 1, 0, 0);
@@ -203,21 +210,19 @@ int makeCal(int yMax, int xMax){
 
 Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char * action, char * trigger){
 	/* make the alarm */
-	List * proplist = malloc(sizeof(List));
-	*proplist = initializeList(printProperty, deleteProperty, compareProperty);
+	List proplist = initializeList(printProperty, deleteProperty, compareProperty);
 	Alarm * alarm = initAlarm(action,trigger,proplist);
 	free(action);
 	free(trigger);
 
 	/* make the event */
-	List * alarmlist = malloc(sizeof(List));
-	*alarmlist = initializeList(printAlarm, deleteAlarm, compareAlarm);
+	List alarmlist = initializeList(printAlarm, deleteAlarm, compareAlarm);
 	insertFront(alarmlist,alarm);
 	DateTime * DT = initDT(dt);
 	free(dt);
 	if (DT == NULL){
-		clearList(alarmlist);
-		clearList(proplist);
+		clearList(&alarmlist);
+		clearList(&proplist);
 		deleteDT(DT);
 		free(uid);
 		free(prodId);
@@ -229,15 +234,14 @@ Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char *
 	free(uid);
 
 	/* make the calendar */
-	List * eventlist = malloc(sizeof(List));
-	*eventlist = initializeList(printAlarm, deleteAlarm, compareAlarm);
+	List eventlist = initializeList(printAlarm, deleteAlarm, compareAlarm);
 	insertFront(eventlist,evt);
 	float ver = atof(version);
 	free(version);
 	if (ver <= 0){
-		clearList(alarmlist);
-		clearList(proplist);
-		clearList(eventlist);
+		clearList(&alarmlist);
+		clearList(&proplist);
+		clearList(&eventlist);
 		free(prodId);
 		errScr("Calendar was not created: Invalid Version");
 		return NULL;
