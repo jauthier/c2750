@@ -267,9 +267,9 @@ int saveCalendar(Calendar * cal){
 	int choice;
 	int highlight = 0;
 	char ** menu = malloc(sizeof(char *)*2);
-	menu[0] = malloc(sizeof(char)*23);
+	menu[0] = malloc(sizeof(char)*26);
 	strcpy(menu[0], "1. Save iCalendar to File");
-	menu[1] = malloc(sizeof(char)*16);
+	menu[1] = malloc(sizeof(char)*21);
 	strcpy(menu[1],"2. Exit to Main Menu");
 
 	mvwprintw(saveWin,1,1,"Calendar was made! If you do not save the Calendar it will be deleted.");
@@ -302,14 +302,15 @@ int saveCalendar(Calendar * cal){
 
 	}
 
+
+	if (highlight == 0){
+		//save the cal to a file
+	}
+
 	for (int j=0;j<2;j++){
 		free(menu[j]);
 	}
 	free(menu);
-
-	if (choice == 0){
-		//save the cal to a file
-	}
 	
 	delwin(saveWin);
 	return highlight;
