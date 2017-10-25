@@ -197,7 +197,8 @@ int main(int argc, char const *argv[]){
 			makeCal(yMax, xMax);
 		} else if (choice == 4){
 			// exit
-			break;
+			endwin();
+			return 0;
 		}
 	}	
 
