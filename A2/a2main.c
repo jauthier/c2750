@@ -58,7 +58,7 @@ int mainMenu(int yMax, int xMax){
 		free(menu[j]);
 	}
 	free(menu);
-	delWin(menuWin);
+	delwin(menuWin);
 	return highlight;
 }
 
@@ -131,8 +131,8 @@ int readICalFIle(int yMax, int xMax){
 	noecho();
 	buffer[i] = '\0';
 	// save the input
-	char * prodId = malloc(sizeof(char)*(strlen(buffer)+1));
-	strcpy(prodId, buffer);
+	char * uid = malloc(sizeof(char)*(strlen(buffer)+1));
+	strcpy(uid, buffer);
 
 	delwin(readCalWin);
 	return 0;
@@ -144,7 +144,7 @@ int displayCal(int yMax, int xMax){
 	refresh();
 	wrefresh(displayWin);
 
-	delWin(displayWin);
+	delwin(displayWin);
 	return 0;
 }
 
@@ -154,7 +154,7 @@ int makeCal(int yMax, int xMax){
 	refresh();
 	wrefresh(makeCalWin);
 
-	delWin(makeCalWin);
+	delwin(makeCalWin);
 	return 0;
 }
 
@@ -164,7 +164,7 @@ int errScr(int yMax, int xMax){
 	refresh();
 	wrefresh(errWin);
 
-	delWin(errWin);
+	delwin(errWin);
 	return 0;
 }
 
