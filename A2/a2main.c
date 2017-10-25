@@ -3,7 +3,6 @@
 #include <string.h>
 #include <curses.h>
 
-#include "LinkedListAPI.h"
 #include "CalendarParser.h"
 
 int mainMenu(int yMax, int xMax){
