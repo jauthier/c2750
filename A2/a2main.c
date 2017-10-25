@@ -260,6 +260,8 @@ Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char *
 
 int saveCalendar(Calendar * cal){
 	// create a menu window
+	int yMax, xMax;
+	getmaxyx(stdscr, yMax, xMax);
 	WINDOW * saveWin = newwin(yMax - 1, xMax - 1, 0, 0);
 	refresh();
 	wrefresh(saveWin);
@@ -306,12 +308,12 @@ int saveCalendar(Calendar * cal){
 		free(menu[j]);
 	}
 	free(menu);
-	
+
 	if (choice == 0){
 		//save the cal to a file
 	}
 	
-	delwin(menuWin);
+	delwin(saveWin);
 	return highlight;
 }
 
