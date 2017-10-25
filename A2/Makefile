@@ -1,6 +1,9 @@
 FLAGS = -g -Wall -std=c11
-FILES = calMain.c CalendarParser.c LinkedListAPI.c readFile.c
+FILES = CalendarParser.c LinkedListAPI.c readFile.c BasicFunctions.c
 
 all :
-	gcc $(FILES) $(FLAGS) -o runCal
+	gcc calMain.c $(FILES) $(FLAGS) -o runCal
 
+
+UI:
+	gcc a2main.c $(FILES) $(FLAGS) -lncurses -o uiTest
