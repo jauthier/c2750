@@ -398,7 +398,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                 free(value);
                 free(action);
                 free(trigger);
-                 return OK;
+                return OK;
             } else {
                 free(value);
                 clearList(&propList);
