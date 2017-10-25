@@ -203,16 +203,13 @@ int makeCal(int yMax, int xMax){
 	}
 
 	Calendar * cal = calInit(prodId,version,uid,dt,action,trigger);
+	delwin(readCalWin);
 	if (cal != NULL){
 		ICalErrorCode ec = validateCalendar(cal);
 		if (ec == OK){
 			saveCalendar(cal);
 		}
-		errScr("Calendar was Made!");
-
 	}
-
-	delwin(readCalWin);
 	return 1;
 }
 
