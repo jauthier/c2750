@@ -632,7 +632,7 @@ char * printError (ICalErrorCode err){
 
 ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
     /* check if obj is valid */
-    ICalErrorCode ec = validateCalendar();
+    ICalErrorCode ec = validateCalendar(obj);
     if (ec != OK)
         return ec;
     /* check file is valid */
@@ -656,7 +656,10 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
         fprintf(fp, "BEGIN:VEVENT\r\n");
         Event * evt = (Event *)hold->data;
         fprintf(fp, "UID:%s\r\n", evt->UID);
-        fprintf(fp, "DTSTAMP:%s\r\n", evt->creationDateTime);
+        if (evt->creationDateTime == true)
+            fprintf(fp, "DTSTAMP:%sT%sz\r\n", evt->creationDateTime.date, evt->creationDateTime.time);
+        else 
+            fprintf(fp, "DTSTAMP:%sT%s\r\n", evt->creationDateTime.date, evt->creationDateTime.time);
         /* event properties */
         Node * hold2 = evt->properties.head;
         while (hold2 != NULL){
