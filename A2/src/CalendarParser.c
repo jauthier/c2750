@@ -642,7 +642,7 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
     /* start file */
     fprintf(fp, "BEGIN:VCALENDAR\r\n");
     fprintf(fp, "PRODID:%s\r\n", obj->prodID);
-    fprintf(fp, "VERSION:%f\r\n", obj->version);
+    fprintf(fp, "VERSION:%.1f\r\n", obj->version);
     /* calendadr properties */
     Node * hold = obj->properties.head;
     while (hold != NULL){
@@ -657,7 +657,7 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
         Event * evt = (Event *)hold->data;
         fprintf(fp, "UID:%s\r\n", evt->UID);
         if (evt->creationDateTime.UTC == true)
-            fprintf(fp, "DTSTAMP:%sT%sz\r\n", evt->creationDateTime.date, evt->creationDateTime.time);
+            fprintf(fp, "DTSTAMP:%sT%sZ\r\n", evt->creationDateTime.date, evt->creationDateTime.time);
         else 
             fprintf(fp, "DTSTAMP:%sT%s\r\n", evt->creationDateTime.date, evt->creationDateTime.time);
         /* event properties */
