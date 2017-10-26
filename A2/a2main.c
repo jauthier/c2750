@@ -414,6 +414,8 @@ int displayCal(Calendar * obj){
 		refresh();
 		wrefresh(displayWin);
 		mvwprintw(displayWin, 1, 1, "%s",toPrint);
+		wrefresh(displayWin);
+		getch();
 		delwin(displayWin);
 	}
 	return 0;
