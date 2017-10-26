@@ -656,7 +656,7 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
         fprintf(fp, "BEGIN:VEVENT\r\n");
         Event * evt = (Event *)hold->data;
         fprintf(fp, "UID:%s\r\n", evt->UID);
-        if (evt->creationDateTime == true)
+        if (evt->creationDateTime.UTC == true)
             fprintf(fp, "DTSTAMP:%sT%sz\r\n", evt->creationDateTime.date, evt->creationDateTime.time);
         else 
             fprintf(fp, "DTSTAMP:%sT%s\r\n", evt->creationDateTime.date, evt->creationDateTime.time);
