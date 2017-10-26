@@ -20,7 +20,7 @@ readFile.o:
 parser: CalendarParser.o BasicFunctions.o readFile.o
 	ar cr bin/libcparse.a bin/CalendarParser.o bin/readFile.o bin/BasicFunctions.o
 
-A2main: parser
+A2main: parser list
 	gcc src/a2main.c $(CFLAGS) -lncurses -lcparser -lllist -o bin/A2main
 
 clean:
