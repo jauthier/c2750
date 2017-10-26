@@ -566,7 +566,8 @@ int main(int argc, char const *argv[]){
 
 	int yMax, xMax;
 	getmaxyx(stdscr, yMax, xMax);
-	
+	Calendar * userMade = NULL;
+	Calendar * fileMade = NULL;
 
 	while (1){
 
@@ -577,15 +578,16 @@ int main(int argc, char const *argv[]){
 
 		if (choice == 0){
 			// read file
-			readICalFIle(yMax, xMax);
+			fileMade = readICalFIle(yMax, xMax);
 		} else if (choice == 1){
 			// Display cal using printCalendar
-			displayCal(yMax, xMax);
+			displayCal(fileMade);
 		} else if (choice == 2){
 			// create cal
-			makeCal(yMax, xMax);
+			userMade = makeCal(yMax, xMax);
 		} else if (choice == 3){
 			// save calendar
+			saveCalendar(userMade);
 		} else if (choice == 4){
 			// exit
 			endwin();
