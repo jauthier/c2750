@@ -630,6 +630,10 @@ char * printError (ICalErrorCode err){
     return rtn;
 }
 
+ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
+    return OK;
+}
+
 ICalErrorCode validateCalendar(const Calendar * obj){
 
     //make sure the calendar exists
