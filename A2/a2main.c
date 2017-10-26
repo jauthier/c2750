@@ -7,7 +7,7 @@
 #include "BasicFunctions.h"
 
 int mainMenu(int yMax, int xMax);
-int makeCal(int yMax, int xMax);
+Calendar * makeCal(int yMax, int xMax);
 Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char * action, char * trigger);
 int saveCalendar(Calendar * cal);
 int displayCal(Calendar * obj);
@@ -71,7 +71,7 @@ int mainMenu(int yMax, int xMax){
 	return highlight;
 }
 
-int makeCal(int yMax, int xMax){
+Calendar * makeCal(int yMax, int xMax){
 
 	WINDOW * readCalWin = newwin(yMax - 1, xMax - 1, 0, 0);
 	refresh();
@@ -201,7 +201,7 @@ int makeCal(int yMax, int xMax){
 		(strlen(dt)==0)||(strlen(trigger)==0)||(strlen(action)==0)){
 
 		delwin(readCalWin);
-		return 0;		
+		return NULL;		
 	}
 
 	Calendar * cal = calInit(prodId,version,uid,dt,action,trigger);
@@ -209,10 +209,10 @@ int makeCal(int yMax, int xMax){
 	if (cal != NULL){
 		ICalErrorCode ec = validateCalendar(cal);
 		if (ec == OK){
-			saveCalendar(cal);
+			return cal;
 		}
 	}
-	return 1;
+	return NULL;
 }
 
 Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char * action, char * trigger){
@@ -258,7 +258,7 @@ Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char *
 	return cal;
 }
 
-int saveCalendar(Calendar * cal){
+int saveCalendar(Calendar * obj){
 	/* make sure there is a calendar to save */
 	if (obj == NULL){
 		errScr("Calendar was not Saved: You have not entered a calendar object to save!")
@@ -387,7 +387,7 @@ int saveCalendar(Calendar * cal){
 		}
 	}
 
-	if (save = 1){
+	if (save == 1){
 		ICalErrorCode ec = writeCalendar(fileName , obj);
 		if (ec == OK)
 			return 1;
@@ -398,7 +398,7 @@ int saveCalendar(Calendar * cal){
 int displayCal(Calendar * obj){
 
 	if ( obj == NULL){
-		errScr("Cannot Display Calendar: You must read in a calendar file before it can be displayed!")
+		errScr("Cannot Display Calendar: You must read in a calendar file before it can be displayed!");
 		return 0;
 	}
 
