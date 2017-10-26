@@ -1,4 +1,4 @@
-FLAGS = -g -Wall -std=c11 -Iinclude
+CFLAGS = -g -Wall -std=c11 -Iinclude
 
 all : A2main
 
@@ -21,7 +21,7 @@ parser: CalendarParser.o BasicFunctions.o readFile.o
 	ar cr bin/libcparse.a bin/CalendarParser.o bin/readFile.o bin/BasicFunctions.o
 
 A2main: parser
-	gcc src/a2main.c $(FLAGS) -lncurses -lcparser -lllist -o bin/A2main
+	gcc src/a2main.c $(CFLAGS) -lncurses -lcparser -lllist -o bin/A2main
 
 clean:
 	rm bin/*.o bin/*.a A2main
