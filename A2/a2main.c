@@ -13,6 +13,7 @@ int saveCalendar(Calendar * cal);
 int displayCal(Calendar * obj);
 Calendar * readICalFIle(int yMax, int xMax);
 void errScr(char * msg);
+void readError(ICalErrorCode err);
 
 int mainMenu(int yMax, int xMax){
 	// create a menu window
@@ -334,10 +335,6 @@ int saveCalendar(Calendar * cal){
 					break;
 			}
 
-			for (int j=0;j<2;j++){
-				free(menu[j]);
-			}
-			free(menu);
 			delwin(askWin);
 
 			if (highlight == 0){
@@ -350,14 +347,8 @@ int saveCalendar(Calendar * cal){
 			refresh();
 			wrefresh(againWin);
 			mvwprintw(againWin, 1,1,"Would you like to try a new file name?");
-			int choice;
-			int highlight = 0;
-			char ** menu = malloc(sizeof(char *)*2);
-			menu[0] = malloc(sizeof(char)*4);
-			strcpy(menu[0], "Yes");
-			menu[1] = malloc(sizeof(char)*3);
-			strcpy(menu[1],"No");
-			keypad(againWin,TRUE);
+			highlight = 0;
+			
 			while (1){
 				for (int i=0;i<2;i++){
 					if (highlight == i)
