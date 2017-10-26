@@ -261,7 +261,8 @@ Calendar * calInit(char * prodId,  char * version, char * uid, char * dt, char *
 int saveCalendar(Calendar * obj){
 	/* make sure there is a calendar to save */
 	if (obj == NULL){
-		errScr("Calendar was not Saved: You have not entered a calendar object to save!")
+		errScr("Calendar was not Saved: You have not entered a calendar object to save!");
+
 		return 0;
 	}
 
