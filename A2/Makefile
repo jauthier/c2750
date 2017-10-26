@@ -9,19 +9,19 @@ list: LinkedListAPI.o
 	ar cr bin/libllist.a bin/LinkedListAPI.o
 
 CalendarParser.o:
-	gcc $(CFLAGS) -c src/CalendarParser.c -o bin/CalendarParser.o -lllist
+	gcc $(CFLAGS) -c src/CalendarParser.c -o bin/CalendarParser.o 
 
 BasicFunctions.o:
-	gcc $(CFLAGS) -c src/BasicFunctions.c -o bin/BasicFunctions.o -lllist
+	gcc $(CFLAGS) -c src/BasicFunctions.c -o bin/BasicFunctions.o 
 
 readFile.o:
-	gcc $(CFLAGS) -c src/readFile.c -o bin/readFile.o -lllist
+	gcc $(CFLAGS) -c src/readFile.c -o bin/readFile.o
 
 parser: CalendarParser.o BasicFunctions.o readFile.o
-	ar cr bin/libcparse.a bin/CalendarParser.o bin/readFile.o bin/BasicFunctions.o
+	ar cr bin/libcparse.a bin/CalendarParser.o bin/readFile.o bin/BasicFunctions.o -lllist
 
 A2main: parser list
-	gcc src/a2main.c $(CFLAGS) -lncurses -lcparse -lllist -o bin/A2main
+	gcc src/a2main.c $(CFLAGS) -lncurses -Lbin -lcparse -lllist -o bin/A2main
 
 clean:
 	rm bin/*.o bin/*.a bin/A2main
