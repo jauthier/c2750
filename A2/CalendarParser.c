@@ -631,6 +631,60 @@ char * printError (ICalErrorCode err){
 }
 
 ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
+    /* check if obj is valid */
+    ICalErrorCode ec = validateCalendar();
+    if (ec != OK)
+        return ec;
+    /* check file is valid */
+    FILE * fp = fopen(fileName, "w");
+    if (fp == NULL)
+        return INV_FILE;
+    /* start file */
+    fprintf(fp, "BEGIN:VCALENDAR\r\n");
+    fprintf(fp, "PRODID:%s\r\n", obj->prodID);
+    fprintf(fp, "VERSION:%f\r\n", obj->version);
+    /* calendadr properties */
+    Node * hold = obj->properties.head;
+    while (hold != NULL){
+        Property * prop = (Property *)hold->data;
+        fprintf(fp, "%s:%s\r\n", prop->propName,prop->propDescr);
+        hold = hold->next;
+    }
+    /* calendar events */
+    hold = obj->events.head;
+    while (hold != NULL){
+        fprintf(fp, "BEGIN:VEVENT\r\n");
+        Event * evt = (Event *)hold->data;
+        fprintf(fp, "UID:%s\r\n", evt->UID);
+        fprintf(fp, "DTSTAMP:%s\r\n", evt->creationDateTime);
+        /* event properties */
+        Node * hold2 = evt->properties.head;
+        while (hold2 != NULL){
+            Property * prop = (Property *)hold2->data;
+            fprintf(fp, "%s:%s\r\n", prop->propName,prop->propDescr);
+            hold2 = hold2->next;
+        }
+        /* event alarms */
+        hold2 = evt->alarms.head;
+        while (hold2 != NULL){
+            fprintf(fp, "BEGIN:VALARM\r\n");
+            Alarm * alarm = (Alarm *)hold2->data;
+            fprintf(fp, "ACTION:%s\r\n", alarm->action);
+            fprintf(fp, "TRIGGER:%s\r\n", alarm->trigger);
+            /* alarm properties */
+            Node * hold3 = alarm->properties.head;
+            while (hold3 != NULL){
+                Property * prop = (Property *)hold3->data;
+                fprintf(fp, "%s:%s\r\n", prop->propName,prop->propDescr);
+                hold3 = hold3->next;
+            }
+            fprintf(fp, "END:VALARM\r\n");
+            hold2 = hold2->next;
+        }
+        fprintf(fp, "END:VEVENT\r\n");
+        hold = hold->next;
+    }
+    fprintf(fp, "END:VCALENDAR\r\n");
     return OK;
 }
 
