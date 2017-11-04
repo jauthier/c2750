@@ -102,6 +102,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
     while(current != NULL){
 
         char * line = (char *)current->data;
+        printf("%s\n", line);
         if (line[0] == ';'){
             current = current->next;
             continue;
@@ -112,7 +113,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                 free(action);
             if  (checkTrigger == 1)
                 free(trigger);
-            return INV_EVENT;
+            return INV_ALARM;
         }
 
         /* parse the line */
@@ -126,7 +127,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                 free(action);
             if  (checkTrigger == 1)
                 free(trigger);
-            return INV_EVENT;
+            return INV_ALARM;
         }
 
         int len = strlen(holdVal) + 1;
@@ -144,7 +145,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                 free(action);
                 if (checkTrigger == 1)
                     free(trigger);
-                return INV_EVENT;
+                return INV_ALARM;
             }
         } else if (strcmp(token,"TRIGGER")==0){
             if (checkTrigger == 0){
@@ -157,7 +158,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                 free(trigger);
                 if (checkAction == 1)
                     free(action);
-                return INV_EVENT;
+                return INV_ALARM;
             }
         } else if (strcmp(token,"END")==0){
             if (strcmp(value,"VALARM")==0 &&checkAction == 1 && checkTrigger == 1){
@@ -167,7 +168,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                         clearList(&propList);
                         free(trigger);
                         free(action);
-                        return INV_EVENT;
+                        return INV_ALARM;
                     }
                 }
                 // the alarm is good to be made
@@ -185,7 +186,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                     free(trigger);
                 if (checkAction == 1)
                     free(action);
-                return INV_EVENT;
+                return INV_ALARM;
             }
 
         } else {
@@ -211,7 +212,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                         free(trigger);
                     if (checkAction == 1)
                         free(action);
-                    return INV_EVENT;
+                    return INV_ALARM;
                 }
             } else {
                 free(value);
@@ -220,13 +221,13 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
                     free(trigger);
                 if (checkAction == 1)
                     free(action);
-                return INV_EVENT;   
+                return INV_ALARM;   
             }
         }
         free(value);
         current = current->next;
     }
-    return INV_EVENT;
+    return INV_ALARM;
 }
 
 ICalErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
@@ -246,6 +247,7 @@ ICalErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
 
     while(current != NULL){
         char * line = (char *)current->data;
+        printf("%s\n", line);
         /* make sure the line can be parsed */
         if (line[0] == ';'){
             current = current->next;
@@ -390,6 +392,7 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
 
     while (current != NULL){
         char * line = (char *)current->data;
+        printf("%s\n", line);
         if (line[0] == ';'){
             current = current->next;
             continue;
@@ -547,6 +550,7 @@ ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
 
     while (current != NULL){
         char * line = (char *)current->data;
+        printf("%s\n", line);
         if (line[0] == ';'){
             current = current->next;
             continue;
