@@ -38,7 +38,7 @@ int evPropCheck(Property * prop, List propList){
         strcmp(propName,"LOCATION")==0||strcmp(propName,"ORGANIZER")==0||strcmp(propName,"SEQ")==0||
         strcmp(propName,"PRIORITY")==0||strcmp(propName,"STATUS")==0||strcmp(propName,"SUMMARY")==0||
         strcmp(propName,"TRANSP")==0||strcmp(propName,"URL")==0||strcmp(propName,"RECURID")==0||
-        strcmp(propName,"RRULE")==0){
+        strcmp(propName,"RRULE")==0||strcmp(propName,"LAST-MODIFIED")==0){
 
         //check the list for duplicates
         void * check = findElement(propList,custCompareProp, (void*)prop);
