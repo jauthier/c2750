@@ -8,6 +8,8 @@
 
 #include "LinkedListAPI.h"
 
+#undef OK
+
 //Error codes that indicate what went wrong during parsing
 typedef enum ers {OK, INV_FILE, INV_CAL, INV_VER, DUP_VER, INV_PRODID, DUP_PRODID, INV_EVENT, INV_CREATEDT,
     INV_ALARM, WRITE_ERROR, OTHER_ERROR } ICalErrorCode;
