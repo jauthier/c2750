@@ -758,6 +758,8 @@ ICalErrorCode validateProperties(List propList){
             return INV_CAL;
         if(((Property *)hold->data)->propDescr == NULL)
             return INV_CAL;
+        if (findElement(propList,custCompareProp,(void *)hold) != NULL)
+            return INV_CAL;
         hold = hold->next;
     }
     return OK;
