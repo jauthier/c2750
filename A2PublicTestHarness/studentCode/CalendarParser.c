@@ -692,6 +692,7 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
         hold = hold->next;
     }
     fprintf(fp, "END:VCALENDAR\r\n");
+    fclose(fp);
     return OK;
 }
 
