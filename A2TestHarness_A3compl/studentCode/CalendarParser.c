@@ -741,6 +741,7 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
 ICalErrorCode validateCalendar(const Calendar * obj){
 
     //make sure the calendar exists
+    printf("----------In validateCalendar---------\n");
     if (obj == NULL)
         return INV_CAL;
     //check version
@@ -749,17 +750,17 @@ ICalErrorCode validateCalendar(const Calendar * obj){
     //check prodid
     if (obj->prodID == NULL)
         return INV_PRODID;
-    //check for at least one event
-    if (obj->events.head == NULL)
-        return INV_CAL;
-    if (obj->events.head->data == NULL)
-        return INV_CAL;
     //check properties
     ICalErrorCode ec2 = validateProperties(obj->properties,calProp);
     if (ec2 != OK)
         return ec2;
     //check the events
     printf("------------------GOING TO EVENTS------------------\n");
+    //check for at least one event
+    if (obj->events.head == NULL)
+        return INV_CAL;
+    if (obj->events.head->data == NULL)
+        return INV_CAL;
     Node * hold = obj->events.head;
     while (hold != NULL){
         ICalErrorCode ec = validateEvent((Event *)hold->data);
