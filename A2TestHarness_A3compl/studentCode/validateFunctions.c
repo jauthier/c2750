@@ -137,7 +137,7 @@ ICalErrorCode validateEvent(Event * event){
     return OK;
 }
 
-ICalErrorCode validateProperties(List propList, int (*checkFunc)(List list)){
+ICalErrorCode validateProperties(List propList, int (*checkFunc)(List list, Property * prop)){
 
     Node * hold = propList.head;
     while(hold != NULL){
