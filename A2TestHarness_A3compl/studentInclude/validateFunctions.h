@@ -25,7 +25,7 @@ int calProp(List propList, Property * prop);
 int eventProp(List propList, Property * prop);
 int alarmProp(List propList, Property * prop);
 ICalErrorCode validateEvent(Event * event);
-ICalErrorCode validateProperties(List propList, int (*checkFunc)(List list), Property * prop);
+ICalErrorCode validateProperties(List propList, int (*checkFunc)(List list, Property * prop));
 ICalErrorCode validateAlarms(List alarmList);
 
 #endif
