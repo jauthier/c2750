@@ -753,8 +753,10 @@ ICalErrorCode validateCalendar(const Calendar * obj){
     //check properties
     printf("------------before props-------------\n");
     ICalErrorCode ec2 = validateProperties(obj->properties,calProp);
-    if (ec2 != OK)
+    if (ec2 != OK){
+        printf("--------out of props--------\n");
         return ec2;
+    }
     //check the events
     printf("------------------GOING TO EVENTS------------------\n");
     //check for at least one event
