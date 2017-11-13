@@ -14,6 +14,14 @@ int calProp(List propList, Property * prop){
         else 
             return 1;
     } else {
+        if (strcmp(propName,"PRODID")==0){
+            free(propName);
+            return 3;
+        }
+        if (strcmp(propName,"VERSION")==0){
+            free(propName);
+            return 4;
+        }
         free(propName);
         return 0;
     }
@@ -147,8 +155,13 @@ ICalErrorCode validateProperties(List propList, int (*checkFunc)(List list, Prop
             return INV_CAL;
         if(((Property *)hold->data)->propDescr == NULL)
             return INV_CAL;
-        if (checkFunc(propList, (Property *)hold->data) == 0)
+        if (check = checkFunc(propList, (Property *)hold->data) != 1){
+            if (check == 3)
+                return DUP_PRODID;
+            if (check == 4)
+                return DUP_VER;
             return INV_CAL;
+        }
         hold = hold->next;
     }
     return OK;
