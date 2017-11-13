@@ -51,7 +51,7 @@ int eventProp(List propList, Property * prop){
         int check2 = isMultiple(propList, (void*)prop, custCompareProp);
         free(temp);
         free(propName);
-        if (check == 1 && check2 == 1)
+        if (check == 1 && check2 == 0)
             return 1;
         else 
             return 0;
@@ -63,7 +63,7 @@ int eventProp(List propList, Property * prop){
         int check2 = isMultiple(propList, (void*)prop, custCompareProp);
         free(temp);
         free(propName);
-        if (check == 1 && check2 == 1)
+        if (check == 1 && check2 == 0)
             return 1;
         else 
             return 0;
