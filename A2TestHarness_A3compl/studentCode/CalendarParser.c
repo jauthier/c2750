@@ -424,8 +424,8 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
         }
         /* make sure the line can be parsed */
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
-            clearList(propList);
-            clearList(eventList);
+            clearList(&propList);
+            clearList(&eventList);
             return INV_CAL;
         }
         /* parse the line */
@@ -434,8 +434,8 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
         
         /* check if the value following the key word is NULL */
         if (holdVal == NULL){
-            clearList(propList);
-            clearList(eventList);
+            clearList(&propList);
+            clearList(&eventList);
             if (eventEnd == 1)
                 free(eventPtr);
             if (strcmp(token, "VERSION") == 0)
@@ -454,8 +454,8 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
                 /* make sure this is the only version */
                 calVer = atof(value);
                 if (calVer <= 0){
-                    clearList(propList);
-                    clearList(eventList);
+                    clearList(&propList);
+                    clearList(&eventList);
                     free(value);
                     if (checkID == 1)
                         free(calID);
@@ -463,8 +463,8 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
                 }
                 checkVer = 1;
             } else {
-                clearList(propList);
-                clearList(eventList);
+                clearList(&propList);
+                clearList(&eventList);
                 free(value);
                 if (checkID == 1)
                     free(calID);
@@ -478,8 +478,8 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
             } else {
                 free(calID);
                 free(value);
-                clearList(propList);
-                clearList(eventList);
+                clearList(&propList);
+                clearList(&eventList);
                 return DUP_PRODID;
             }
         } else if (strcmp(token,"BEGIN")==0){ /* only allow one Event per calendar object */
@@ -489,8 +489,8 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
                 Node ** returnPos = malloc(sizeof(Node*));
                 ICalErrorCode eCode = parseEvent(current, eventPtr, returnPos);
                 if (eCode != OK){
-                    clearList(propList);
-                    clearList(eventList);
+                    clearList(&propList);
+                    clearList(&eventList);
                     free(value);
                     free(calID);
                     free(returnPos);
@@ -504,8 +504,8 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
 
             } else {
                 free(value);
-                clearList(propList);
-                clearList(eventList);
+                clearList(&propList);
+                clearList(&eventList);
                 if (checkID == 1)
                     free(calID);
                 return INV_CAL;
@@ -520,8 +520,8 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
                 free(eventPtr);
             } else {
                 free(value);
-                clearList(propList);
-                clearList(eventList);
+                clearList(&propList);
+                clearList(&eventList);
                 if (checkID == 1)
                     free(calID);
                 if (eventEnd == 1)
@@ -535,8 +535,8 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
                 insertFront(&propList, (void *)newProp);
             } else { 
                 deleteProperty(newProp);
-                clearList(propList);
-                clearList(eventList);
+                clearList(&propList);
+                clearList(&eventList);
                 free(value);                        
                 if (checkID == 1)
                     free(calID);
@@ -555,8 +555,8 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
     if (end == 1){
         return OK;
     } else {
-        clearList(propList);
-        clearList(eventList);
+        clearList(&propList);
+        clearList(&eventList);
         return INV_CAL;
     } 
 }
