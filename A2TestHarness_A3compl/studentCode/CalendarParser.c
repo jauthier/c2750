@@ -679,12 +679,16 @@ char * printError (ICalErrorCode err){
 ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
     /* check if obj is valid */
     ICalErrorCode ec = validateCalendar(obj);
-    if (ec != OK)
+    if (ec != OK){
+        printf("not writing\n");
         return ec;
+    }
     /* check file is valid */
-    FILE * fp = fopen(fileName, "w");
-    if (fp == NULL)
+    FILE * fp = fopen(fileName, "wb");
+    if (fp == NULL){
+        printf("bad file\n");
         return INV_FILE;
+    }
     /* start file */
     fprintf(fp, "BEGIN:VCALENDAR\r\n");
     fprintf(fp, "PRODID:%s\r\n", obj->prodID);
