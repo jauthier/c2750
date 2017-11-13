@@ -1618,7 +1618,7 @@ Calendar* invalidDuration(Calendar * source) {
     tInsertBack(&alarm->properties, prop);
 
     tInsertBack(&event->alarms, alarm);
-    deleteClandar(source);
+    deleteCalendar(source);
     return calendar;
 }
 
