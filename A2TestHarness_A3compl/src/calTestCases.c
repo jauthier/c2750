@@ -1619,9 +1619,9 @@ printf("here 4\n");
     char tmpData[1000];
     strcpy(tmpData, "TRIGGER;VALUE=DATE-TIME:19970317T133000Z");
     alarm->trigger = malloc(sizeof(char) * strlen(tmpData));
-printf("here 6\n");
     strcpy(alarm->trigger, tmpData);
     prop = createTestProp("TRIGGER", "VALUE=DATE-TIME:19970317T133000Z");
+printf("here 6\n");
     tInsertBack(&alarm->properties, prop);
 
     tInsertBack(&event->alarms, alarm);
