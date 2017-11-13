@@ -2686,7 +2686,7 @@ SubTestRec invalidMultiCompValidate(int testNum, int subTest) {
         result = createSubResult(FAIL, feedback);
     }
     printf("here\n");
-    deleteCalendar(calendar);
+    deleteCalendar(paramsCal);
     return result;
 }
 
