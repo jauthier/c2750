@@ -2703,8 +2703,8 @@ SubTestRec invalidDurationTest(int testNum, int subTest) {
         result = createSubResult(FAIL, feedback);
         return result;
     }
-    printf("before invalidDuration\n");
     Calendar* cal = invalidDuration(paramsCal);
+    printf("after invalidDuration\n");
 
     ICalErrorCode err = validateCalendar(cal);
 
