@@ -1,0 +1,862 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
+    <generated>
+      <config projectName="A1TestHarness" targetName="A1TestHarness" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a660cb2d-d6cd-42de-a632-814a43e6b3ca" name="Default" comment="" />
+    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="calTestCases.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/calTestCases.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="26" column="23" lean-forward="false" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="23" />
+              <folding>
+                <element signature="e#9550#10160#0" expanded="false" />
+                <element signature="e#10162#10869#0" expanded="false" />
+                <element signature="e#10871#12136#0" expanded="false" />
+                <element signature="e#12139#15297#0" expanded="false" />
+                <element signature="e#15299#16354#0" expanded="false" />
+                <element signature="e#16356#17331#0" expanded="false" />
+                <element signature="e#17333#18337#0" expanded="false" />
+                <element signature="e#18339#19308#0" expanded="false" />
+                <element signature="e#19310#20324#0" expanded="false" />
+                <element signature="e#20326#20882#0" expanded="false" />
+                <element signature="e#20884#21308#0" expanded="false" />
+                <element signature="e#21310#21756#0" expanded="false" />
+                <element signature="e#21825#22682#0" expanded="false" />
+                <element signature="e#22685#23261#0" expanded="false" />
+                <element signature="e#23263#23700#0" expanded="false" />
+                <element signature="e#23771#24281#0" expanded="false" />
+                <element signature="e#24283#24739#0" expanded="false" />
+                <element signature="e#24741#25211#0" expanded="false" />
+                <element signature="e#25213#25784#0" expanded="false" />
+                <element signature="e#25920#26791#0" expanded="false" />
+                <element signature="e#26793#27163#0" expanded="false" />
+                <element signature="e#27289#27959#0" expanded="false" />
+                <element signature="e#27961#28661#0" expanded="false" />
+                <element signature="e#28663#29379#0" expanded="false" />
+                <element signature="e#29381#29943#0" expanded="false" />
+                <element signature="e#29945#30547#0" expanded="false" />
+                <element signature="e#30615#31347#0" expanded="false" />
+                <element signature="e#31349#32073#0" expanded="false" />
+                <element signature="e#32075#32785#0" expanded="false" />
+                <element signature="e#32787#33488#0" expanded="false" />
+                <element signature="e#33490#34202#0" expanded="false" />
+                <element signature="e#34204#34912#0" expanded="false" />
+                <element signature="e#34914#35623#0" expanded="false" />
+                <element signature="e#35625#36331#0" expanded="false" />
+                <element signature="e#36333#37053#0" expanded="false" />
+                <element signature="e#37055#37991#0" expanded="false" />
+                <element signature="e#38059#38796#0" expanded="false" />
+                <element signature="e#38798#39513#0" expanded="false" />
+                <element signature="e#39515#40198#0" expanded="false" />
+                <element signature="e#40200#40903#0" expanded="false" />
+                <element signature="e#40905#41610#0" expanded="false" />
+                <element signature="e#41612#42319#0" expanded="false" />
+                <element signature="e#42321#43044#0" expanded="false" />
+                <element signature="e#43113#43874#0" expanded="false" />
+                <element signature="e#43876#44583#0" expanded="false" />
+                <element signature="e#44585#45299#0" expanded="false" />
+                <element signature="e#45301#46008#0" expanded="false" />
+                <element signature="e#46010#46597#0" expanded="false" />
+                <element signature="e#46624#47452#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="doubleCalScale1.ics" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/doubleCalScale1.ics">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="randomBegin1.ics" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/randomBegin1.ics">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="listTest.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/listTest.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="311">
+              <caret line="147" column="1" lean-forward="false" selection-start-line="147" selection-start-column="1" selection-end-line="147" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dupRes1.ics" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/dupRes1.ics">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calTest.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/calTest.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="79" column="25" lean-forward="false" selection-start-line="79" selection-start-column="25" selection-end-line="79" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="testharness.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/testharness.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="22" lean-forward="false" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CalendarParser.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/studentCode/CalendarParser.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="164" column="26" lean-forward="false" selection-start-line="164" selection-start-column="26" selection-end-line="164" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LinkedListAPI.c" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/studentCode/LinkedListAPI.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="95" lean-forward="false" selection-start-line="2" selection-start-column="95" selection-end-line="2" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dtendduration1.ics" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/dtendduration1.ics">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>eventEqual</find>
+      <find>ICalErrorCode</find>
+      <find>ErrorCode</find>
+      <find>printf</find>
+      <find>Error Code</find>
+      <find>testCal</find>
+      <find>testCalEvtPropAlm.ics</find>
+      <find>Creating a calendar object with multiple alarms and event properties from a valid calendar file</find>
+      <find>X-</find>
+      <find>Testing printError</find>
+      <find>Did not return Invalid Alarm when parsing an invalid file</find>
+      <find>megaCal() {</find>
+      <find>FMTYPE=audio/basic:ftp://example.com/pub/sounds/really-longfile.aud</find>
+      <find>UID</find>
+      <find>multiComp</find>
+      <find>PRIORITY:7</find>
+      <find>testCalEvtPropAlm1.ics</find>
+      <find>Trigger</find>
+      <find>Printing calendar</find>
+      <find>SEQ</find>
+      <find>invalid calendar detected!</find>
+      <find>you should</find>
+      <find>Creating simple folded calendar objects from valid calendar files</find>
+      <find>Testing Invalid Calendar Objects using validate()</find>
+      <find>Testing invalid Calendar Params</find>
+      <find>begin</find>
+      <find>alloca</find>
+      <find>allocating</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>ErrorCode</replace>
+      <replace>ICalICalErrorCode</replace>
+      <replace>ICalErrorCode</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/testFiles/validA2/multiline.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/testMultiEvent.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/invAlarm.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/mLineTab.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/mLineProp.ics" />
+        <option value="$PROJECT_DIR$/studentInclude/ParserUtilities.h" />
+        <option value="$PROJECT_DIR$/studentCode/ParserFuncs.c" />
+        <option value="$PROJECT_DIR$/studentCode/CalendarParser.c" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/mLineProp1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/mLinePropTab1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/mLineTab1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/XParams.ics" />
+        <option value="$PROJECT_DIR$/include/calTestCases.h" />
+        <option value="$PROJECT_DIR$/testFiles/validCalendar/testCalEvtPropAlm.ics" />
+        <option value="$PROJECT_DIR$/include/CalendarParser.h" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/invAlarm1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/megaCal.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/megaCal1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/DUPResources.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/dupRes.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validCalendar/testCalEvtPropAlm1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/invAlarmDupProps1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/invAlarmDupProps.ics" />
+        <option value="$PROJECT_DIR$/studentOutput/megaCal2.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/megaCal2.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/megaCalFolded.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validA2/megaCalFolded1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/dupDuration.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/dupDuration1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validCalendar/sourceCal.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validCalendar/testCalEvtPropAlm3.ics" />
+        <option value="$PROJECT_DIR$/testFiles/validCalendar/sourceCal1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/dtendduration.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/randomBegin.ics" />
+        <option value="$PROJECT_DIR$/src/calTestCases.c" />
+        <option value="$PROJECT_DIR$/src/calTest.c" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/dtendduration1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/randomBegin1.ics" />
+        <option value="$PROJECT_DIR$/testFiles/invalidA2/doubleCalScale1.ics" />
+        <option value="$PROJECT_DIR$/src/listTest.c" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="56" />
+    <option name="y" value="39" />
+    <option name="width" value="1314" />
+    <option name="height" value="826" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+              <item name="studentCode" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+              <item name="studentOutput" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+              <item name="testFiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+              <item name="testFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="invalidA2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+              <item name="testFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="invCalendar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+              <item name="testFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="invEvent" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+              <item name="testFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="validA2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="A1TestHarness" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="A2TestHarness" type="462c0819:PsiDirectoryNode" />
+              <item name="testFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="validCalendar" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/testFiles/validA2" />
+      <recent name="$PROJECT_DIR$/testFiles/validCalendar" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.A1TestHarness">
+    <configuration name="A1TestHarness" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="A1TestHarness" TARGET_NAME="A1TestHarness" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="A1TestHarness" RUN_TARGET_NAME="A1TestHarness">
+      <envs />
+    </configuration>
+    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
+      <envs />
+    </configuration>
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
+      <item index="1" class="java.lang.String" itemvalue="Application.A1TestHarness" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a660cb2d-d6cd-42de-a632-814a43e6b3ca" name="Default" comment="" />
+      <created>1508290704302</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1508290704302</updated>
+      <workItem from="1508290706273" duration="4549000" />
+      <workItem from="1508295653487" duration="825000" />
+      <workItem from="1508364570273" duration="22235000" />
+      <workItem from="1508519924289" duration="4769000" />
+      <workItem from="1508536087622" duration="480000" />
+      <workItem from="1508537110780" duration="29736000" />
+      <workItem from="1508803033266" duration="17333000" />
+      <workItem from="1509137650619" duration="746000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="80673000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="56" y="39" width="1314" height="826" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26636225" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919255" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919255" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="4" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/include/testharness.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="33" column="21" lean-forward="false" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/testcases.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="54" lean-forward="false" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validCalendar/testCalSimpleUTC.foo">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/mLineTab.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/studentCode/UtilityFuncs.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2992">
+          <caret line="176" column="23" lean-forward="false" selection-start-line="176" selection-start-column="23" selection-end-line="176" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/mLineProp1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/LinkedListAPI.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="778">
+          <caret line="90" column="21" lean-forward="false" selection-start-line="90" selection-start-column="21" selection-end-line="90" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/XParams.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="51" lean-forward="false" selection-start-line="4" selection-start-column="51" selection-end-line="4" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/megaCal.ics" />
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/invAlarm.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/DUPResources.ics" />
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/dupRes.ics" />
+    <entry file="file://$PROJECT_DIR$/studentOutput/megaCal.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="949">
+          <caret line="56" column="9" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/invAlarm1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="10" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/invAlarmDupProps1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/invAlarmDupProps.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="24" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/megaCal2.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="73" column="9" lean-forward="false" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/mLineProp.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/megaCal1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-576">
+          <caret line="35" column="40" lean-forward="true" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/dupDuration.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="11" lean-forward="true" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/megaCalFolded.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="533">
+          <caret line="108" column="8" lean-forward="false" selection-start-line="108" selection-start-column="8" selection-end-line="108" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/testMultiEvent.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="24" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/dupDuration1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/studentOutput/megaCalFolded.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="12" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validCalendar/testCalEvtProp.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="8" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validCalendar/testCalEvtPropAlm1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="8" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/mLineTab1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/megaCalFolded1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1330">
+          <caret line="108" column="8" lean-forward="false" selection-start-line="108" selection-start-column="8" selection-end-line="108" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/CalendarParser.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="84" column="14" lean-forward="false" selection-start-line="84" selection-start-column="14" selection-end-line="84" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/calTestCases.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="33" lean-forward="false" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validCalendar/testCalEvtPropAlm.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="14" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/mLinePropTab.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="4" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validA2/mLinePropTab1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validCalendar/sourceCal.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="5" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invCalendar/dupPRODID.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validCalendar/testCalEvtPropAlm3.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="12" lean-forward="false" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/validCalendar/sourceCal1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="42" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/doubleCalScale.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invCalendar/lineEnder.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="39" lean-forward="false" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/randomBegin.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/dtendduration.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="12" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/dupRes1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/dtendduration1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/doubleCalScale1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testFiles/invalidA2/randomBegin1.ics">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/listTest.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="147" column="1" lean-forward="false" selection-start-line="147" selection-start-column="1" selection-end-line="147" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/calTestCases.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="26" column="23" lean-forward="false" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="23" />
+          <folding>
+            <element signature="e#9550#10160#0" expanded="false" />
+            <element signature="e#10162#10869#0" expanded="false" />
+            <element signature="e#10871#12136#0" expanded="false" />
+            <element signature="e#12139#15297#0" expanded="false" />
+            <element signature="e#15299#16354#0" expanded="false" />
+            <element signature="e#16356#17331#0" expanded="false" />
+            <element signature="e#17333#18337#0" expanded="false" />
+            <element signature="e#18339#19308#0" expanded="false" />
+            <element signature="e#19310#20324#0" expanded="false" />
+            <element signature="e#20326#20882#0" expanded="false" />
+            <element signature="e#20884#21308#0" expanded="false" />
+            <element signature="e#21310#21756#0" expanded="false" />
+            <element signature="e#21825#22682#0" expanded="false" />
+            <element signature="e#22685#23261#0" expanded="false" />
+            <element signature="e#23263#23700#0" expanded="false" />
+            <element signature="e#23771#24281#0" expanded="false" />
+            <element signature="e#24283#24739#0" expanded="false" />
+            <element signature="e#24741#25211#0" expanded="false" />
+            <element signature="e#25213#25784#0" expanded="false" />
+            <element signature="e#25920#26791#0" expanded="false" />
+            <element signature="e#26793#27163#0" expanded="false" />
+            <element signature="e#27289#27959#0" expanded="false" />
+            <element signature="e#27961#28661#0" expanded="false" />
+            <element signature="e#28663#29379#0" expanded="false" />
+            <element signature="e#29381#29943#0" expanded="false" />
+            <element signature="e#29945#30547#0" expanded="false" />
+            <element signature="e#30615#31347#0" expanded="false" />
+            <element signature="e#31349#32073#0" expanded="false" />
+            <element signature="e#32075#32785#0" expanded="false" />
+            <element signature="e#32787#33488#0" expanded="false" />
+            <element signature="e#33490#34202#0" expanded="false" />
+            <element signature="e#34204#34912#0" expanded="false" />
+            <element signature="e#34914#35623#0" expanded="false" />
+            <element signature="e#35625#36331#0" expanded="false" />
+            <element signature="e#36333#37053#0" expanded="false" />
+            <element signature="e#37055#37991#0" expanded="false" />
+            <element signature="e#38059#38796#0" expanded="false" />
+            <element signature="e#38798#39513#0" expanded="false" />
+            <element signature="e#39515#40198#0" expanded="false" />
+            <element signature="e#40200#40903#0" expanded="false" />
+            <element signature="e#40905#41610#0" expanded="false" />
+            <element signature="e#41612#42319#0" expanded="false" />
+            <element signature="e#42321#43044#0" expanded="false" />
+            <element signature="e#43113#43874#0" expanded="false" />
+            <element signature="e#43876#44583#0" expanded="false" />
+            <element signature="e#44585#45299#0" expanded="false" />
+            <element signature="e#45301#46008#0" expanded="false" />
+            <element signature="e#46010#46597#0" expanded="false" />
+            <element signature="e#46624#47452#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/calTest.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="79" column="25" lean-forward="false" selection-start-line="79" selection-start-column="25" selection-end-line="79" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testharness.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="22" lean-forward="false" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/studentCode/CalendarParser.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="164" column="26" lean-forward="false" selection-start-line="164" selection-start-column="26" selection-end-line="164" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/studentCode/LinkedListAPI.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="95" lean-forward="false" selection-start-line="2" selection-start-column="95" selection-end-line="2" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
