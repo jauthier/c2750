@@ -2689,7 +2689,7 @@ SubTestRec invalidMultiCompValidate(int testNum, int subTest) {
         sprintf(feedback, "Subtest %d.%d: DUP_PRODID not detected! (returned %s)", testNum, subTest, printError(err));
         result = createSubResult(FAIL, feedback);
     }
-    deleteClandar(calendar);
+    deleteCalendar(calendar);
     return result;
 }
 
