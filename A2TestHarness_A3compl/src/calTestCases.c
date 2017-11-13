@@ -129,6 +129,8 @@ Property* createTestProp(char* propName, char* propDescr){
     prop = malloc(sizeof(Property) + (sizeof(char)*(strlen(propDescr)+1)) );
     if (prop == NULL)
         printf("malloc returned null\n");
+    else 
+        printf("not NULL\n");
     strcpy(prop->propName, propName);
     strcpy(prop->propDescr, propDescr);
     return prop;
