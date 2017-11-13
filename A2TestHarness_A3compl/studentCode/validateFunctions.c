@@ -72,7 +72,7 @@ int eventProp(List propList, Property * prop){
 }
 
 int alarmProp(List propList, Property * prop){
-    char * propName = toUpper(token);
+    char * propName = toUpper(prop->propName);
     if (strcmp(propName,"ATTACH")==0||strcmp(propName,"DESCRIPTION")==0||strcmp(propName,"SUMMARY")==0){
         int check = isMultiple(propList, (void*)prop, custCompareProp);
         free(propName);
