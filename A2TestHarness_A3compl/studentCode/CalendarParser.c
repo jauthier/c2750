@@ -354,8 +354,11 @@ ICalErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
             }
 
         } else if (strcmp(token,"END")==0){ /* don't want multiple ends */
-            if (strcmp(value, "VEVENT") == 0 && checkUID == 1 && checkDT == 1 && checkDTStart == 1){
+            if (strcmp(value, "VEVENT") == 0 && checkUID == 1 && checkDT == 1){
                 //create a event object
+                if (checkDTStart == 0){
+                    DTStart = evDT;
+                }     
                 Event * temp = initEvent(evUID,evDT, DTStart,propList,alarmList);
                 *eventPtr = temp;
                 free(value);
