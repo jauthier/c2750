@@ -1554,7 +1554,7 @@ Calendar* invalidDuration(Calendar * source) {
 
     Event * sourceEvent = (Event*)source->events.head;
     Event * event = malloc(sizeof(Event));
-    printf("here 1\n");
+    
 
     strcpy(event->creationDateTime.date, "19970714");
     strcpy(event->creationDateTime.time, "170000");
@@ -1570,7 +1570,6 @@ Calendar* invalidDuration(Calendar * source) {
             event->properties = tInitializeList(NULL, NULL, NULL);
         }
     }
-printf("here 2\n");
 
     prop = createTestProp("ORGANIZER", "CN=Jimmy Johnson:MAILTO:john.doe@example.com");
     tInsertBack(&event->properties, prop);
@@ -1586,7 +1585,6 @@ printf("here 2\n");
     prop = createTestProp("SUMMARY", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
     tInsertBack(&event->properties, prop);
 
-printf("here 3\n");
     calendar->events = initWithExisting(source->events);
     tInsertBack(&calendar->events, event);
     Alarm *alm = NULL;
@@ -1600,7 +1598,6 @@ printf("here 3\n");
         event->alarms = tInitializeList(NULL, NULL, NULL);
     }
 
-printf("here 4\n");
     Alarm *alarm = malloc(sizeof(Alarm));
     if (alm != NULL) {
         alarm->properties = initWithExisting(alarm->properties);
@@ -1612,14 +1609,13 @@ printf("here 4\n");
             alarm->properties = tInitializeList(NULL, NULL, NULL);
         }
     }
-    printf("here 5\n");
+
     strcpy(alarm->action, "AUDIO");
     char tmpData[1000];
     strcpy(tmpData, "TRIGGER;VALUE=DATE-TIME:19970317T133000Z");
     alarm->trigger = malloc(sizeof(char) * strlen(tmpData));
     strcpy(alarm->trigger, tmpData);
     prop = createTestProp("TRIGGER", "VALUE=DATE-TIME:19970317T133000Z");
-printf("here 6\n");
     tInsertBack(&alarm->properties, prop);
 
     tInsertBack(&event->alarms, alarm);
@@ -2690,6 +2686,7 @@ SubTestRec invalidMultiCompValidate(int testNum, int subTest) {
         result = createSubResult(FAIL, feedback);
     }
     deleteCalendar(calendar);
+    printf("here\n");
     return result;
 }
 
