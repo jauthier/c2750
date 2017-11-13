@@ -124,11 +124,11 @@ bool containsProp(List list, const Property* prop){
 
 Property* createTestProp(char* propName, char* propDescr){
     Property* prop;
-    
+    printf("in test prop\n");
     prop = malloc(sizeof(Property) + (sizeof(char)*(strlen(propDescr)+1)) );
     strcpy(prop->propName, propName);
     strcpy(prop->propDescr, propDescr);
-    
+    printf("exiting test prop\n");
     return prop;
 }
 
