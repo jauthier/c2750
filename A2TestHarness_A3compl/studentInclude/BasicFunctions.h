@@ -37,7 +37,7 @@ char * printDT(DateTime * dt);
 void deleteDT(DateTime * toDelete);
 Calendar * initCal (float ver, char * id, List eventList, List propList);
 char* printCalendar(const Calendar* obj);
-Event * initEvent (char * uID, DateTime * dt, List propList, List alarmList);
+Event * initEvent (char * uID, DateTime * dt, DateTime * dtStart, List propList, List alarmList);
 void deleteEvent (void * toDelete);
 char * printEvent(void * event);
 int compareEvent(const void * first,const void * second);
