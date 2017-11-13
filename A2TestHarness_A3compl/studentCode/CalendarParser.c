@@ -711,7 +711,7 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
         while (hold2 != NULL){
             Property * prop = (Property *)hold2->data;
             fprintf(fp, "%s:", prop->propName);
-            if (strlen(prop->propDescr)<74){
+            if (strlen(prop->propDescr)>74){
                 int stop = 74 - strlen(prop->propName);
                 int i = 0;
                 while (i < strlen(prop->propDescr)){
