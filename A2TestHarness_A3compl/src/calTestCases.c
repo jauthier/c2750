@@ -127,11 +127,12 @@ Property* createTestProp(char* propName, char* propDescr){
     if (propName == NULL || propDescr == NULL)
         printf("bad params\n");
     prop = malloc(sizeof(Property) + (sizeof(char)*(strlen(propDescr)+1)) );
-    if (prop == NULL)
+    /*if (prop == NULL)
         printf("malloc returned null\n");
     else 
-        printf("not NULL\n");
+        printf("not NULL\n");*/
     strcpy(prop->propName, propName);
+    printf("here2\n");
     strcpy(prop->propDescr, propDescr);
     return prop;
 }
