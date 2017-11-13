@@ -754,6 +754,10 @@ ICalErrorCode validateCalendar(const Calendar * obj){
         return INV_CAL;
     if (obj->events.head->data == NULL)
         return INV_CAL;
+    //check properties
+    ICalErrorCode ec2 = validateProperties(obj->properties,calProp);
+    if (ec2 != OK)
+        return ec2;
     //check the events
     Node * hold = obj->events.head;
     while (hold != NULL){
@@ -762,10 +766,6 @@ ICalErrorCode validateCalendar(const Calendar * obj){
             return ec;
         hold = hold->next;
     }
-    //check properties
-    ICalErrorCode ec2 = validateProperties(obj->properties,calProp);
-    if (ec2 != OK)
-        return ec2;
 
     return OK;
 }
