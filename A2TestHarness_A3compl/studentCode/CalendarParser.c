@@ -710,6 +710,22 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
         Node * hold2 = evt->properties.head;
         while (hold2 != NULL){
             Property * prop = (Property *)hold2->data;
+            fprintf(fp, "%s:", prop->propName);
+            if (strlen(prop->propDescr)<74){
+                int stop = 74 - strlen(prop->propName);
+                int i = 0;
+                while (i < strlen(prop->propDescr)){
+                    while (i < stop){
+                        fprintf(fp, "%c", prop->propDescr[i]);
+                        i++;
+                    }
+                    fprintf(fp, "\r\n");
+                    stop = stop + 73;
+                    if (stop < strlen(prop->propDescr))
+                        fprintf(fp, " ", );
+                    
+                }
+            }
             fprintf(fp, "%s:%s\r\n", prop->propName,prop->propDescr);
             hold2 = hold2->next;
         }
