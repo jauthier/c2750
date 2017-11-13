@@ -722,7 +722,7 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
                     fprintf(fp, "\r\n");
                     stop = stop + 73;
                     if (stop < strlen(prop->propDescr))
-                        fprintf(fp, " ", );
+                        fprintf(fp, " ");
                     
                 }
             }
