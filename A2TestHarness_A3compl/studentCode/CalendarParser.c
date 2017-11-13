@@ -759,6 +759,7 @@ ICalErrorCode validateCalendar(const Calendar * obj){
     if (ec2 != OK)
         return ec2;
     //check the events
+    printf("------------------GOING TO EVENTS------------------\n");
     Node * hold = obj->events.head;
     while (hold != NULL){
         ICalErrorCode ec = validateEvent((Event *)hold->data);

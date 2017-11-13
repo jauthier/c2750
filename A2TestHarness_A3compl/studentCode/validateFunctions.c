@@ -135,6 +135,8 @@ ICalErrorCode validateEvent(Event * event){
     if (event->startDateTime.time == NULL)
         return INV_EVENT;*/
     //check properties
+
+    printf("-----------CHECK PROPS----------------\n");
     ICalErrorCode ec = validateProperties(event->properties, eventProp);
     if (ec != OK)
         return INV_EVENT;
