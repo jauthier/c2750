@@ -2655,7 +2655,7 @@ SubTestRec invalidEventCalendarValidate(int testNum, int subTest) {
         sprintf(feedback, "Subtest %d.%d: invalid event NOT detected (returned %s)!", testNum, subTest, printError(err));
         result = createSubResult(FAIL, feedback);
     }
-
+deleteClandar(paramsCal);
     return result;
 
 }
@@ -2687,6 +2687,7 @@ SubTestRec invalidMultiCompValidate(int testNum, int subTest) {
     }
     printf("here\n");
     deleteCalendar(paramsCal);
+
     return result;
 }
 
