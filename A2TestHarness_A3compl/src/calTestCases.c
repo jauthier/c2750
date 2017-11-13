@@ -124,6 +124,8 @@ bool containsProp(List list, const Property* prop){
 
 Property* createTestProp(char* propName, char* propDescr){
     Property* prop;
+    if (propName == NULL || propDescr == NULL)
+        printf("bad params\n");
     prop = malloc(sizeof(Property) + (sizeof(char)*(strlen(propDescr)+1)) );
     if (prop == NULL)
         printf("malloc returned null\n");
