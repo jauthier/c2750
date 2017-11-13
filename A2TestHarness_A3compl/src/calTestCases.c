@@ -124,10 +124,7 @@ bool containsProp(List list, const Property* prop){
 
 Property* createTestProp(char* propName, char* propDescr){
     Property* prop;
-    printf("in test prop\n");
     prop = malloc(sizeof(Property) + (sizeof(char)*(strlen(propDescr)+1)) );
-    
-    printf("exiting test prop\n");
     strcpy(prop->propName, propName);
     strcpy(prop->propDescr, propDescr);
     return prop;
@@ -2692,6 +2689,7 @@ SubTestRec invalidMultiCompValidate(int testNum, int subTest) {
         sprintf(feedback, "Subtest %d.%d: DUP_PRODID not detected! (returned %s)", testNum, subTest, printError(err));
         result = createSubResult(FAIL, feedback);
     }
+    deleteClandar(calendar);
     return result;
 }
 
