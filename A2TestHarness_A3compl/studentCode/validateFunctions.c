@@ -129,11 +129,11 @@ ICalErrorCode validateEvent(Event * event){
         return INV_CREATEDT;
     if (event->creationDateTime.time == NULL)
         return INV_CREATEDT;
-   /* //check datetime Start
+    //check datetime Start
     if (event->startDateTime.date == NULL)
         return INV_EVENT;
     if (event->startDateTime.time == NULL)
-        return INV_EVENT;*/
+        return INV_EVENT;
     //check properties
 
     printf("-----------CHECK PROPS----------------\n");
