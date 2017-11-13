@@ -124,15 +124,8 @@ bool containsProp(List list, const Property* prop){
 
 Property* createTestProp(char* propName, char* propDescr){
     Property* prop;
-    if (propName == NULL || propDescr == NULL)
-        printf("bad params\n");
     prop = malloc(sizeof(Property) + (sizeof(char)*(strlen(propDescr)+1)) );
-    /*if (prop == NULL)
-        printf("malloc returned null\n");
-    else 
-        printf("not NULL\n");*/
     strcpy(prop->propName, propName);
-    printf("here2\n");
     strcpy(prop->propDescr, propDescr);
     return prop;
 }
@@ -1530,7 +1523,6 @@ Calendar* invalidMultiComp(Calendar *source) {
         event->properties = tInitializeList(NULL, NULL, NULL);
     }
 
-
     prop = createTestProp("ORGANIZER", "CN=Jimmy Johnson:MAILTO:john.doe@example.com");
     tInsertBack(&event->properties, prop);
     prop = createTestProp("DTSTART", "19970714T170000Z");
@@ -1626,6 +1618,7 @@ Calendar* invalidDuration(Calendar * source) {
     tInsertBack(&alarm->properties, prop);
 
     tInsertBack(&event->alarms, alarm);
+    deleteClandar(source);
     return calendar;
 }
 
