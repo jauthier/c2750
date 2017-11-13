@@ -751,6 +751,7 @@ ICalErrorCode validateCalendar(const Calendar * obj){
     if (obj->prodID == NULL)
         return INV_PRODID;
     //check properties
+    printf("------------before props-------------\n");
     ICalErrorCode ec2 = validateProperties(obj->properties,calProp);
     if (ec2 != OK)
         return ec2;
