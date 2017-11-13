@@ -196,5 +196,10 @@ int getLength(List list);
  **/
 void* findElement(List list, bool (*customCompare)(const void* first,const void* second), const void* searchRecord);
 
+/** Checks the list for multiple instances of the same data.
+ *@return 0 if the data is not in the list, 1 if the data is in the list once or 2 if the data
+ * is in the list more than once.
+**/
+int isMultiple(List list, void * data, bool (*customCompare)(const void* first,const void* second));
 
 #endif

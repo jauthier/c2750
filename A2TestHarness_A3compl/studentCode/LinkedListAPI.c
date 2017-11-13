@@ -1,9 +1,9 @@
 /*
 * LinkedListAPI.c
 * CIS 2750
-* Assignment 0
+* Assignment 3
 * Author: Jessica Authier, 0849720
-* 2017/10/23
+* 2017/11/13
 * 
 * This file contains the functions to create, manipulate and destroy a double linked list.
 */
@@ -299,4 +299,18 @@ void * findElement(List list, bool (*customCompare)(const void* first,const void
         hold = hold->next;
     }
     return NULL;
+}
+
+int isMultiple(List list, void * data, bool (*customCompare)(const void* first,const void* second)){
+    Node * hold = list.head;
+    int count = 0;
+    while (hold != NULL){
+        if (customCompare(hold->data,data) == true)
+            count ++;
+        hold = hold->next;
+    }
+    if (count > 1)
+        return 2;
+    else
+        return count;
 }

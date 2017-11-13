@@ -1,9 +1,9 @@
 /*
 * BasicFunctions.c
 * CIS 2750
-* Assignment 2
+* Assignment 3
 * Author: Jessica Authier, 0849720
-* 2017/10/25
+* 2017/11/13
 * 
 * This file contains the functions to create, compare, 
 * print and destroy Alarms, Properties, DT object, Events and Cal objects.

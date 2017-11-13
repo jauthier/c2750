@@ -1,17 +1,12 @@
 #include "CalendarParser.h"
 #include "readFile.h"
 #include "BasicFunctions.h"
+#include "validateFunctions.h"
 
 
 void deleteEvent (void * toDelete);
 char * printEvent(void * event);
 char * toUpper(char * str);
-
-ICalErrorCode validateEvent(Event * event);
-ICalErrorCode validateProperties(List propList);
-ICalErrorCode validateAlarms(List alarmList);
-
-
 
 /*-------- For checking the whether a property is valid --------*/
 
@@ -73,9 +68,8 @@ int evPropCheck(Property * prop, List propList){
     }
 }
 
-
-
 /*----- For freeing the memory when the calendar is invalid ------*/
+
 void free1(char * value, List * list){
     clearList(list);
     free(list);
@@ -87,6 +81,8 @@ void freeEv(List *list1, List *list2, char * value){
     clearList(list2);
     free(value);
 }
+
+/* ----- For parsing the iCal file ----- */
 
 ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
     // check that it is an audio alarms
@@ -577,7 +573,6 @@ ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
         return INV_FILE;
     }
 
-
     /* call fileToList to read the file and put it in a list all multi 
     lines are unfolded and all lines with only white space are removes */
     List * list = malloc(sizeof(List));
@@ -613,7 +608,6 @@ ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
-        
 
         /* this should be the beginning of the calendar object */
         if (strcmp(token, "BEGIN") == 0){
@@ -747,12 +741,12 @@ ICalErrorCode validateCalendar(const Calendar * obj){
     if (obj == NULL)
         return INV_CAL;
     //check version
-    if (obj->version <= 0)
+    if (obj->version != 2.0)
         return INV_VER;
     //check prodid
     if (obj->prodID == NULL)
         return INV_PRODID;
-    //check for an event
+    //check for at least one event
     if (obj->events.head == NULL)
         return INV_CAL;
     if (obj->events.head->data == NULL)
@@ -766,64 +760,10 @@ ICalErrorCode validateCalendar(const Calendar * obj){
         hold = hold->next;
     }
     //check properties
-    ICalErrorCode ec2 = validateProperties(obj->properties);
+    ICalErrorCode ec2 = validateProperties(obj->properties,calProp);
     if (ec2 != OK)
         return ec2;
 
     return OK;
 }
 
-ICalErrorCode validateEvent(Event * event){
-    //check uid
-    if (event->UID == NULL)
-        return INV_EVENT;
-    //check datetime
-    if (event->creationDateTime.date == NULL)
-        return INV_CREATEDT;
-    if (event->creationDateTime.time == NULL)
-        return INV_CREATEDT;
-    //check properties
-    ICalErrorCode ec = validateProperties(event->properties);
-    if (ec != OK)
-        return INV_EVENT;
-    //check alarms
-    ec = validateAlarms(event->alarms);
-    if (ec != OK)
-        return ec;
-    return OK;  
-}
-
-ICalErrorCode validateProperties(List propList, int (*checkFunc)(Property * prop, List list)){
-
-    Node * hold = propList.head;
-    while(hold != NULL){
-        if(hold->data == NULL)
-            return INV_CAL; 
-        if(((Property *)hold->data)->propName == NULL)
-            return INV_CAL;
-        if(((Property *)hold->data)->propDescr == NULL)
-            return INV_CAL;
-        if (evPropCheck(hold, propList) == 1)
-            return INV_CAL;
-        hold = hold->next;
-    }
-    return OK;
-}
-
-ICalErrorCode validateAlarms(List alarmList){
-    Node * hold = alarmList.head;
-    while(hold != NULL){
-        if(hold->data == NULL)
-            return INV_ALARM; 
-        if(((Alarm *)hold->data)->action == NULL)
-            return INV_ALARM;
-        if(((Alarm *)hold->data)->trigger == NULL)
-            return INV_ALARM;
-        ICalErrorCode ec = validateProperties(((Alarm *)hold->data)->properties);
-        if (ec != OK)
-            return INV_ALARM;
-        hold = hold->next;
-    }
-    return OK;
-
-}
