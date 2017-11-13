@@ -155,7 +155,8 @@ ICalErrorCode validateProperties(List propList, int (*checkFunc)(List list, Prop
             return INV_CAL;
         if(((Property *)hold->data)->propDescr == NULL)
             return INV_CAL;
-        if (int check = checkFunc(propList, (Property *)hold->data) != 1){
+        int check = checkFunc(propList, (Property *)hold->data);
+        if (check != 1){
             if (check == 3)
                 return DUP_PRODID;
             if (check == 4)
