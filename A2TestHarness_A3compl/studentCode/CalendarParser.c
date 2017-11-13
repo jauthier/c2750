@@ -320,7 +320,7 @@ ICalErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
                 }
                 checkDTStart = 1;
             } else {
-                deleteDT(checkDTStart);
+                deleteDT(DTStart);
                 freeEv(&propList, &alarmList, value);
                 if (checkUID == 1)
                     free(evUID);

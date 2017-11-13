@@ -187,7 +187,7 @@ Event * initEvent (char * uID, DateTime * dt, DateTime * dtStart, List propList,
     Event * newEvent = malloc(sizeof(Event));
     strcpy(newEvent->UID,uID);
     newEvent->creationDateTime = *dt;
-    newEvent->startDateTime = dtStart;
+    newEvent->startDateTime = *dtStart;
     newEvent->properties = propList;
     newEvent->alarms = alarmList;
     return newEvent;
