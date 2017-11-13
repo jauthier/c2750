@@ -2680,6 +2680,7 @@ SubTestRec invalidMultiCompValidate(int testNum, int subTest) {
     Calendar *calendar = invalidMultiComp(paramsCal);
     
     ICalErrorCode err = validateCalendar(calendar);
+    printf("Return err: %s\n", printError(err));
     
     if (err == DUP_PRODID || err == INV_CAL) {
         sprintf(feedback, "Subtest %d.%d: invalid calendar detected!", testNum, subTest);
@@ -2688,7 +2689,7 @@ SubTestRec invalidMultiCompValidate(int testNum, int subTest) {
         sprintf(feedback, "Subtest %d.%d: DUP_PRODID not detected! (returned %s)", testNum, subTest, printError(err));
         result = createSubResult(FAIL, feedback);
     }
-
+printf("leaving imcv\n");
     return result;
 }
 
