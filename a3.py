@@ -72,11 +72,39 @@ class openView(tk.Frame):
 class displayView(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self,parent)
+		#Calendar information
 		label1 = Label(self, text="Product ID:")
 		label2 = Label(self, text="Version:")
-
-		label1.grid(row=0)
-		label2.grid(row=1)
+		label1.grid(row=0, sticky=W, columnspan=3)
+		label2.grid(row=1, sticky=W, columnspan=3,pady=8)
+		#Events
+		evNumLabel = tk.Label(self, text="Event No.",relief="solid",width=11)
+		numPropLabel = tk.Label(self, text="Properties",relief="solid",width=12)
+		numAlarmLabel = tk.Label(self, text="Alarms",relief="solid",width=8)
+		summaryLabel = tk.Label(self, text="Summary",relief="solid",width=36)
+		evNumLabel.grid(row=3,column=0)
+		numPropLabel.grid(row=3,column=1)
+		numAlarmLabel.grid(row=3,column=2)
+		summaryLabel.grid(row=3,column=3, columnspan=3)
+		self.setEvents();
+		
+	def setEvents(self):
+		numEvents = 3 ##get the number of events from the c functions
+		for n in range(numEvents):
+			numProp = 4
+			numAlarm = 5
+			summary = "A summary all about baby ktties. They sure are cute!"
+			label1 = tk.Label(self,text="%d" % n)
+			label2 = tk.Label(self,text="%d" % numProp)
+			label3 = tk.Label(self,text="%d" % numAlarm)
+			label4 = tk.Label(self,text="%s" % summary,width=36,wraplength=290,justify="left")
+			
+			label1.grid(row=n+4,column=0)
+			label2.grid(row=n+4,column=1)
+			label3.grid(row=n+4,column=2)
+			label4.grid(row=n+4,column=3, columnspan=3, sticky=W)
+		
+		
 
 class createCalView(tk.Frame):
 	def __init__(self, parent, controller):
@@ -99,7 +127,8 @@ class createCalView(tk.Frame):
 		#Events
 		
 		
-	def checkInput():
+	def checkInput(prodID, version):
+		print("checking input")
 		
 		
 view = GUI()
