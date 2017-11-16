@@ -1,11 +1,20 @@
-#!/usr/bin/python
-import Tkinter as tk
+#!/usr/bin/python3
+import tkinter as tk
 import sys
 import os
-from Tkinter import *
+from tkinter import *
+from tkinter import filedialog
+from ctypes import *
 
 LARGE_FONT = ("Verdana", 12)
 SMALL_FONT = ("Verdana", 8)
+
+class Calendar(Structure):
+    _fields_ = [
+        ('version', c_float),
+        ('prodID', c_char*1000),
+        ('events', c_void_p),
+        ('propertiies', c_void_p)]
 
 class GUI(tk.Tk):
 	def __init__(self, *args, **kwargs):
@@ -21,7 +30,7 @@ class GUI(tk.Tk):
 
 		file_menu = tk.Menu(menu)
 		menu.add_cascade(label="File",menu=file_menu)
-		file_menu.add_command(label="Open", command=lambda:self.show_frame(openView))
+		file_menu.add_command(label="Open", command=lambda:fileSelect(root))
 		file_menu.add_command(label="Save", command=self.show_frame)
 		file_menu.add_command(label="Save As", command=self.show_frame)
 		file_menu.add_command(label="Exit", command=self.show_frame)
@@ -38,13 +47,18 @@ class GUI(tk.Tk):
 		#open up all the frames and add them to the dict
 		self.frames = {}
 		
-		for F in (startPage, openView, displayView, createCalView):
+		for F in (startPage, createCalView):
 			frame = F(root,self)
 			self.frames[F] = frame
 			frame.grid(row=0, column=0, sticky="nsew")
 		
 		#set the opening page	
 		self.show_frame(startPage)
+		
+	def make_display(self,root,cal):
+		f = displayView(root,self,cal)
+		f.grid(row=0, column=0, sticky="nsew")
+		f.tkraise()
 		
 		
 	def show_frame(self,cont):
@@ -58,25 +72,42 @@ class startPage(tk.Frame):
 		label = tk.Label(self,text="Hello from start page", font=LARGE_FONT)
 		label.pack()
 	
-class openView(tk.Frame):
-	def __init__(self, parent, controller):
-		tk.Frame.__init__(self,parent)
-		label = tk.Label(self, text="Enter the path of the file you want to open.")
-		fileInput = tk.Entry(self)
-		openButton = tk.Button(self, text="Open", command=lambda:controller.show_frame(displayView))
 
-		label.grid(row=0, columnspan=2, pady=4,padx=4)
-		fileInput.grid(row=1,column=0,sticky=W,padx=5)
-		openButton.grid(row =1,column=1, sticky=W)
+		
+def fileSelect(root):
+	filename = filedialog.askopenfilename(filetypes = (("iCal files", "*.ics")
+                                                      ,("All files", "*.*") ))
+	createCal = callib.createCalendar
+		
+	#get ready to call the create cal function
+	fStr = filename.encode('utf-8')
+	createCal.argtypes = [c_char_p,POINTER(POINTER(Calendar))]
+	createCal.restype = c_int
+	printCal = callib.printCalendar
+	printCal.argtypes = [POINTER(Calendar)]
+	printCal.restype = c_char_p
+	calPtr = POINTER(Calendar)()	
+	
+	print('returned = ',createCal(fStr,byref(calPtr)))
+	view.make_display(root,calPtr)
+	
+		
 		
 class displayView(tk.Frame):
-	def __init__(self, parent, controller):
+	def __init__(self, parent, controller, cal):
 		tk.Frame.__init__(self,parent)
 		#Calendar information
 		label1 = Label(self, text="Product ID:")
 		label2 = Label(self, text="Version:")
-		label1.grid(row=0, sticky=W, columnspan=3)
-		label2.grid(row=1, sticky=W, columnspan=3,pady=8)
+		label1.grid(row=0, sticky=W)
+		label2.grid(row=1, sticky=W, pady=8)
+		calHold = cal.contents
+		label1 = Label(self, text="%s" % calHold.prodID)
+		label2 = Label(self, text="%f" % calHold.version)
+		label1.grid(row=0, sticky=W, column=1, columnspan=3)
+		label2.grid(row=1, sticky=W, column=1, columnspan=3,pady=8)
+
+		
 		#Events
 		evNumLabel = tk.Label(self, text="Event No.",relief="solid",width=11)
 		numPropLabel = tk.Label(self, text="Properties",relief="solid",width=12)
@@ -86,23 +117,36 @@ class displayView(tk.Frame):
 		numPropLabel.grid(row=3,column=1)
 		numAlarmLabel.grid(row=3,column=2)
 		summaryLabel.grid(row=3,column=3, columnspan=3)
-		self.setEvents();
 		
-	def setEvents(self):
-		numEvents = 3 ##get the number of events from the c functions
+		#get ready to call the create cal function
+		
+		length = CDLL(calLibPath).getEventLength
+		length.argtypes = [c_void_p]
+		length.restype = c_int
+		
+		numEvents = length(cast(cal,c_void_p)) ##get the number of events from the c functions
+		
 		for n in range(numEvents):
-			numProp = 4
-			numAlarm = 5
-			summary = "A summary all about baby ktties. They sure are cute!"
+			pLen = CDLL(calLibPath).getEventPropLength
+			aLen = CDLL(calLibPath).getEventAlarmLength
+			pLen.restype = c_int
+			aLen.restype = c_int
+			numProp = pLen(cast(cal,c_void_p),n)
+			numAlarm = aLen(cast(cal,c_void_p),n)
+			getSum = CDLL(calLibPath).getSummary
+			getSum.restype = c_char_p
+			summary = getSum(cast(cal,c_void_p),n)
+			
 			label1 = tk.Label(self,text="%d" % n)
 			label2 = tk.Label(self,text="%d" % numProp)
 			label3 = tk.Label(self,text="%d" % numAlarm)
-			label4 = tk.Label(self,text="%s" % summary,width=36,wraplength=290,justify="left")
+			label4 = tk.Label(self,text="%s" % summary.decode("utf-8"),width=36,wraplength=290,justify="left")
 			
 			label1.grid(row=n+4,column=0)
 			label2.grid(row=n+4,column=1)
 			label3.grid(row=n+4,column=2)
 			label4.grid(row=n+4,column=3, columnspan=3, sticky=W)
+			
 		
 		
 
@@ -131,5 +175,11 @@ class createCalView(tk.Frame):
 		print("checking input")
 		
 		
+		
+#save the path
+calLibPath = 'libs/libcal.so'
+
+#load the module
+callib = CDLL(calLibPath)
 view = GUI()
 view.mainloop()

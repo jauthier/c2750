@@ -3,13 +3,57 @@
 * CIS 2750
 * Assignment 3
 * Author: Jessica Authier, 0849720
-* 2017/11/13
+* 2017/11/15
 * 
 * This file contains the functions to create, compare, 
 * print and destroy Alarms, Properties, DT object, Events and Cal objects.
 */
 
 #include "BasicFunctions.h"
+
+int getEventLength(void * data){
+	Calendar * cal = (Calendar*)data;
+	return getLength(cal->events);
+	
+}
+
+int getEventPropLength(void * data, int evNum){
+	Calendar * cal = (Calendar*)data;
+	Node * hold = cal->events.head;
+	for(int i=0;i<evNum;i++){
+		hold = hold->next;
+	}
+	return getLength(((Event*)hold->data)->properties);
+}
+
+int getEventAlarmLength(void * data, int evNum){
+	Calendar * cal = (Calendar*)data;
+	Node * hold = cal->events.head;
+	for(int i=0;i<evNum;i++){
+		hold = hold->next;
+	}
+	return getLength(((Event*)hold->data)->alarms);
+}
+
+char * getSummary(void * data, int evNum){
+	Calendar * cal = (Calendar*)data;
+	Node * hold = (Node*)cal->events.head;
+	for(int i=0;i<evNum;i++){
+		hold = hold->next;
+	}
+	Event * event = (Event *)hold->data;
+	char * summary;
+	Property * temp = initProperty("SUMMARY","temp");
+	Property * ret = findElement(event->properties, custCompareProp, temp);
+	if (ret == NULL){
+		summary = malloc(sizeof(char));
+		strcpy(summary,"\0");
+	} else {
+		summary = malloc(sizeof(char)*(strlen((((Property*)ret)->propDescr)+1)));
+		strcpy(summary,((Property*)ret)->propDescr);
+	}
+	return summary;
+}
 
 char * toUpper(char * str){
     if (str == NULL)

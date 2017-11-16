@@ -175,6 +175,7 @@ ListIterator createIterator(List list);
 **/
 void* nextElement(ListIterator* iter);
 
+
 /**Returns the number of elements in the list.
  *@pre List must exist, but does not have to have elements.
  *@param list - the list struct.

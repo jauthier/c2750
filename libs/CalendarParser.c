@@ -790,7 +790,6 @@ ICalErrorCode validateCalendar(const Calendar * obj){
             return ec;
         hold = hold->next;
     }
-
     return OK;
 }
 

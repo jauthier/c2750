@@ -21,6 +21,9 @@
 #include "LinkedListAPI.h"
 #include "CalendarParser.h"
 
+int pGetLength(void * data);
+int getEventPropLength(void * data, int evNum);
+int getEventAlarmLength(void * data, int evNum);
 char * toUpper(char * str);
 Property * initProperty(char * name, char * descr);
 char * printProperty(void * toBePrinted);
