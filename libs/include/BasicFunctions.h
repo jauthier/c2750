@@ -3,7 +3,7 @@
 * CIS 2750
 * Assignment 3
 * Author: Jessica Authier, 0849720
-* 2017/11/13
+* 2017/11/16
 * 
 * This file contains the functions to create, compare, 
 * print and destroy Alarms, Properties, DT object, Events and Cal objects.
@@ -24,6 +24,10 @@
 int pGetLength(void * data);
 int getEventPropLength(void * data, int evNum);
 int getEventAlarmLength(void * data, int evNum);
+char * initCalWrapper(Calendar ** objPtr, char * prodID, float version);
+char * createAddEvent(Calendar ** obj, char * UID, char * dtCreation, char * dtStart);
+char * displayA(Calendar ** obj, int evNum);
+char * displayP(Calendar ** obj, int evNum);
 char * toUpper(char * str);
 Property * initProperty(char * name, char * descr);
 char * printProperty(void * toBePrinted);

@@ -3,13 +3,15 @@
 * CIS 2750
 * Assignment 3
 * Author: Jessica Authier, 0849720
-* 2017/11/15
+* 2017/11/16
 * 
 * This file contains the functions to create, compare, 
 * print and destroy Alarms, Properties, DT object, Events and Cal objects.
 */
 
 #include "BasicFunctions.h"
+
+/*-------- wrapper functions used by pyhton --------*/
 
 int getEventLength(void * data){
 	Calendar * cal = (Calendar*)data;
@@ -23,7 +25,7 @@ int getEventPropLength(void * data, int evNum){
 	for(int i=0;i<evNum;i++){
 		hold = hold->next;
 	}
-	return getLength(((Event*)hold->data)->properties);
+	return getLength(((Event*)hold->data)->properties)+3;
 }
 
 int getEventAlarmLength(void * data, int evNum){
@@ -54,6 +56,86 @@ char * getSummary(void * data, int evNum){
 	}
 	return summary;
 }
+
+char * initCalWrapper(Calendar ** objPtr, char * prodID, float version){
+	//check the parameters
+	if (prodID == NULL)
+		return "Invalid Product ID";
+	if (version != 2)
+		return "Invalid Version";
+	
+	Calendar * obj;
+	List propList = initializeList(printProperty,deleteProperty,compareProperty);
+	List eventList = initializeList(printEvent,deleteEvent,compareEvent);
+	
+	obj = initCal(version, prodID, eventList, propList);
+	*objPtr = obj;
+	return "OK";
+}
+
+char * createAddEvent(Calendar ** obj, char * UID, char * dtCreation, char * dtStart){
+	/*turn the dt strings into DateTime objects*/
+	if (dtCreation == NULL)
+		return "Invalid Date-Time";
+	DateTime * creationDT = initDT(dtCreation);
+	if (creationDT == NULL)
+		return "Invalid Date-Time";
+	DateTime * startDT;
+	if (dtStart == NULL)
+		startDT = initDT(dtCreation);
+	else 
+		startDT = initDT(dtStart);
+	if (startDT == NULL)
+		return "Invalid Date-Time";
+		
+	List propList = initializeList(printProperty,deleteProperty,compareProperty);
+	List alarmList = initializeList(printAlarm,deleteAlarm,compareAlarm);
+	
+	Event * event = initEvent(UID,creationDT,startDT,propList,alarmList);
+	if (event == NULL){
+		clearList(&propList);
+		clearList(&alarmList);
+		return "Invalid Event";
+	}
+	insertBack(&((*obj)->events) ,(void *)event);
+	return "OK";
+}
+
+ICalErrorCode writeToFileWrapper(Calendar ** obj, char * filename){
+	//if the calendar is valid then save
+	printf("%s",filename);
+	ICalErrorCode err = writeCalendar(filename, *obj);
+	return err;
+}
+
+char * displayA(Calendar ** obj, int evNum){
+	Event * event;
+	Node * hold = (*obj)->events.head;
+	for(int i=0;i<evNum;i++){
+		hold = hold->next;
+	}
+	event = hold->data;
+	char * str = toString(event->alarms);
+	if (str == NULL)
+		return "NULL";
+	return str;
+}
+
+char * displayP(Calendar ** obj, int evNum){
+	Event * event;
+	Node * hold = (*obj)->events.head;
+	for(int i=0;i<evNum;i++){
+		hold = hold->next;
+	}
+	event = hold->data;
+	char * str = toString(event->properties);
+	if (str == NULL)
+		return "NULL";
+	return str;
+}
+
+
+/*--------------------------------*/
 
 char * toUpper(char * str){
     if (str == NULL)

@@ -136,7 +136,6 @@ ICalErrorCode validateEvent(Event * event){
         return INV_EVENT;
     //check properties
 
-    printf("-----------CHECK PROPS----------------\n");
     ICalErrorCode ec = validateProperties(event->properties, eventProp);
     if (ec != OK)
         return INV_EVENT;

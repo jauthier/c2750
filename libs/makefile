@@ -1,9 +1,9 @@
-FLAGS = -Wall -std=c11 -fPIC -shared
+FLAGS = -Wall -std=c11 -fPIC -shared -Iinclude
 
-all: list
-
-list: LinkedListAPI.c
-	gcc $(FLAGS) LinkedListAPI.c -o liblist.so
+all: cal
 
 cal:
-	gcc $(FLAGS) *.c -o libcal.so
+	gcc $(FLAGS) src/*.c -o bin/libcal.so
+
+clean:
+	rm bin/libcal.so

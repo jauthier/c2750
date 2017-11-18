@@ -101,7 +101,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
     while(current != NULL){
 
         char * line = (char *)current->data;
-        //printf("%s\n", line);
+        printf("%s\n", line);
         if (line[0] == ';'){
             current = current->next;
             continue;
@@ -117,7 +117,7 @@ ICalErrorCode parseAlarm(Node * current, Alarm ** alarmPtr, Node ** returnPos){
 
         /* parse the line */
         char * token = strtok(line, ":;\t");
-        char * holdVal = strtok(NULL, "\n");
+        char * holdVal = strtok(NULL, "\r\n");
         
         /* check if the value following the key word is NULL */
         if (holdVal == NULL){
@@ -248,7 +248,7 @@ ICalErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
 
     while(current != NULL){
         char * line = (char *)current->data;
-        //printf("%s\n", line);
+        printf("%s\n", line);
         /* make sure the line can be parsed */
         if (line[0] == ';'){
             current = current->next;
@@ -260,7 +260,7 @@ ICalErrorCode parseEvent (Node * current, Event ** eventPtr, Node ** returnPos){
 
         /* parse the line */
             char * token = strtok(line, ":;\t");
-            char * holdVal = strtok(NULL, "\n");
+            char * holdVal = strtok(NULL, "\r\n");
 
         /* check if the value following the key word is NULL */
         if (holdVal == NULL){
@@ -416,7 +416,7 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
 
     while (current != NULL){
         char * line = (char *)current->data;
-        //printf("%s\n", line);
+        printf("%s\n", line);
         if (line[0] == ';'){
             current = current->next;
             continue;
@@ -425,11 +425,13 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             clearList(&propList);
             clearList(&eventList);
+        printf("here1\n");
             return INV_CAL;
         }
+        
         /* parse the line */
         char * token = strtok(line, ":;\t");
-        char * holdVal = strtok(NULL, "\n");
+        char * holdVal = strtok(NULL, "\r\n");
         
         /* check if the value following the key word is NULL */
         if (holdVal == NULL){
@@ -444,6 +446,7 @@ ICalErrorCode parseCalendar (Node * current, Calendar ** obj){
             else
                 return INV_CAL;
         }
+        printf("here2\n");
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
@@ -590,10 +593,12 @@ ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
         free(list);
         return INV_FILE;
     }
-
+	//if (current == NULL)
+		//printf("bad\n");
+		
     while (current != NULL){
         char * line = (char *)current->data;
-        //printf("%s\n", line);
+        printf("%s\n", line);
         if (line[0] == ';'){
             current = current->next;
             continue;
@@ -602,12 +607,13 @@ ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
         if (strchr(line,':') == NULL && strchr(line,';') == NULL){
             clearList(list);
             free(list);
+            printf("bad\n");
             return INV_CAL;
         }
 
         /* parse the line */
         char * token = strtok(line, ":;\t");
-        char * holdVal = strtok(NULL, "\n");
+        char * holdVal = strtok(NULL, "\r\n");
         int len = strlen(holdVal) + 1;
         char * value = malloc(sizeof(char)*len);
         strcpy(value, holdVal);
@@ -621,12 +627,15 @@ ICalErrorCode createCalendar(char* fileName, Calendar ** obj){
                 free1(value, list);
                 return eCode;
             } else {
+				printf("%s\n",value);
+				printf("here2\n");
                 free1(value, list);
                 return INV_CAL;
             }
         } else {
             if (strcmp(token, "COMMENT") != 0){
                 free1(value, list);
+                printf("here\n");
                 return INV_CAL;
             }
         }
@@ -684,7 +693,7 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
         return ec;
     }
     /* check file is valid */
-    FILE * fp = fopen(fileName, "wb");
+    FILE * fp = fopen(fileName, "w");
     if (fp == NULL){
         printf("bad file\n");
         return INV_FILE;
@@ -710,6 +719,11 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
             fprintf(fp, "DTSTAMP:%sT%sZ\r\n", evt->creationDateTime.date, evt->creationDateTime.time);
         else 
             fprintf(fp, "DTSTAMP:%sT%s\r\n", evt->creationDateTime.date, evt->creationDateTime.time);
+        if (evt->creationDateTime.UTC == true)
+            fprintf(fp, "DTSTART:%sT%sZ\r\n", evt->startDateTime.date, evt->creationDateTime.time);
+        else 
+            fprintf(fp, "DTSTART:%sT%s\r\n", evt->startDateTime.date, evt->creationDateTime.time);
+        
         /* event properties */
         Node * hold2 = evt->properties.head;
         while (hold2 != NULL){
@@ -761,7 +775,6 @@ ICalErrorCode writeCalendar(char* fileName, const Calendar* obj){
 ICalErrorCode validateCalendar(const Calendar * obj){
 
     //make sure the calendar exists
-    printf("----------In validateCalendar---------\n");
     if (obj == NULL)
         return INV_CAL;
     //check version
@@ -771,13 +784,11 @@ ICalErrorCode validateCalendar(const Calendar * obj){
     if (obj->prodID == NULL)
         return INV_PRODID;
     //check properties
-    printf("------------before props-------------\n");
     ICalErrorCode ec2 = validateProperties(obj->properties,calProp);
     if (ec2 != OK){        
         return ec2;
     }
     //check the events
-    printf("------------------GOING TO EVENTS------------------\n");
     //check for at least one event
     if (obj->events.head == NULL)
         return INV_CAL;
