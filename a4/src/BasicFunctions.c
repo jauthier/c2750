@@ -48,13 +48,12 @@ char * getSummary(void * data, int evNum){
 	Property * temp = initProperty("SUMMARY","temp");
 	Property * ret = findElement(event->properties, custCompareProp, temp);
 	if (ret == NULL){
-		summary = malloc(sizeof(char));
-		strcpy(summary,"\0");
+		return "NULL";
 	} else {
 		summary = malloc(sizeof(char)*(strlen((((Property*)ret)->propDescr)+1)));
 		strcpy(summary,((Property*)ret)->propDescr);
+		return summary;
 	}
-	return summary;
 }
 
 char * initCalWrapper(Calendar ** objPtr, char * prodID, float version){
@@ -134,6 +133,50 @@ char * displayP(Calendar ** obj, int evNum){
 	return str;
 }
 
+/* returns a string of the form "<Date> <Time> <UTC>" */
+char * getStartDT(Calendar ** obj, int evNum){
+	Event * event;
+	Node * hold = (*obj)->events.head;
+	for(int i=0;i<evNum;i++){
+		hold = hold->next;
+	}
+	event = hold->data;
+	char * str = printDT(&(event->startDateTime));
+	return str;
+}
+
+char * getLocation(Calendar ** obj, int evNum){
+	Event * event;
+	Node * hold = (*obj)->events.head;
+	for(int i=0;i<evNum;i++){
+		hold = hold->next;
+	}
+	event = hold->data;
+	
+	Property * temp = initProperty("LOCATION","temp");
+	Property * ret = findElement(event->properties, custCompareProp, temp);
+	if (ret == NULL)
+		return "NULL";
+	else
+		return printProperty(ret);
+	
+}
+
+char * getOrganizer(Calendar ** obj, int evNum){
+	Event * event;
+	Node * hold = (*obj)->events.head;
+	for(int i=0;i<evNum;i++){
+		hold = hold->next;
+	}
+	event = hold->data;
+	
+	Property * temp = initProperty("ORGANIZER","temp");
+	Property * ret = findElement(event->properties, custCompareProp, temp);
+	if (ret == NULL)
+		return "NULL";
+	else
+		return printProperty(ret);
+}
 
 /*--------------------------------*/
 
