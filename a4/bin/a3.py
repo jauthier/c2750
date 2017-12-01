@@ -121,8 +121,6 @@ class GUI(tk.Tk):
 		newLog.tkraise()
 		
 	def make_display(self):
-		if self.sharedCal is None:
-			print("none")
 		f = displayView(self.root,self)
 		f.grid(row=0, column=0, sticky="nsew")
 		f.tkraise()
@@ -218,7 +216,6 @@ def fileSelect():
 	createCal.restype = c_int
 	calPtr = POINTER(Calendar)()
 	check = createCal(fStr,byref(calPtr))
-	print(check)
 	if check == 0:
 		view.setSharedCal(calPtr)
 		messages.append("Calendar successfully opened.")
@@ -291,8 +288,7 @@ def getErrorMessage(num):
 #For displaying the current calendar
 class displayView(tk.Frame):
 	def __init__(self, parent, controller):
-		if view.sharedCal is None:
-			print("none")
+
 		temp = view.sharedCal
 		tk.Frame.__init__(self,parent)
 		
@@ -491,11 +487,7 @@ class createCalView(tk.Frame):
 					messages.append("Make sure you add events to your calendar.")
 					view.logUpdate()
 			if calMesg == "OK":
-				if calPtr is None:
-					print("bad")
 				view.setSharedCal(calPtr)
-				if view.sharedCal is None:
-					print("bad")
 				view.make_display()
 				
 			prodIDI.delete(0, END)
@@ -563,12 +555,10 @@ class createEventView(tk.Frame):
 
 #database functions
 def createDatabases():
-	organizerTbl = " CREATE TABLE ORGANIZER (org_id int AUTO_INCREMENT NOT NULL, name varchar(60) NOT NULL, contact varchar(60),PRIMARY KEY(org_id))"
-	eventTbl = " CREATE TABLE EVENT (event_id int AUTO_INCREMENT, summary varchar(60) NOT NULL, start_time DATETIME NOT NULL, location varchar(60), organizer int ,num_alarms int, PRIMARY KEY(event_id), FOREIGN KEY (organizer) REFERENCES organizers(org_id) ON DELETE CASCADE)"
+	organizerTbl = "CREATE TABLE IF NOT EXISTS ORGANIZER (org_id int AUTO_INCREMENT NOT NULL, name varchar(60) NOT NULL, contact varchar(60),PRIMARY KEY(org_id))"
+	eventTbl = "CREATE TABLE IF NOT EXISTS EVENT (event_id int AUTO_INCREMENT, summary varchar(60) NOT NULL, start_time DATETIME NOT NULL, location varchar(60), organizer int ,num_alarms int, PRIMARY KEY(event_id), FOREIGN KEY (organizer) REFERENCES ORGANIZER (org_id) ON DELETE CASCADE)"
 
 	cursor = conn.cursor()
-	cursor.execute("DROP TABLE IF EXISTS EVENT")
-	cursor.execute("DROP TABLE IF EXISTS ORGANIZER")
 	
     
 	#try creating
@@ -711,8 +701,7 @@ def addCurrentEvent():
 	sDTStr = getStartDT(byref(view.sharedCal),view.eventSelected).decode('utf-8')
 	#format the string
 	startDT = "%s-%s-%s %s:%s:%s" % (sDTStr[0:4],sDTStr[4:6],sDTStr[6:8],sDTStr[10:12],sDTStr[12:14],sDTStr[14:16])
-	print(startDT)
-		
+	
 	#get the number of Alarms
 	getNumAlarms = callib.getEventAlarmLength
 	getNumAlarms.argtypes = [c_void_p,c_int]
@@ -1108,7 +1097,6 @@ class helpWin(tk.Tk):
 		toPrint = ""
 		for r in res:
 			toPrint += "%s\n"%str(r) 
-		print(toPrint)
 		l1 = Label(display, text="ORGANIZER\n%s"%toPrint)
 		l1.pack()
 		
@@ -1118,7 +1106,6 @@ class helpWin(tk.Tk):
 		toPrint = ""
 		for r in res:
 			toPrint += "%s\n"%str(r) 
-		print(toPrint)
 		l1 = Label(display, text="EVENT\n%s"%toPrint)
 		l1.pack()
 		

@@ -63,7 +63,7 @@ int fileToList(char * fileName, List * list){
         hold = fgets(next, LINELEN, fp);
         if (isWhitespace(current) == 0){ // if the line is only whitespace it is skipped
 
-            char * holdCurrent = strtok(current, "\n"); // remove the newline
+            char * holdCurrent = strtok(current, "\n\r"); // remove the newline
             int len = strlen(holdCurrent) + 1;
             char * value = malloc(sizeof(char)*len);
             strcpy(value, holdCurrent);
@@ -84,7 +84,7 @@ int fileToList(char * fileName, List * list){
                     multi = 0;
 
                 /* realloc and add the next line to the end of value */
-                char * temp = strtok(next, "\n");
+                char * temp = strtok(next, "\n\r");
                 temp++;
                 len = len + strlen(temp);
                 value = realloc(value, len);

@@ -9,7 +9,7 @@ int calProp(List propList, Property * prop){
         //check the list for duplicates
         int check = isMultiple(propList, (void*)prop, custCompareProp);
         free(propName);
-        if (check != 1)
+        if (check > 1)
             return 0;
         else 
             return 1;
@@ -51,7 +51,7 @@ int eventProp(List propList, Property * prop){
         int check2 = isMultiple(propList, (void*)prop, custCompareProp);
         free(temp);
         free(propName);
-        if (check == 1 && check2 == 0)
+        if (check == 0 && check2 == 1)
             return 1;
         else 
             return 0;
@@ -63,7 +63,7 @@ int eventProp(List propList, Property * prop){
         int check2 = isMultiple(propList, (void*)prop, custCompareProp);
         free(temp);
         free(propName);
-        if (check == 1 && check2 == 0)
+        if (check == 0 && check2 == 1)
             return 1;
         else 
             return 0;

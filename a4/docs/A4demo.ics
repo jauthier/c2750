@@ -1,0 +1,71 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sleepy/sadcal//NONSGML v1.0//EN
+CALSCALE:CATS
+BEGIN:VEVENT
+UID:bedtime@example.com
+DTSTAMP:29970714T170000Z
+ORGANIZER;CN=Timmy Johns:MAILTO:john.Tim@example.com
+DTSTART:29970716T170000Z
+DTEND:29970720T035959Z
+CLASS:PUBLIC
+SUMMARY:Sleep-a-thon for charity
+BEGIN:VALARM
+TRIGGER;VALUE=DATE-TIME:29970716T163000Z
+REPEAT:0
+DURATION:PT55M
+ACTION:AUDIO
+ATTACH:FMTYPE=audio/basic:ftp://example.com/pub/sounds/
+ really-longfile
+ .aud
+END:VALARM
+BEGIN:VALARM
+TRIGGER;VALUE=DATE-TIME:29970720T200000Z
+REPEAT:1
+DURATION:PT55M
+ACTION:AUDIO
+ATTACH:FMTYPE=audio/basic:ftp://example.com/pub/sounds/test.aud
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:uid2sleepy@example.com
+DTSTAMP:20170714T170000Z
+ORGANIZER;CN=Cornelius Samuelson III:MAILTO:cornelius
+ samsuelsoniii@gmail.com
+DTSTART:20170714T170000Z
+DTEND:20170715T035959Z
+CLASS:PUBLIC
+SUMMARY:Lunch (Pizza) at 12:30pm with my cats where
+  Cornelius the tabby will discuss wage cuts.
+DESCRIPTION:The wages are much too high and Cornelius requires
+  an extra treat each day. Such cost will
+  be covered through extensive wage reductions.
+END:VEVENT
+BEGIN:VEVENT
+UID:uid1catsforall@example.com
+DTSTAMP:19970714T170000Z
+ORGANIZER;CN=Jimmy Yang:MAILTO:jim@example.com
+DTSTART:19970714T170000Z
+DTEND:19970715T035959Z
+CLASS:Private
+PRIORITY:7
+LOCATION:BED
+GEO:0.1241154;-122.08324
+STATUS:TIRED
+TRANSP:OPAQUE
+RESOURCES:Things that are necessary to sleep
+SUMMARY:I will be sleeping so please
+ do not bother me.
+DESCRIPTION:Lond descriptions in different languages
+ are confusing.
+BEGIN:VALARM
+TRIGGER;VALUE=DATE-TIME:19970317T133000Z
+REPEAT:5
+DURATION:PT55M
+ACTION:AUDIO
+ATTACH:FMTYPE=audio/basic:ftp://example.com/pub/sounds/
+ really-longfile
+ .aud
+END:VALARM
+END:VEVENT
+END:VCALENDAR
